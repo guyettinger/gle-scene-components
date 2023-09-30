@@ -1,10 +1,6 @@
 import { CameraFlyTo, CesiumComponentRef, Viewer } from 'resium'
 import { Cartesian3, Viewer as CesiumViewer } from "cesium"
 import { useSceneViewModel } from "./providers/sceneViewProvider";
-import { Ion } from "cesium";
-import 'cesium/Build/Cesium/Widgets/widgets.css'
-
-Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjOWIzZmM0Mi0zOThjLTRmZjItOTM2OC1iOWM4N2ZiMzY3MzUiLCJpZCI6MTYzOTg4LCJpYXQiOjE2OTM2MDMzMzl9.SkbJ2XbsBVeaGSZ2MrwuksCHx4xuux3DGYh6pIJJhGQ';
 
 /*
     Component Lifecycle

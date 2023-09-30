@@ -3,6 +3,11 @@ import SceneView from "./SceneView";
 import { Box } from "./Box";
 import { SceneModel } from "./models/sceneModel";
 
+import { Ion } from "cesium";
+import 'cesium/Build/Cesium/Widgets/widgets.css'
+(window as any).CESIUM_BASE_URL = './dist'
+Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjOWIzZmM0Mi0zOThjLTRmZjItOTM2OC1iOWM4N2ZiMzY3MzUiLCJpZCI6MTYzOTg4LCJpYXQiOjE2OTM2MDMzMzl9.SkbJ2XbsBVeaGSZ2MrwuksCHx4xuux3DGYh6pIJJhGQ';
+
 const meta: Meta<typeof SceneView> = {
     component: SceneView,
     title: "gle-scene-components/SceneView",
