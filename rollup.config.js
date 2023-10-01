@@ -5,11 +5,8 @@ import dts from "rollup-plugin-dts";
 import terser from "@rollup/plugin-terser";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import css from "rollup-plugin-import-css";
-import copy from "rollup-plugin-copy";
-
 
 const packageJson = require("./package.json");
-
 
 export default [
     {
@@ -32,15 +29,7 @@ export default [
             commonjs(),
             typescript({tsconfig: "./tsconfig.json"}),
             css(),
-            terser(),
-            copy({
-                targets: [
-                    { src: 'node_modules/cesium/Build/Cesium/*', dest: 'dist' },
-                    { src: 'node_modules/cesium/Build/Cesium/Widgets/widgets.css', dest: 'dist' },
-                    { src: 'node_modules/cesium/Build/Cesium/Widgets/Images/TimelineIcons.png', dest: 'dist/Images' }
-                ],
-                copyOnce: true
-            }),
+            terser()
         ],
         external: ["react", "react-dom", "styled-components"],
     },
