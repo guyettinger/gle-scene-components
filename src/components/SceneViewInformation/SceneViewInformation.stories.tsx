@@ -1,17 +1,17 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { Vector3 } from "three";
-import { SceneView } from "./SceneView";
 import { Box } from "../Box";
 import { SceneModel, SceneViewModel } from "../../models";
+import { SceneViewInformation } from "./SceneViewInformation";
 
-const meta: Meta<typeof SceneView> = {
-    component: SceneView,
-    title: "gle-scene-components/SceneView",
+const meta: Meta<typeof SceneViewInformation> = {
+    component: SceneViewInformation,
+    title: "gle-scene-components/SceneViewInformation",
     argTypes: {},
 };
 export default meta;
 
-type Story = StoryObj<typeof SceneView>;
+type Story = StoryObj<typeof SceneViewInformation>;
 
 const farmGeodeticCenter = new Vector3(-83.764977, 34.401379, 400.0)
 const farmCameraGeodeticCenter = new Vector3(farmGeodeticCenter.x, farmGeodeticCenter.y, farmGeodeticCenter.z + 100)
@@ -28,12 +28,8 @@ const sceneViewModel: SceneViewModel = new SceneViewModel(
     farmCameraGeodeticCenter
 )
 
-setInterval(()=>{
-    sceneViewModel.updateCameraGeodeticCenter(sceneViewModel.cameraGeodeticCenter.x, sceneViewModel.cameraGeodeticCenter.y, sceneViewModel.cameraGeodeticCenter.z + 10)
-})
-
 export const Farm: Story = (args: any) => (
-    <SceneView data-testId="SceneView-id" {...args} />
+    <SceneViewInformation data-testId="SceneView-id" {...args} />
 );
 Farm.args = {
     sceneViewModel: sceneViewModel

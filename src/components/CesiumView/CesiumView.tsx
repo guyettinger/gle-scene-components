@@ -1,6 +1,7 @@
 import { CameraFlyTo, CesiumComponentRef, Viewer } from 'resium'
 import { Cartesian3, Viewer as CesiumViewer } from "cesium"
 import { useSceneViewModel } from "../../providers";
+import { observer } from "mobx-react-lite";
 
 /*
     Component Lifecycle
@@ -12,7 +13,7 @@ import { useSceneViewModel } from "../../providers";
     4. Update: Changed properties of the Cesium element are updated. If "Cesium read-only properties" are changed, the Cesium element will be reinitialized.
     5. Unmount: The Cesium element is destroyed.
  */
-export const CesiumView = () => {
+export const CesiumView = observer(() => {
     const sceneViewModel = useSceneViewModel()
     const creditContainer = typeof document !== 'undefined' ? document?.createElement("div") : null!
     const cartesianCenter = Cartesian3.fromDegrees(sceneViewModel.cameraGeodeticCenter.x, sceneViewModel.cameraGeodeticCenter.y, sceneViewModel.cameraGeodeticCenter.z)
@@ -46,4 +47,4 @@ export const CesiumView = () => {
             <CameraFlyTo destination={cartesianCenter} duration={0}/>
         </Viewer>
     )
-}
+})

@@ -13,6 +13,10 @@ export class SceneViewModel {
     // three
     threeRootState: RootState | null = null
 
+    updateCameraGeodeticCenter(x: number, y: number, z: number) {
+        this.cameraGeodeticCenter.set(x, y, z)
+    }
+
     constructor(
         public name: string,
         public sceneModel: SceneModel,
