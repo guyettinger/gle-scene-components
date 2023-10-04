@@ -1,9 +1,7 @@
-import { StoreProvider } from "./providers/storeProvider";
-import { SceneViewProvider } from "./providers/sceneViewProvider";
-import { CesiumView } from "./CesiumView";
-import { ThreeView } from "./ThreeView";
-import { SceneProvider } from "./providers/sceneProvider";
-import { SceneViewModel } from "./models/sceneViewModel";
+import { StoreProvider, SceneProvider, SceneViewProvider } from "../../providers";
+import { SceneViewModel } from "../../models";
+import { CesiumView } from "../CesiumView";
+import { ThreeView } from "../ThreeView";
 
 const SceneView = (props: { sceneViewModel: SceneViewModel }) => {
     const {sceneViewModel} = props;

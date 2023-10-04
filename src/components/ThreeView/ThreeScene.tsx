@@ -1,6 +1,5 @@
 import { useFrame, useThree } from "@react-three/fiber";
-import { useSceneViewModel } from "./providers/sceneViewProvider";
-import { useSceneModel } from "./providers/sceneProvider";
+import { useSceneViewModel, useSceneModel } from "../../providers";
 
 export const ThreeScene = () => {
     const {threeScene} = useSceneModel()

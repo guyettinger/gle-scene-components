@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext } from "react";
 import { useStore } from "./storeProvider";
-import { SceneViewModel } from "../models/sceneViewModel";
+import { SceneViewModel } from "../models";
 
 const SceneViewContext = createContext<SceneViewModel | null>(null);
 

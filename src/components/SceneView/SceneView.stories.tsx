@@ -1,8 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
 import SceneView from "./SceneView";
-import { Box } from "./Box";
-import { SceneModel } from "./models/sceneModel";
-import { SceneViewModel } from "./models/sceneViewModel";
+import { Box } from "../Box";
+import { SceneModel, SceneViewModel } from "../../models";
 import { Vector3 } from "three";
 
 const meta: Meta<typeof SceneView> = {

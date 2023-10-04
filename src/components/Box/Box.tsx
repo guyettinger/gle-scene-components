@@ -6,7 +6,7 @@ export const Box = (props: ThreeElements['mesh']) => {
     const meshRef = useRef<Mesh>(null!);
     const [hovered, setHovered] = useState(false);
     const [active, setActive] = useState(false);
-    useFrame((state, delta) => (meshRef.current.rotation.x += delta))
+    useFrame((state, delta) => (meshRef.current.rotation.z += delta))
     return (
         <mesh  {...props}
                ref={meshRef}

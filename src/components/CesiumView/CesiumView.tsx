@@ -1,6 +1,6 @@
 import { CameraFlyTo, CesiumComponentRef, Viewer } from 'resium'
 import { Cartesian3, Viewer as CesiumViewer } from "cesium"
-import { useSceneViewModel } from "./providers/sceneViewProvider";
+import { useSceneViewModel } from "../../providers";
 
 /*
     Component Lifecycle
