@@ -3,7 +3,7 @@ import { SceneViewModel } from "../../models";
 import { CesiumView } from "../CesiumView";
 import { ThreeView } from "../ThreeView";
 
-const SceneView = (props: { sceneViewModel: SceneViewModel }) => {
+export const SceneView = (props: { sceneViewModel: SceneViewModel }) => {
     const {sceneViewModel} = props;
 
     return (
@@ -17,5 +17,3 @@ const SceneView = (props: { sceneViewModel: SceneViewModel }) => {
         </StoreProvider>
     )
 }
-
-export default SceneView;

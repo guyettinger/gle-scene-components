@@ -16,7 +16,7 @@ export class SceneViewModel {
     constructor(
         public name: string,
         public sceneModel: SceneModel,
-        public geodeticCenter: Vector3
+        public cameraGeodeticCenter: Vector3
     ) {
         makeAutoObservable(this)
     }

@@ -15,7 +15,7 @@ import { useSceneViewModel } from "../../providers";
 export const CesiumView = () => {
     const sceneViewModel = useSceneViewModel()
     const creditContainer = typeof document !== 'undefined' ? document?.createElement("div") : null!
-    const cartesianCenter = Cartesian3.fromDegrees(sceneViewModel.geodeticCenter.x, sceneViewModel.geodeticCenter.y, sceneViewModel.geodeticCenter.z)
+    const cartesianCenter = Cartesian3.fromDegrees(sceneViewModel.cameraGeodeticCenter.x, sceneViewModel.cameraGeodeticCenter.y, sceneViewModel.cameraGeodeticCenter.z)
 
     const handleRef = (e: CesiumComponentRef<CesiumViewer> | null) => {
         if (!e) return;
