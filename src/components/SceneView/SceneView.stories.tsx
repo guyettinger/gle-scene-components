@@ -27,9 +27,9 @@ const sceneViewModel: SceneViewModel = new SceneViewModel(
     sceneModel,
     geodeticCenter)
 
-export const Primary: Story = (args: any) => (
+export const Farm: Story = (args: any) => (
     <SceneView data-testId="SceneView-id" {...args} />
 );
-Primary.args = {
+Farm.args = {
     sceneViewModel: sceneViewModel
 };
