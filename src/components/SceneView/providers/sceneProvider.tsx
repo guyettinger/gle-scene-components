@@ -1,13 +1,15 @@
 import { createContext, ReactNode, useContext } from "react";
-import { SceneModel } from "../models/sceneModel";
 import { useStore } from "./storeProvider";
+import { SceneModel } from "../models/sceneModel";
 
 const SceneContext = createContext<SceneModel | null>(null)
 
 export const SceneProvider = (props: { sceneModel: SceneModel, children: ReactNode }) => {
     const {sceneModel, children} = props
     const {sceneStore} = useStore()
-    sceneStore.setScene(sceneModel.name, sceneModel)
+    if (!sceneStore.hasScene(sceneModel.name)) {
+        sceneStore.setScene(sceneModel.name, sceneModel)
+    }
 
     return (
         <SceneContext.Provider value={sceneModel}>

@@ -4,12 +4,12 @@ import { SceneViewModel } from "../models/sceneViewModel";
 
 const SceneViewContext = createContext<SceneViewModel | null>(null);
 
-export const SceneViewProvider = (props: { sceneViewName: string, children: ReactNode }) => {
-    const {sceneViewName, children} = props
+export const SceneViewProvider = (props: { sceneViewModel: SceneViewModel, children: ReactNode }) => {
+    const {sceneViewModel, children} = props;
     const {sceneViewStore} = useStore()
-    const sceneViewModel = sceneViewStore.hasSceneView(sceneViewName)
-        ? sceneViewStore.getSceneView(sceneViewName)
-        : sceneViewStore.createSceneView(sceneViewName)
+    if (!sceneViewStore.hasSceneView(sceneViewModel.name)) {
+        sceneViewStore.setSceneView(sceneViewModel.name, sceneViewModel)
+    }
     return (
         <SceneViewContext.Provider value={sceneViewModel}>
             {children}

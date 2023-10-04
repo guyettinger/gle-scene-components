@@ -2,6 +2,8 @@ import { Meta, StoryObj } from "@storybook/react";
 import SceneView from "./SceneView";
 import { Box } from "./Box";
 import { SceneModel } from "./models/sceneModel";
+import { SceneViewModel } from "./models/sceneViewModel";
+import { Vector3 } from "three";
 
 const meta: Meta<typeof SceneView> = {
     component: SceneView,
@@ -12,16 +14,23 @@ export default meta;
 
 type Story = StoryObj<typeof SceneView>;
 
-const sceneModel:SceneModel = new SceneModel()
-sceneModel.name = 'Scene1'
-sceneModel.threeScene = (
-    <Box position={[0, 0, 0]}/>
-)
+const farmGeodeticCenter = new Vector3(-83.764977, 34.401379, 400.0)
+const geodeticCenter = new Vector3(farmGeodeticCenter.x, farmGeodeticCenter.y, farmGeodeticCenter.z + 100)
 
-export const Primary: Story = (args:any) => (
+const sceneModel: SceneModel = new SceneModel(
+    'Scene1',
+    <Box position={[0, 0, 0]}/>,
+    geodeticCenter
+);
+
+const sceneViewModel: SceneViewModel = new SceneViewModel(
+    'SceneView1',
+    sceneModel,
+    geodeticCenter)
+
+export const Primary: Story = (args: any) => (
     <SceneView data-testId="SceneView-id" {...args} />
 );
 Primary.args = {
-    sceneModel: sceneModel,
-    sceneViewName: "SceneView1"
+    sceneViewModel: sceneViewModel
 };

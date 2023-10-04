@@ -41,6 +41,7 @@ export const CesiumView = () => {
                 geocoder={false}
                 sceneModePicker={false}
                 baseLayerPicker={false}
+                fullscreenButton={false}
         >
             <CameraFlyTo destination={cartesianCenter} duration={0}/>
         </Viewer>

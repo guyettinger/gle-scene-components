@@ -1,11 +1,13 @@
 import { makeAutoObservable } from "mobx";
+import { Vector3 } from "three";
 
 export class SceneModel {
 
-    name: string = ''
-    threeScene: JSX.Element | null = null
-
-    constructor() {
+    constructor(
+        public name: string,
+        public threeScene: JSX.Element,
+        public geodeticCenter: Vector3
+    ) {
         makeAutoObservable(this)
     }
 }

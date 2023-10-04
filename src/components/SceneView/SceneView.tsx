@@ -2,16 +2,16 @@ import { StoreProvider } from "./providers/storeProvider";
 import { SceneViewProvider } from "./providers/sceneViewProvider";
 import { CesiumView } from "./CesiumView";
 import { ThreeView } from "./ThreeView";
-import { SceneModel } from "./models/sceneModel";
 import { SceneProvider } from "./providers/sceneProvider";
+import { SceneViewModel } from "./models/sceneViewModel";
 
-const SceneView = (props: { sceneModel: SceneModel, sceneViewName: string}) => {
-    const {sceneModel, sceneViewName} = props;
+const SceneView = (props: { sceneViewModel: SceneViewModel }) => {
+    const {sceneViewModel} = props;
 
     return (
         <StoreProvider>
-            <SceneProvider sceneModel={sceneModel}>
-                <SceneViewProvider sceneViewName={sceneViewName}>
+            <SceneProvider sceneModel={sceneViewModel.sceneModel}>
+                <SceneViewProvider sceneViewModel={sceneViewModel}>
                     <CesiumView/>
                     <ThreeView/>
                 </SceneViewProvider>
