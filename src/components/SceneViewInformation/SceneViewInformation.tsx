@@ -1,7 +1,8 @@
-import { observer } from "mobx-react-lite";
+import { observer } from "mobx-react";
 import { SceneViewModel } from "../../models";
 
-export const SceneViewInformation = observer(({sceneViewModel}:{sceneViewModel:SceneViewModel}) =>{
+export const SceneViewInformation = observer(({sceneViewModel}: { sceneViewModel: SceneViewModel }) => {
+
     return (
         <div>
             <div>

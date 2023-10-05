@@ -28,10 +28,6 @@ const sceneViewModel: SceneViewModel = new SceneViewModel(
     farmCameraGeodeticCenter
 )
 
-setInterval(()=>{
-    sceneViewModel.updateCameraGeodeticCenter(sceneViewModel.cameraGeodeticCenter.x, sceneViewModel.cameraGeodeticCenter.y, sceneViewModel.cameraGeodeticCenter.z + 10)
-})
-
 export const Farm: Story = (args: any) => (
     <SceneView data-testId="SceneView-id" {...args} />
 );

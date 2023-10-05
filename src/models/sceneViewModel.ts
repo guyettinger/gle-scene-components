@@ -1,7 +1,7 @@
-import { makeAutoObservable } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 import { Vector3 } from "three";
 import { RootState } from "@react-three/fiber";
-import { CesiumTerrainProvider, createWorldTerrainAsync, Viewer as CesiumViewer } from "cesium";
+import { Cartesian3, CesiumTerrainProvider, createWorldTerrainAsync, Ellipsoid, Viewer as CesiumViewer } from "cesium";
 import { SceneModel } from "./sceneModel";
 
 export class SceneViewModel {
@@ -13,15 +13,57 @@ export class SceneViewModel {
     // three
     threeRootState: RootState | null = null
 
+    // camera geodetic center
+    cameraGeodeticX: number = 0
+    cameraGeodeticY: number = 0
+    cameraGeodeticZ: number = 0
+
     updateCameraGeodeticCenter(x: number, y: number, z: number) {
-        this.cameraGeodeticCenter.set(x, y, z)
+        this.cameraGeodeticX = x
+        this.cameraGeodeticY = y
+        this.cameraGeodeticZ = z
+    }
+
+    private get cameraGeodeticChanged(): boolean {
+        return this._cameraGeodeticCenter.x !== this.cameraGeodeticX
+            || this._cameraGeodeticCenter.y !== this.cameraGeodeticY
+            || this._cameraGeodeticCenter.z !== this.cameraGeodeticZ
+    }
+
+    private _cameraGeodeticCenter: Vector3 = new Vector3()
+    get cameraGeodeticCenter(): Vector3 {
+        if (this.cameraGeodeticChanged) {
+            return this._cameraGeodeticCenter.set(this.cameraGeodeticX, this.cameraGeodeticY, this.cameraGeodeticZ)
+        }
+        return this._cameraGeodeticCenter;
+    }
+
+    // cartesian center
+    private _cartesianCenter: Cartesian3 = new Cartesian3()
+
+    get cameraCartesianCenter(): Cartesian3 {
+        if (this.cameraGeodeticChanged) {
+            Cartesian3.fromDegrees(this.cameraGeodeticCenter.x, this.cameraGeodeticCenter.y, this.cameraGeodeticCenter.z, Ellipsoid.WGS84, this._cartesianCenter)
+        }
+        return this._cartesianCenter;
     }
 
     constructor(
         public name: string,
         public sceneModel: SceneModel,
-        public cameraGeodeticCenter: Vector3
+        cameraGeodeticCenter: Vector3
     ) {
-        makeAutoObservable(this)
+        this.updateCameraGeodeticCenter(cameraGeodeticCenter.x, cameraGeodeticCenter.y, cameraGeodeticCenter.z)
+
+        makeObservable(this, {
+            cameraGeodeticX: observable,
+            cameraGeodeticY: observable,
+            cameraGeodeticZ: observable,
+            updateCameraGeodeticCenter: action
+        })
+
+        setInterval(() => {
+            this.updateCameraGeodeticCenter(this.cameraGeodeticCenter.x, this.cameraGeodeticCenter.y, this.cameraGeodeticCenter.z + 1)
+        }, 100)
     }
 }

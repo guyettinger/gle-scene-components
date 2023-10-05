@@ -1,7 +1,7 @@
 import { CameraFlyTo, CesiumComponentRef, Viewer } from 'resium'
-import { Cartesian3, Viewer as CesiumViewer } from "cesium"
+import { Viewer as CesiumViewer } from "cesium"
 import { useSceneViewModel } from "../../providers";
-import { observer } from "mobx-react-lite";
+import { observer } from "mobx-react";
 
 /*
     Component Lifecycle
@@ -16,7 +16,7 @@ import { observer } from "mobx-react-lite";
 export const CesiumView = observer(() => {
     const sceneViewModel = useSceneViewModel()
     const creditContainer = typeof document !== 'undefined' ? document?.createElement("div") : null!
-    const cartesianCenter = Cartesian3.fromDegrees(sceneViewModel.cameraGeodeticCenter.x, sceneViewModel.cameraGeodeticCenter.y, sceneViewModel.cameraGeodeticCenter.z)
+    const cartesianCenter = sceneViewModel.cameraCartesianCenter
 
     const handleRef = (e: CesiumComponentRef<CesiumViewer> | null) => {
         if (!e) return;
