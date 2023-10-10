@@ -1,4 +1,4 @@
-import { action, computed, makeObservable, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import { Vector3 } from "three";
 import { RootState } from "@react-three/fiber";
 import { Cartesian3, CesiumTerrainProvider, createWorldTerrainAsync, Ellipsoid, Viewer as CesiumViewer } from "cesium";
@@ -61,9 +61,5 @@ export class SceneViewModel {
             cameraGeodeticZ: observable,
             updateCameraGeodeticCenter: action
         })
-
-        setInterval(() => {
-            this.updateCameraGeodeticCenter(this.cameraGeodeticCenter.x, this.cameraGeodeticCenter.y, this.cameraGeodeticCenter.z + 1)
-        }, 100)
     }
 }
