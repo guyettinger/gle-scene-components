@@ -1,5 +1,5 @@
-import { CameraFlyTo, CesiumComponentRef, Viewer } from 'resium'
-import { Viewer as CesiumViewer } from "cesium"
+import { CesiumComponentRef, Viewer } from 'resium'
+import { SceneMode, Viewer as CesiumViewer } from "cesium"
 import { useSceneViewModel } from "../../providers";
 import { observer } from "mobx-react";
 
@@ -16,7 +16,6 @@ import { observer } from "mobx-react";
 export const CesiumView = observer(() => {
     const sceneViewModel = useSceneViewModel()
     const creditContainer = typeof document !== 'undefined' ? document?.createElement("div") : null!
-    const cartesianCenter = sceneViewModel.cameraCartesianCenter
 
     const handleRef = (e: CesiumComponentRef<CesiumViewer> | null) => {
         if (!e) return;
@@ -43,8 +42,8 @@ export const CesiumView = observer(() => {
                 sceneModePicker={false}
                 baseLayerPicker={false}
                 fullscreenButton={false}
+                sceneMode={SceneMode.SCENE3D}
         >
-            <CameraFlyTo destination={cartesianCenter} duration={0}/>
         </Viewer>
     )
 })

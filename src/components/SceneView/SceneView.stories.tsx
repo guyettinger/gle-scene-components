@@ -13,7 +13,7 @@ export default meta;
 
 type Story = StoryObj<typeof SceneView>;
 
-const farmGeodeticCenter = new Vector3(-83.764977, 34.401379, 400.0)
+const farmGeodeticCenter = new Vector3(-83.764977, 34.401379, 370.0)
 const farmCameraGeodeticCenter = new Vector3(farmGeodeticCenter.x, farmGeodeticCenter.y, farmGeodeticCenter.z + 100)
 
 const sceneModel: SceneModel = new SceneModel(

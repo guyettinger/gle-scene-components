@@ -90,26 +90,3 @@ export function getOrthotransformForGeocentric(geocentricPosition: Vector3, targ
 
     return target;
 }
-
-/**
- * Converts lat/lon DMS-formatted string (Degrees/Minutes/Seconds) to decimal degrees
- * @param dms
- * @param referenceDirection
- */
-export function convertDMSToDD(dms: string, referenceDirection: string | null = null): number {
-    let split = dms.split(/\s/);
-    if (split.length < 3) return 0;
-    let degreesDec = parseFloat(split[0]);
-    let sign = Math.sign(degreesDec);
-    let minutesDec = (sign * parseFloat(split[1])) / 60;
-    let secondsDec = (sign * parseFloat(split[2])) / 3600;
-    let dd = degreesDec + minutesDec + secondsDec;
-
-    if (referenceDirection) {
-        let dir = referenceDirection.toLowerCase();
-        if (dir == 's' || dir == 'w') {
-            dd *= -1;
-        }
-    }
-    return dd;
-}
