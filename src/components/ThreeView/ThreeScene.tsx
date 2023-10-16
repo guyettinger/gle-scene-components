@@ -1,11 +1,10 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
 import { MathUtils, OrthographicCamera, PerspectiveCamera, Vector3 } from "three";
-import { Cartesian3, OrthographicFrustum, PerspectiveFrustum } from "cesium";
+import { Cartesian3, HeadingPitchRange, OrthographicFrustum, PerspectiveFrustum, Transforms } from "cesium";
 import { useRef, useState } from "react";
 import { useSceneModel, useSceneViewModel } from "../../providers";
 import { normalizeAngle, toGeodetic } from "../../services";
-import * as Cesium from "cesium";
 
 export const ThreeScene = () => {
     const sceneViewModel = useSceneViewModel()
@@ -89,7 +88,7 @@ export const ThreeScene = () => {
         let cesiumCameraTargetCartesian = Cartesian3.fromDegrees(cesiumCameraTargetGeodetic.x, cesiumCameraTargetGeodetic.y, cesiumCameraTargetGeodetic.z)
 
         // cesium camera look at
-        const transform = Cesium.Transforms.eastNorthUpToFixedFrame(cesiumCameraTargetCartesian)
+        const transform = Transforms.eastNorthUpToFixedFrame(cesiumCameraTargetCartesian)
         const heading = normalizeAngle(-1 * cameraControls.azimuthAngle)
         const pitch = cameraControls.polarAngle - MathUtils.degToRad(90)
         const range = cameraControls.distance
@@ -98,7 +97,7 @@ export const ThreeScene = () => {
 
         cesiumCamera.lookAtTransform(
             transform,
-            new Cesium.HeadingPitchRange(heading, pitch, range)
+            new HeadingPitchRange(heading, pitch, range)
         )
 
         // cesium camera frustum
@@ -133,7 +132,7 @@ export const ThreeScene = () => {
     }
 
     return (
-        <group parent={sceneViewModel.sceneModel.geocentricFrame}>
+        <group position={[0,0,0]}>
             <ambientLight></ambientLight>
             <pointLight position={[0, 1.1, 0]}/>
             <CameraControls
