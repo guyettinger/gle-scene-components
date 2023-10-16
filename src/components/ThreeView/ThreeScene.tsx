@@ -1,6 +1,6 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
-import { OrthographicCamera, PerspectiveCamera, Vector3 } from "three";
+import { MathUtils, OrthographicCamera, PerspectiveCamera, Vector3 } from "three";
 import { Cartesian3, OrthographicFrustum, PerspectiveFrustum } from "cesium";
 import { useRef, useState } from "react";
 import { useSceneModel, useSceneViewModel } from "../../providers";
@@ -44,6 +44,11 @@ export const ThreeScene = () => {
         // initialize cameras
         if (!camerasInitialized) {
             setCamerasInitialized(true)
+
+            const cameraControls = threeCameraControlsReference?.current;
+            if(cameraControls){
+            }
+
             syncCameras()
             console.log('camera controls initialized')
         }
@@ -74,34 +79,26 @@ export const ThreeScene = () => {
 
         // three camera position
         let threeCameraPosition = cameraControls.getPosition(new Vector3())
-
-        // three camera target
-        let threeCameraTarget = cameraControls.getTarget(new Vector3())
-
-        // three camera up
-        let threeCameraUp = new Vector3().copy(cameraControls.camera.up)
-
-        // three camera direction
-        let threeCameraDirection = new Vector3().copy(threeCameraTarget).sub(threeCameraPosition).normalize()
-
         let cesiumCameraPosition = new Vector3().copy(threeCameraPosition).applyMatrix4(geocentricInverseMatrixWorld)
-        let cesiumCameraTarget = new Vector3().copy(threeCameraTarget).applyMatrix4(geocentricInverseMatrixWorld)
-        let cesiumCameraDirection = new Vector3().copy(threeCameraDirection).applyMatrix4(geocentricInverseMatrixWorld)
-        let cesiumCameraUp = new Vector3().copy(threeCameraUp).transformDirection(geocentricInverseMatrixWorld).normalize()
-
         let cesiumCameraPositionGeodetic = toGeodetic(cesiumCameraPosition, new Vector3())
-        let cesiumCameraTargetGeodetic = toGeodetic(cesiumCameraTarget, new Vector3())
-        let cesiumCameraDirectionGeodetic = cesiumCameraPositionGeodetic.clone().sub(cesiumCameraTargetGeodetic)
-        let cesiumCameraUpGeodetic = toGeodetic(cesiumCameraUp, new Vector3())
-
         let cesiumCameraPositionCartesian = Cartesian3.fromDegrees(cesiumCameraPositionGeodetic.x, cesiumCameraPositionGeodetic.y, cesiumCameraPositionGeodetic.z)
+
+        let threeCameraTarget = cameraControls.getTarget(new Vector3())
+        let cesiumCameraTarget = new Vector3().copy(threeCameraTarget).applyMatrix4(geocentricInverseMatrixWorld)
+        let cesiumCameraTargetGeodetic = toGeodetic(cesiumCameraTarget, new Vector3())
         let cesiumCameraTargetCartesian = Cartesian3.fromDegrees(cesiumCameraTargetGeodetic.x, cesiumCameraTargetGeodetic.y, cesiumCameraTargetGeodetic.z)
-        let cesiumCameraDirectionCartesian = Cartesian3.fromDegrees(cesiumCameraDirectionGeodetic.x, cesiumCameraDirectionGeodetic.y, cesiumCameraDirectionGeodetic.z)
-        let cesiumCameraUpCartesian = Cartesian3.fromDegrees(cesiumCameraUpGeodetic.x, cesiumCameraUpGeodetic.y, cesiumCameraUpGeodetic.z)
-        cesiumCameraUpCartesian = Cartesian3.normalize(cesiumCameraUpCartesian, new Cartesian3())
 
-        let cesiumCameraOffsetCartesian = Cartesian3.subtract(cesiumCameraTargetCartesian, cesiumCameraPositionCartesian, new Cartesian3())
+        // cesium camera view
+        cesiumCamera.setView({
+            destination: cesiumCameraPositionCartesian
+        })
 
+        // cesium camera target
+        const transform = Cesium.Transforms.eastNorthUpToFixedFrame(cesiumCameraTargetCartesian);
+        cesiumCamera.lookAtTransform(
+            transform,
+            new Cesium.HeadingPitchRange(-1 * cameraControls.azimuthAngle, cameraControls.polarAngle - MathUtils.degToRad(90), cameraControls.distance)
+        )
         // cesium camera frustum
         if (threeCamera instanceof PerspectiveCamera) {
             if (!(cesiumCamera.frustum instanceof PerspectiveFrustum)) {
@@ -127,22 +124,9 @@ export const ThreeScene = () => {
             orthographicFrustum.aspectRatio = orthographicCamera.right / orthographicCamera.top;
             orthographicFrustum.width = (-orthographicCamera.left + orthographicCamera.right) / orthographicCamera.zoom;
         }
-
-        const vectorToCartesian = (v:Vector3):Cartesian3 => {
-            return new Cartesian3(v.x, v.y, v.z)
-        }
-
-        // todo: handle cesium camera y-up
-        cesiumCamera.setView({
-            destination: cesiumCameraPositionCartesian
-        })
-
-        console.log('camera position', cesiumCameraPositionGeodetic)
-        console.log('camera target', cesiumCameraTargetGeodetic)
     }
 
     const handleCameraControlsChange = () => {
-        console.log('camera controls change')
         syncCameras();
     }
 
