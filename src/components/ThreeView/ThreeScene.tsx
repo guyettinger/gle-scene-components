@@ -4,7 +4,7 @@ import { MathUtils, OrthographicCamera, PerspectiveCamera, Vector3 } from "three
 import { Cartesian3, OrthographicFrustum, PerspectiveFrustum } from "cesium";
 import { useRef, useState } from "react";
 import { useSceneModel, useSceneViewModel } from "../../providers";
-import { toGeodetic } from "../../services";
+import { normalizeAngle, toGeodetic } from "../../services";
 import * as Cesium from "cesium";
 
 export const ThreeScene = () => {
@@ -34,10 +34,15 @@ export const ThreeScene = () => {
 
         // initialize cesium
         if (!cesiumInitialized) {
-            setCesiumInitialized(true);
-            cesiumViewer.scene.screenSpaceCameraController.enableCollisionDetection = false;
+            // remove axis constraint
             (cesiumViewer.camera as any).constrainedAxis = undefined
             console.log('cesium constrained axis', cesiumViewer.camera.constrainedAxis)
+
+            // allow camera to go below surface
+            cesiumViewer.scene.screenSpaceCameraController.enableCollisionDetection = false
+
+            // cesium initialized
+            setCesiumInitialized(true)
             console.log('cesium initialized')
         }
 
@@ -46,7 +51,7 @@ export const ThreeScene = () => {
             setCamerasInitialized(true)
 
             const cameraControls = threeCameraControlsReference?.current;
-            if(cameraControls){
+            if (cameraControls) {
             }
 
             syncCameras()
@@ -77,28 +82,25 @@ export const ThreeScene = () => {
         // geocentric inverse
         const geocentricInverseMatrixWorld = sceneModel.geocentricInverseMatrixWorld
 
-        // three camera position
-        let threeCameraPosition = cameraControls.getPosition(new Vector3())
-        let cesiumCameraPosition = new Vector3().copy(threeCameraPosition).applyMatrix4(geocentricInverseMatrixWorld)
-        let cesiumCameraPositionGeodetic = toGeodetic(cesiumCameraPosition, new Vector3())
-        let cesiumCameraPositionCartesian = Cartesian3.fromDegrees(cesiumCameraPositionGeodetic.x, cesiumCameraPositionGeodetic.y, cesiumCameraPositionGeodetic.z)
-
+        // three camera target
         let threeCameraTarget = cameraControls.getTarget(new Vector3())
         let cesiumCameraTarget = new Vector3().copy(threeCameraTarget).applyMatrix4(geocentricInverseMatrixWorld)
         let cesiumCameraTargetGeodetic = toGeodetic(cesiumCameraTarget, new Vector3())
         let cesiumCameraTargetCartesian = Cartesian3.fromDegrees(cesiumCameraTargetGeodetic.x, cesiumCameraTargetGeodetic.y, cesiumCameraTargetGeodetic.z)
 
-        // cesium camera view
-        cesiumCamera.setView({
-            destination: cesiumCameraPositionCartesian
-        })
+        // cesium camera look at
+        const transform = Cesium.Transforms.eastNorthUpToFixedFrame(cesiumCameraTargetCartesian)
+        const heading = normalizeAngle(-1 * cameraControls.azimuthAngle)
+        const pitch = cameraControls.polarAngle - MathUtils.degToRad(90)
+        const range = cameraControls.distance
 
-        // cesium camera target
-        const transform = Cesium.Transforms.eastNorthUpToFixedFrame(cesiumCameraTargetCartesian);
+        //todo: translation
+
         cesiumCamera.lookAtTransform(
             transform,
-            new Cesium.HeadingPitchRange(-1 * cameraControls.azimuthAngle, cameraControls.polarAngle - MathUtils.degToRad(90), cameraControls.distance)
+            new Cesium.HeadingPitchRange(heading, pitch, range)
         )
+
         // cesium camera frustum
         if (threeCamera instanceof PerspectiveCamera) {
             if (!(cesiumCamera.frustum instanceof PerspectiveFrustum)) {
@@ -133,8 +135,13 @@ export const ThreeScene = () => {
     return (
         <group parent={sceneViewModel.sceneModel.geocentricFrame}>
             <ambientLight></ambientLight>
-            <pointLight position={[0, 0, 1.1]}/>
-            <CameraControls onChange={handleCameraControlsChange} ref={threeCameraControlsReference}/>
+            <pointLight position={[0, 1.1, 0]}/>
+            <CameraControls
+                ref={threeCameraControlsReference}
+                smoothTime={0}
+                draggingSmoothTime={0}
+                onChange={handleCameraControlsChange}
+            />
             {threeScene}
         </group>
     )

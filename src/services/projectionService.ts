@@ -1,5 +1,5 @@
 import proj4 from 'proj4';
-import { Matrix4, Plane, Vector3 } from 'three';
+import { MathUtils, Matrix4, Plane, Vector3 } from 'three';
 
 function initProj4Defs(): boolean {
     proj4.defs([
@@ -89,4 +89,10 @@ export function getOrthotransformForGeocentric(geocentricPosition: Vector3, targ
     target.setPosition(rotatedTrans);
 
     return target;
+}
+
+const TAU = Math.PI * 2;
+
+export const normalizeAngle = ( angle:number ) => {
+    return MathUtils.euclideanModulo( angle, TAU );
 }
