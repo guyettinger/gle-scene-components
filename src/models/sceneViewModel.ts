@@ -1,7 +1,14 @@
 import { action, makeObservable, observable } from "mobx";
 import { Vector3 } from "three";
 import { RootState } from "@react-three/fiber";
-import { Cartesian3, CesiumTerrainProvider, createWorldTerrainAsync, Ellipsoid, Viewer as CesiumViewer } from "cesium";
+import {
+    Cartesian3,
+    CesiumTerrainProvider,
+    createWorldTerrainAsync,
+    DebugModelMatrixPrimitive,
+    Ellipsoid,
+    Viewer as CesiumViewer
+} from "cesium";
 import { SceneModel } from "./sceneModel";
 
 export class SceneViewModel {
@@ -62,4 +69,6 @@ export class SceneViewModel {
             updateCameraGeodeticCenter: action
         })
     }
+
+    debugModelMatrixPrimitive:DebugModelMatrixPrimitive | null = null
 }

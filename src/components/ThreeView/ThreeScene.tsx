@@ -1,10 +1,16 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
 import { MathUtils, OrthographicCamera, PerspectiveCamera, Vector3 } from "three";
-import { Cartesian3, HeadingPitchRange, OrthographicFrustum, PerspectiveFrustum, Transforms } from "cesium";
+import {
+    DebugModelMatrixPrimitive,
+    HeadingPitchRange,
+    OrthographicFrustum,
+    PerspectiveFrustum,
+    Transforms
+} from "cesium";
 import { useRef, useState } from "react";
 import { useSceneModel, useSceneViewModel } from "../../providers";
-import { normalizeAngle, toGeodetic } from "../../services";
+import { normalizeAngle, offsetCartesianByVector } from "../../services";
 
 export const ThreeScene = () => {
     const sceneViewModel = useSceneViewModel()
@@ -14,6 +20,7 @@ export const ThreeScene = () => {
     const [threeInitialized, setThreeInitialized] = useState<boolean>(false)
     const [cesiumInitialized, setCesiumInitialized] = useState<boolean>(false)
     const [camerasInitialized, setCamerasInitialized] = useState<boolean>(false)
+    const [debug, setDebug] = useState<boolean>(true)
 
     useThree((threeRootState) => {
         sceneViewModel.threeRootState = threeRootState;
@@ -48,11 +55,6 @@ export const ThreeScene = () => {
         // initialize cameras
         if (!camerasInitialized) {
             setCamerasInitialized(true)
-
-            const cameraControls = threeCameraControlsReference?.current;
-            if (cameraControls) {
-            }
-
             syncCameras()
             console.log('camera controls initialized')
         }
@@ -74,18 +76,17 @@ export const ThreeScene = () => {
         const threeCamera = cameraControls?.camera
         if (!threeCamera) return
 
-        // wait for cesium camera
-        const cesiumCamera = sceneViewModel?.cesiumViewer?.camera
-        if (!cesiumCamera) return
+        // wait for cesium viewer
+        const cesiumViewer = sceneViewModel.cesiumViewer
+        if (!cesiumViewer) return;
 
-        // geocentric inverse
-        const geocentricInverseMatrixWorld = sceneModel.geocentricInverseMatrixWorld
+        // wait for cesium camera
+        const cesiumCamera = cesiumViewer.camera
+        if (!cesiumCamera) return
 
         // three camera target
         let threeCameraTarget = cameraControls.getTarget(new Vector3())
-        let cesiumCameraTarget = new Vector3().copy(threeCameraTarget).applyMatrix4(geocentricInverseMatrixWorld)
-        let cesiumCameraTargetGeodetic = toGeodetic(cesiumCameraTarget, new Vector3())
-        let cesiumCameraTargetCartesian = Cartesian3.fromDegrees(cesiumCameraTargetGeodetic.x, cesiumCameraTargetGeodetic.y, cesiumCameraTargetGeodetic.z)
+        let cesiumCameraTargetCartesian = offsetCartesianByVector(sceneModel.sceneCenterCartesian, threeCameraTarget)
 
         // cesium camera look at
         const transform = Transforms.eastNorthUpToFixedFrame(cesiumCameraTargetCartesian)
@@ -93,7 +94,18 @@ export const ThreeScene = () => {
         const pitch = cameraControls.polarAngle - MathUtils.degToRad(90)
         const range = cameraControls.distance
 
-        //todo: translation
+        if (debug) {
+            // cesium debug axis
+            if (!sceneViewModel.debugModelMatrixPrimitive) {
+                sceneViewModel.debugModelMatrixPrimitive = new DebugModelMatrixPrimitive({
+                    modelMatrix: transform,
+                    length: 5.0,
+                })
+                cesiumViewer.scene.primitives.add(sceneViewModel.debugModelMatrixPrimitive)
+            } else {
+                sceneViewModel.debugModelMatrixPrimitive.modelMatrix = transform
+            }
+        }
 
         cesiumCamera.lookAtTransform(
             transform,
@@ -132,7 +144,7 @@ export const ThreeScene = () => {
     }
 
     return (
-        <group position={[0,0,0]}>
+        <group>
             <ambientLight></ambientLight>
             <pointLight position={[0, 1.1, 0]}/>
             <CameraControls
@@ -142,6 +154,7 @@ export const ThreeScene = () => {
                 onChange={handleCameraControlsChange}
             />
             {threeScene}
+            {debug && <axesHelper args={[5]}/>}
         </group>
     )
 }

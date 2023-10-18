@@ -1,30 +1,17 @@
 import { makeAutoObservable } from "mobx";
-import { Group, Matrix4, Vector3 } from "three";
-import { getOrthotransformForGeocentric, toGeocentric } from "../services";
+import { Vector3 } from "three";
+import { Cartesian3, Ellipsoid } from "cesium";
 
 export class SceneModel {
 
-    geocentricFrame: Group = new Group()
-    geocentricMatrix = new Matrix4()
-    geocentricInverseMatrix = new Matrix4()
-    geocentricMatrixWorld = new Matrix4()
-    geocentricInverseMatrixWorld = new Matrix4()
+    sceneCenterCartesian: Cartesian3 = new Cartesian3()
 
     constructor(
         public name: string,
         public threeScene: JSX.Element,
         public geodeticCenter: Vector3
     ) {
-        const geocentricCenter = toGeocentric(geodeticCenter.x, geodeticCenter.y, geodeticCenter.z)
-        const orthoTransformForGeocentric = getOrthotransformForGeocentric(geocentricCenter)
-        this.geocentricFrame.matrixAutoUpdate = false
-        this.geocentricFrame.matrix.copy(orthoTransformForGeocentric)
-        this.geocentricMatrix.copy(orthoTransformForGeocentric).invert()
-        this.geocentricInverseMatrix.copy(orthoTransformForGeocentric)
-        this.geocentricFrame.updateMatrixWorld(true)
-        this.geocentricMatrixWorld.copy(this.geocentricFrame.matrixWorld)
-        this.geocentricInverseMatrixWorld.copy(this.geocentricFrame.matrixWorld).invert()
-
+        Cartesian3.fromDegrees(geodeticCenter.x, geodeticCenter.y, geodeticCenter.z, Ellipsoid.WGS84, this.sceneCenterCartesian)
         makeAutoObservable(this)
     }
 }
