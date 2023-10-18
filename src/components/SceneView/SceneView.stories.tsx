@@ -18,7 +18,11 @@ const farmCameraGeodeticCenter = new Vector3(farmGeodeticCenter.x, farmGeodeticC
 
 const sceneModel: SceneModel = new SceneModel(
     'Scene1',
-    <Box position={[0, 0, 0]}/>,
+    <group>
+        <Box position={[4, 0, 0]}/>
+        <Box position={[0, 0, 0]}/>
+        <Box position={[-4, 0, 0]}/>
+    </group>,
     farmGeodeticCenter
 )
 
