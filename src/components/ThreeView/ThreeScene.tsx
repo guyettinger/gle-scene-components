@@ -146,7 +146,6 @@ export const ThreeScene = () => {
     return (
         <group>
             <ambientLight></ambientLight>
-            <pointLight position={[0, 1.1, 0]}/>
             <CameraControls
                 ref={threeCameraControlsReference}
                 smoothTime={0}
