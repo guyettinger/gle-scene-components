@@ -62,8 +62,11 @@ export const ThreeScene = () => {
         // render three scene
         gl.render(scene, camera)
 
+        // render point cloud
+        sceneModel.potree.updatePointClouds(sceneModel.pointClouds, camera, gl)
+
         // render cesium scene
-        cesiumViewer.render();
+        cesiumViewer.render()
 
     }, 1)
 
@@ -144,7 +147,7 @@ export const ThreeScene = () => {
     }
 
     return (
-        <group>
+        <scene>
             <ambientLight></ambientLight>
             <CameraControls
                 ref={threeCameraControlsReference}
@@ -152,8 +155,10 @@ export const ThreeScene = () => {
                 draggingSmoothTime={0}
                 onChange={handleCameraControlsChange}
             />
-            {threeScene}
-            {debug && <axesHelper args={[5]}/>}
-        </group>
+            <group>
+                {threeScene}
+                {debug && <axesHelper args={[5]}/>}
+            </group>
+        </scene>
     )
 }
