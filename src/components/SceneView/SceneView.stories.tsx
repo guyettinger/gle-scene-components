@@ -3,6 +3,7 @@ import { Vector3 } from "three";
 import { SceneView } from "./SceneView";
 import { Box } from "../Box";
 import { SceneModel, SceneViewModel } from "../../models";
+import { PointCloud } from "../PointCloud";
 
 const meta: Meta<typeof SceneView> = {
     component: SceneView,
@@ -22,6 +23,11 @@ const sceneModel: SceneModel = new SceneModel(
         <Box position={[4, 0, 0]}/>
         <Box position={[0, 0, 0]}/>
         <Box position={[-4, 0, 0]}/>
+        <PointCloud
+            baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
+            fileName="cloud.js"
+            position={new Vector3(0, 0, 0)}
+        />
     </group>,
     farmGeodeticCenter
 )

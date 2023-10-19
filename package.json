@@ -22,9 +22,10 @@
   },
   "homepage": "https://github.com/guyettinger/gle-scene-components#readme",
   "dependencies": {
-    "@react-three/fiber": "^8.14.6",
     "@react-three/drei": "^9.88.3",
+    "@react-three/fiber": "^8.14.6",
     "cesium": "^1.110.0",
+    "gle-three-loader": "^0.0.2",
     "mobx": "^6.10.2",
     "mobx-react": "^9.0.1",
     "proj4": "^2.9.0",
