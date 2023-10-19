@@ -3,8 +3,6 @@ import { Vector3 } from "three";
 import { RootState } from "@react-three/fiber";
 import {
     Cartesian3,
-    CesiumTerrainProvider,
-    createWorldTerrainAsync,
     DebugModelMatrixPrimitive,
     Ellipsoid,
     Viewer as CesiumViewer
@@ -14,7 +12,6 @@ import { SceneModel } from "./sceneModel";
 export class SceneViewModel {
 
     // cesium
-    cesiumTerrainProviderFactory: Promise<CesiumTerrainProvider> = createWorldTerrainAsync()
     cesiumViewer: CesiumViewer | null = null
 
     // three

@@ -1,7 +1,7 @@
 import { CesiumComponentRef, Viewer } from 'resium'
 import { SceneMode, Viewer as CesiumViewer } from "cesium"
-import { useSceneViewModel } from "../../providers";
 import { observer } from "mobx-react";
+import { useSceneViewModel } from "../../providers";
 
 /*
     Component Lifecycle
@@ -15,6 +15,7 @@ import { observer } from "mobx-react";
  */
 export const CesiumView = observer(() => {
     const sceneViewModel = useSceneViewModel()
+    const sceneModel = sceneViewModel.sceneModel
     const creditContainer = typeof document !== 'undefined' ? document?.createElement("div") : null!
 
     const handleRef = (e: CesiumComponentRef<CesiumViewer> | null) => {
@@ -35,7 +36,7 @@ export const CesiumView = observer(() => {
                 creditContainer={creditContainer}
                 homeButton={false}
                 navigationHelpButton={false}
-                terrainProvider={sceneViewModel.cesiumTerrainProviderFactory}
+                terrainProvider={sceneModel.cesiumTerrainProviderFactory}
                 timeline={false}
                 useDefaultRenderLoop={false}
                 geocoder={false}

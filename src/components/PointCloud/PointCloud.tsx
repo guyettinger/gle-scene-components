@@ -31,11 +31,11 @@ export const PointCloud = ({fileName, baseUrl, position}: PointCloudProps) => {
                 // Add the loaded point cloud to your ThreeJS scene.
                 pointCloudGroup.add(pco)
 
-                // Make the point cloud show up at the center of the screen
-                pco.translateX(-1)
-                pco.translateY(1)
+                // Make the point cloud y-up, bottom
+                pco.translateX(pco.pcoGeometry.offset.x)
+                pco.translateY(-pco.pcoGeometry.offset.y)
                 pco.rotateX(-Math.PI / 2)
-                pco.material.size = 1.0;
+                pco.material.size = 1.0
 
             })
             .finally(() => {

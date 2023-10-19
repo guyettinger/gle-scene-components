@@ -26,12 +26,12 @@ const sceneModel: SceneModel = new SceneModel(
         <PointCloud
             baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
             fileName="cloud.js"
-            position={[0, 0, 0]}
+            position={[0, -.75, 0]}
         />
         <PointCloud
             baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
             fileName="cloud.js"
-            position={[10, 0, 0]}
+            position={[10, -.75, 0]}
         />
     </group>,
     farmGeodeticCenter
