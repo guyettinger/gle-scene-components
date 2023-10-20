@@ -1,5 +1,5 @@
 # gle-scene-components
-GLE Scene Component Library
+A component library for building 3D scenes.
 
 ## Installation
 Follow the [Resium Install Guide ](https://resium.reearth.io/installation)
