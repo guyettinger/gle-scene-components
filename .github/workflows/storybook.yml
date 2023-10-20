@@ -19,7 +19,6 @@ jobs:
           npm ci
           npm run build-storybook
           touch ./storybook-static/.nojekyll
-          mv ./storybook-static/cesium ./
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.6.2
