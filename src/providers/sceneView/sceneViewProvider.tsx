@@ -1,8 +1,8 @@
 import { createContext, ReactNode, useContext } from "react";
-import { useStore } from "./storeProvider";
-import { SceneViewModel } from "../models";
+import { useStore } from "../store";
+import { SceneViewModel } from "../../models";
 
-const SceneViewContext = createContext<SceneViewModel | null>(null);
+export const SceneViewContext = createContext<SceneViewModel | null>(null);
 
 export const SceneViewProvider = (props: { sceneViewModel: SceneViewModel, children: ReactNode }) => {
     const {sceneViewModel, children} = props;

@@ -16,6 +16,8 @@ export default [
                 file: packageJson.main,
                 format: "cjs",
                 sourcemap: true,
+                interop: "auto",
+                name: "gle-scene-components"
             },
             {
                 file: packageJson.module,
@@ -35,7 +37,7 @@ export default [
     },
     {
         input: "src/index.ts",
-        output: [{file: "dist/types.d.ts", format: "es"}],
+        output: [{file: "dist/types.d.ts", format: "esm"}],
         plugins: [dts.default()],
     },
 ];

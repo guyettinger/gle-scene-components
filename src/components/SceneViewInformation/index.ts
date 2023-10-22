@@ -1,1 +1,1 @@
-export * from "./SceneViewInformation"
+export { SceneViewInformation } from './SceneViewInformation'

@@ -1,0 +1,1 @@
+export { type RootStore, default as DefaultRootStore } from './rootStore'

@@ -1,3 +1,3 @@
-export * from "./sceneProvider"
-export * from "./sceneViewProvider"
-export * from "./storeProvider"
+export * from "./scene"
+export * from "./sceneView"
+export * from "./store"

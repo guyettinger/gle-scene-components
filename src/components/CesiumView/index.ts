@@ -1,1 +1,1 @@
-export * from "./CesiumView"
+export { CesiumView } from "./CesiumView"

@@ -1,2 +1,2 @@
-export * from "./ThreeView"
-export * from "./ThreeScene"
+export { ThreeView } from './ThreeView'
+export { ThreeScene } from './ThreeScene'

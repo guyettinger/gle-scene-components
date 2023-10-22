@@ -1,5 +1,5 @@
 import { makeAutoObservable, observable, ObservableMap } from "mobx";
-import { SceneViewModel } from "../models";
+import { SceneViewModel } from "../../models";
 
 export class SceneViewStore {
 

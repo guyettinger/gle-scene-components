@@ -7,7 +7,7 @@ import {
     Ellipsoid,
     Viewer as CesiumViewer
 } from "cesium";
-import { SceneModel } from "./sceneModel";
+import { SceneModel } from "../scene/sceneModel";
 
 export class SceneViewModel {
 

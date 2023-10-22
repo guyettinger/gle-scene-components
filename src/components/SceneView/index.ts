@@ -1,1 +1,1 @@
-export * from "./SceneView"
+export { SceneView } from './SceneView'

@@ -1,2 +1,2 @@
-export * from "./mathService"
-export * from "./projectionService"
+export * from "./math"
+export * from "./projection"

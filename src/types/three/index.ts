@@ -1,0 +1,1 @@
+export {type VectorLike, type Vector3Like} from './threeTypes'

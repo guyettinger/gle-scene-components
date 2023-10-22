@@ -1,8 +1,8 @@
 import { createContext, ReactNode, useContext } from "react";
-import { useStore } from "./storeProvider";
-import { SceneModel } from "../models";
+import { useStore } from "../store";
+import { SceneModel } from "../../models";
 
-const SceneContext = createContext<SceneModel | null>(null)
+export const SceneContext = createContext<SceneModel | null>(null)
 
 export const SceneProvider = (props: { sceneModel: SceneModel, children: ReactNode }) => {
     const {sceneModel, children} = props

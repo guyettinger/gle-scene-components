@@ -1,2 +1,2 @@
-export * from "./sceneModel"
-export * from "./sceneViewModel"
+export * from "./scene"
+export * from "./sceneView"
