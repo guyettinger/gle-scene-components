@@ -1,0 +1,1 @@
+<script src="./coi-serviceworker.js"></script>

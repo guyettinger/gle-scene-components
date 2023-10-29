@@ -25,9 +25,6 @@ const config: StorybookConfig = {
             base: "",
             plugins: [cesium()],
         });
-    },
-    core: {
-        crossOriginIsolated: true
     }
 };
 export default config;
