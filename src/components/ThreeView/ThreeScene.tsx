@@ -105,8 +105,8 @@ export const ThreeScene = () => {
         const pitch = cameraControls.polarAngle - MathUtils.degToRad(90)
         const range = cameraControls.distance
 
+        // cesium debug axis
         if (debug) {
-            // cesium debug axis
             if (!sceneViewModel.debugModelMatrixPrimitive) {
                 sceneViewModel.debugModelMatrixPrimitive = new DebugModelMatrixPrimitive({
                     modelMatrix: transform,
@@ -118,35 +118,40 @@ export const ThreeScene = () => {
             }
         }
 
+        // move cesium camera
         cesiumCamera.lookAtTransform(
             transform,
             new HeadingPitchRange(heading, pitch, range)
         )
 
-        // cesium camera frustum
+        // sync frustum
         if (threeCamera instanceof PerspectiveCamera) {
             if (!(cesiumCamera.frustum instanceof PerspectiveFrustum)) {
-                cesiumCamera.switchToPerspectiveFrustum();
-            }
-
-            let aspect = threeCamera.aspect;
-            let perspectiveFrustum = cesiumCamera.frustum as PerspectiveFrustum;
-            if (aspect < 1) {
-                let fovy = Math.PI * (threeCamera.fov / 180);
-                perspectiveFrustum.fov = fovy;
-            } else {
-                let fovy = Math.PI * (threeCamera.fov / 180);
-                let fovx = Math.atan(Math.tan(0.5 * fovy) * aspect) * 2;
-                perspectiveFrustum.fov = fovx;
+                cesiumCamera.switchToPerspectiveFrustum()
             }
         } else {
-            let orthographicCamera = threeCamera as OrthographicCamera;
             if (!(cesiumCamera.frustum instanceof OrthographicFrustum)) {
-                cesiumCamera.switchToOrthographicFrustum();
+                cesiumCamera.switchToOrthographicFrustum()
             }
-            let orthographicFrustum = cesiumCamera.frustum as OrthographicFrustum;
-            orthographicFrustum.aspectRatio = orthographicCamera.right / orthographicCamera.top;
-            orthographicFrustum.width = (-orthographicCamera.left + orthographicCamera.right) / orthographicCamera.zoom;
+        }
+
+        // sync aspect
+        if (threeCamera instanceof PerspectiveCamera) {
+            let threeCameraAspect = threeCamera.aspect
+            let threeCameraFov = threeCamera.fov
+            let perspectiveFrustum = cesiumCamera.frustum as PerspectiveFrustum
+            if (threeCameraAspect < 1) {
+                perspectiveFrustum.fov = Math.PI * (threeCameraFov / 180)
+            } else {
+                let cesiumFovY = Math.PI * (threeCameraFov / 180)
+                let cesiumFovX = Math.atan(Math.tan(0.5 * cesiumFovY) * threeCameraAspect) * 2
+                perspectiveFrustum.fov = cesiumFovX
+            }
+        } else {
+            let orthographicCamera = threeCamera as OrthographicCamera
+            let orthographicFrustum = cesiumCamera.frustum as OrthographicFrustum
+            orthographicFrustum.aspectRatio = orthographicCamera.right / orthographicCamera.top
+            orthographicFrustum.width = (-orthographicCamera.left + orthographicCamera.right) / orthographicCamera.zoom
         }
     }
 
