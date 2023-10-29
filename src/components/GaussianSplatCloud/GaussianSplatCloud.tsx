@@ -16,10 +16,10 @@ export const GaussianSplatCloud = ({fileName, baseUrl, position}: GaussianSplatC
         if (!gaussianSplatViewer) {
             // initialize gaussian splat viewer
             const gaussianSplatViewer = new GaussianSplatViewer({
-                selfDrivenMode: true,
                 renderer: gl,
                 camera: camera,
                 scene: scene,
+                selfDrivenMode: false,
                 useBuiltInControls: false
             })
             gaussianSplatViewer.init()
@@ -32,8 +32,6 @@ export const GaussianSplatCloud = ({fileName, baseUrl, position}: GaussianSplatC
                 gaussianSplatViewer.loadFile(baseUrl + fileName, {
                     halfPrecisionCovariancesOnGPU: true
                 }).then(() => {
-                    gaussianSplatViewer.start()
-
                     const group = gaussianSplatCloudGroupReference.current;
                     const splatMesh = gaussianSplatViewer.splatMesh
                     if(group && splatMesh){

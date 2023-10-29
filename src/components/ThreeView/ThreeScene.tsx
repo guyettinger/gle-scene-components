@@ -66,8 +66,8 @@ export const ThreeScene = () => {
         // render gaussian splats
         const gaussianSplatViewer = sceneViewModel.gaussianSplatViewer
         if (gaussianSplatViewer) {
-            // gaussianSplatViewer.update()
-            // gaussianSplatViewer.render()
+            gaussianSplatViewer.update()
+            gaussianSplatViewer.render()
         }
 
         // render point cloud
