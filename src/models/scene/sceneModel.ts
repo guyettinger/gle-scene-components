@@ -8,7 +8,7 @@ import {
     Ellipsoid,
     sampleTerrainMostDetailed
 } from "cesium";
-import { PointCloudOctree, Potree } from "gle-three-loader";
+import { PointCloudOctree, Potree } from "gle-potree";
 
 export class SceneModel {
 
