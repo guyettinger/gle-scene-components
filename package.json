@@ -27,6 +27,7 @@
     "@react-three/fiber": "^8.14.6",
     "cesium": "^1.110.0",
     "gle-three-loader": "^0.0.2",
+    "gle-gs3d": "^1.0.4",
     "mobx": "^6.10.2",
     "mobx-react": "^9.0.1",
     "proj4": "^2.9.0",

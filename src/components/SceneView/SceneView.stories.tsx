@@ -4,6 +4,7 @@ import { SceneView } from "./SceneView";
 import { Box } from "../Box";
 import { SceneModel, SceneViewModel } from "../../models";
 import { PointCloud } from "../PointCloud";
+import { GaussianSplatCloud } from "../GaussianSplatCloud";
 
 const meta: Meta<typeof SceneView> = {
     component: SceneView,
@@ -73,6 +74,32 @@ export const PointClouds: Story = (args: any) => {
     )
 }
 PointClouds.args = {};
+
+export const GaussianSplatClouds: Story = (args: any) => {
+    const farmGeodeticCenter = new Vector3(-83.765350, 34.401279, 357.0)
+    const farmCameraGeodeticCenter = new Vector3(farmGeodeticCenter.x, farmGeodeticCenter.y, farmGeodeticCenter.z + 10)
+
+    const sceneModel: SceneModel = new SceneModel(
+        'Scene1',
+        <group>
+            <GaussianSplatCloud baseUrl="./"
+                                fileName="splats/garden/garden_high.splat"
+                                position={[0, -.75, 0]}/>
+        </group>,
+        farmGeodeticCenter
+    )
+
+    const sceneViewModel: SceneViewModel = new SceneViewModel(
+        'SceneView1',
+        sceneModel,
+        farmCameraGeodeticCenter
+    )
+
+    return (
+        <SceneView data-testId="SceneView-id" sceneViewModel={sceneViewModel} />
+    )
+}
+GaussianSplatClouds.args = {};
 
 export const Mixed: Story = (args: any) => {
     const farmGeodeticCenter = new Vector3(-83.765350, 34.401279, 357.0)

@@ -14,6 +14,9 @@ const config: StorybookConfig = {
         name: "@storybook/react-vite",
         options: {},
     },
+    staticDirs: [
+        { from: '../public', to: '/' }
+    ],
     docs: {
         autodocs: "tag",
     },
@@ -23,5 +26,8 @@ const config: StorybookConfig = {
             plugins: [cesium()],
         });
     },
+    core: {
+        crossOriginIsolated: true
+    }
 };
 export default config;

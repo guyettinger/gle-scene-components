@@ -28,12 +28,12 @@ export const ThreeScene = () => {
 
     // render loop
     useFrame(({gl, scene, camera}) => {
-
         // initialize three
         if (!threeInitialized) {
             setThreeInitialized(true)
             console.log('three initialized')
         }
+
         // wait for cesium
         const cesiumViewer = sceneViewModel.cesiumViewer
         if (!cesiumViewer) return;
@@ -56,11 +56,19 @@ export const ThreeScene = () => {
         if (!camerasInitialized) {
             setCamerasInitialized(true)
             syncCameras()
+            sceneViewModel.camerasInitialized = true
             console.log('camera controls initialized')
         }
 
         // render three scene
         gl.render(scene, camera)
+
+        // render gaussian splats
+        const gaussianSplatViewer = sceneViewModel.gaussianSplatViewer
+        if (gaussianSplatViewer) {
+            // gaussianSplatViewer.update()
+            // gaussianSplatViewer.render()
+        }
 
         // render point cloud
         sceneModel.potree.updatePointClouds(sceneModel.pointClouds, camera, gl)

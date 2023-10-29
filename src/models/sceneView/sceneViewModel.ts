@@ -7,6 +7,9 @@ import {
     Ellipsoid,
     Viewer as CesiumViewer
 } from "cesium";
+import {
+    Viewer as GaussianSplatViewer
+} from "gle-gs3d"
 import { SceneModel } from "../scene/sceneModel";
 
 export class SceneViewModel {
@@ -14,8 +17,14 @@ export class SceneViewModel {
     // cesium
     cesiumViewer: CesiumViewer | null = null
 
+    // gaussian splat viewer
+    gaussianSplatViewer: GaussianSplatViewer | null = null
+
     // three
     threeRootState: RootState | null = null
+
+    // cameras
+    camerasInitialized: boolean = false
 
     // camera geodetic center
     cameraGeodeticX: number = 0
@@ -67,5 +76,5 @@ export class SceneViewModel {
         })
     }
 
-    debugModelMatrixPrimitive:DebugModelMatrixPrimitive | null = null
+    debugModelMatrixPrimitive: DebugModelMatrixPrimitive | null = null
 }
