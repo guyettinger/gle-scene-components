@@ -3,7 +3,7 @@ import { Group } from "three";
 import { useSceneViewModel } from "../../providers";
 import { PointCloudProps } from "./PointCloud.types";
 
-export const PointCloud = ({fileName, baseUrl, position}: PointCloudProps) => {
+export const PointCloud = ({fileName, baseUrl, onPointCloudLoad, ...groupProps}: PointCloudProps) => {
     const sceneViewModel = useSceneViewModel()
     const sceneModel = sceneViewModel.sceneModel
     const [pointCloudLoading, setPointCloudLoading] = useState<boolean>(false)
@@ -20,22 +20,19 @@ export const PointCloud = ({fileName, baseUrl, position}: PointCloudProps) => {
         // load point cloud
         sceneModel.potree
             .loadPointCloud(
-                // The name of the point cloud which is to be loaded.
                 fileName,
-                // Given the relative URL of a file, should return a full URL (e.g. signed).
                 relativeUrl => `${baseUrl}${relativeUrl}`,
             )
             .then(pco => {
+
+                // add the point cloud to the scene model
                 sceneModel.pointClouds.push(pco)
 
-                // Add the loaded point cloud to your ThreeJS scene.
+                // add the point cloud to the group
                 pointCloudGroup.add(pco)
 
-                // Make the point cloud y-up, bottom
-                pco.translateX(pco.pcoGeometry.offset.x)
-                pco.translateY(-pco.pcoGeometry.offset.y)
-                pco.rotateX(-Math.PI / 2)
-                pco.material.size = 1.0
+                // notify point cloud loaded
+                onPointCloudLoad?.(pco)
 
             })
             .finally(() => {
@@ -47,7 +44,7 @@ export const PointCloud = ({fileName, baseUrl, position}: PointCloudProps) => {
     }, [fileName, baseUrl]);
 
     return (
-        <group position={position} ref={pointCloudGroupReference}>
+        <group {...groupProps} ref={pointCloudGroupReference}>
         </group>
     )
 }

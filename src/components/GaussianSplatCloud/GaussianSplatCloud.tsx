@@ -1,11 +1,17 @@
 import { useRef, useState } from "react";
-import { Group, MathUtils} from "three";
+import { Group } from "three";
 import { useFrame } from "@react-three/fiber";
+import { Viewer as GaussianSplatViewer } from "gle-gs3d";
 import { useSceneViewModel } from "../../providers";
 import { GaussianSplatCloudProps } from "./GaussianSplatCloud.types";
-import { Viewer as GaussianSplatViewer } from "gle-gs3d"
 
-export const GaussianSplatCloud = ({fileName, baseUrl, position}: GaussianSplatCloudProps) => {
+export const GaussianSplatCloud = (
+    {
+        fileName,
+        baseUrl,
+        onSplatMeshLoad,
+        ...groupProps
+    }: GaussianSplatCloudProps) => {
     const sceneViewModel = useSceneViewModel()
     const [gaussianSplatCloudLoading, setGaussianSplatCloudLoading] = useState<boolean>(false)
     const [gaussianSplatCloudLoaded, setGaussianSplatCloudLoaded] = useState<boolean>(false)
@@ -25,7 +31,7 @@ export const GaussianSplatCloud = ({fileName, baseUrl, position}: GaussianSplatC
             gaussianSplatViewer.init()
             sceneViewModel.gaussianSplatViewer = gaussianSplatViewer
         } else {
-            if(!gaussianSplatCloudLoaded && !gaussianSplatCloudLoading){
+            if (!gaussianSplatCloudLoaded && !gaussianSplatCloudLoading) {
                 // load gaussian splat cloud
                 setGaussianSplatCloudLoading(true)
 
@@ -34,11 +40,15 @@ export const GaussianSplatCloud = ({fileName, baseUrl, position}: GaussianSplatC
                 }).then(() => {
                     const group = gaussianSplatCloudGroupReference.current;
                     const splatMesh = gaussianSplatViewer.splatMesh
-                    if(group && splatMesh){
-                        group.add(splatMesh)
-                        group.rotateZ(MathUtils.degToRad(180))
-                        group.rotateX(MathUtils.degToRad(-30))
-                        group.translateY(-4)
+                    if (splatMesh) {
+
+                        // add the splat mesh to the group
+                        if (group) {
+                            group.add(splatMesh)
+                        }
+
+                        // notify splat mesh load
+                        onSplatMeshLoad?.(splatMesh)
                     }
                     console.log('Loading gaussian splat cloud success')
                 }).catch((reason) => {
@@ -54,7 +64,7 @@ export const GaussianSplatCloud = ({fileName, baseUrl, position}: GaussianSplatC
     }, 1)
 
     return (
-        <group position={position} ref={gaussianSplatCloudGroupReference}>
+        <group {...groupProps} ref={gaussianSplatCloudGroupReference}>
         </group>
     )
 }

@@ -1,7 +1,8 @@
-import { Vector3Like } from "../../types";
+import { GroupProps } from "@react-three/fiber";
+import { PointCloudOctree } from "gle-potree";
 
-export interface PointCloudProps {
+export interface PointCloudProps extends GroupProps {
     fileName: string
     baseUrl: string
-    position: Vector3Like
+    onPointCloudLoad?: (pco:PointCloudOctree) => void
 }

@@ -1,7 +1,8 @@
-import { Vector3Like } from "../../types";
+import { GroupProps } from "@react-three/fiber";
+import { SplatMesh } from "gle-gs3d";
 
-export interface GaussianSplatCloudProps {
+export interface GaussianSplatCloudProps extends GroupProps {
     fileName: string
     baseUrl: string
-    position: Vector3Like
+    onSplatMeshLoad?: (splatMesh: SplatMesh) => void
 }
