@@ -1,1 +1,1 @@
-export { offsetCartesian, offsetCartesianByVector } from './projectionService'
+export { offsetCartesianPositionByCartesianOffset, offsetCartesianPositionBySceneOffset } from './projectionService'

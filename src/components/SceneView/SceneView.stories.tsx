@@ -17,9 +17,9 @@ const meta: Meta<typeof SceneView> = {
 export default meta;
 
 // well-known coordinates
-const upperArenaGeodeticCenter = new Vector3(-83.765350, 34.401279, 357.0)
-const lowerArenaGeodeticCenter = new Vector3(-83.76612684589652, 34.40024525982904, 350.0)
-const railayBeachGeodeticCenter = new Vector3(98.83703938567413, 8.012837715484707, 0)
+const upperArenaLongitudeLatitudeHeight = new Vector3(-83.765350, 34.401279, 357.0)
+const lowerArenaLongitudeLatitudeHeight = new Vector3(-83.76612684589652, 34.40024525982904, 350.0)
+const railayBeachLongitudeLatitudeHeight = new Vector3(98.83703938567413, 8.012837715484707, 0)
 
 type Story = StoryObj<typeof SceneView>;
 
@@ -33,7 +33,7 @@ export const Boxes: Story = (args: any) => {
             <Box position={[0, 0, -4]}/>
             <Box position={[-4, 0, 0]}/>
         </group>,
-        upperArenaGeodeticCenter
+        upperArenaLongitudeLatitudeHeight
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(
@@ -67,7 +67,7 @@ export const PointClouds: Story = (args: any) => {
                 position={[10, -.75, 0]}
             />
         </group>,
-        upperArenaGeodeticCenter
+        upperArenaLongitudeLatitudeHeight
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(
@@ -103,7 +103,7 @@ export const GaussianSplatClouds: Story = (args: any) => {
                                 position={position}
                                 rotation={rotation}/>
         </group>,
-        upperArenaGeodeticCenter
+        upperArenaLongitudeLatitudeHeight
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(
@@ -139,7 +139,7 @@ export const Mixed: Story = (args: any) => {
                 position={[10, -.75, 0]}
             />
         </group>,
-        upperArenaGeodeticCenter
+        upperArenaLongitudeLatitudeHeight
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(
@@ -160,21 +160,21 @@ export const CoordinatedGroups: Story = (args: any) => {
     const sceneModel: SceneModel = new SceneModel(
         'Scene1',
         <group>
-            <CoordinatedGroup coordinates={upperArenaGeodeticCenter}>
+            <CoordinatedGroup longitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}>
                 <Box position={[0, 0, 0]}/>
                 <Box position={[4, 0, 0]}/>
                 <Box position={[0, 0, -4]}/>
                 <Box position={[-4, 0, 0]}/>
                 <Box position={[0, 4, 0]}/>
             </CoordinatedGroup>
-            <CoordinatedGroup coordinates={lowerArenaGeodeticCenter}>
+            <CoordinatedGroup longitudeLatitudeHeight={lowerArenaLongitudeLatitudeHeight}>
                 <Box position={[0, 0, 0]}/>
                 <Box position={[4, 0, 0]}/>
                 <Box position={[0, 0, -4]}/>
                 <Box position={[-4, 0, 0]}/>
                 <Box position={[0, 4, 0]}/>
             </CoordinatedGroup>
-            <CoordinatedGroup coordinates={railayBeachGeodeticCenter}>
+            <CoordinatedGroup longitudeLatitudeHeight={railayBeachLongitudeLatitudeHeight}>
                 <Box position={[0, 0, 0]}/>
                 <Box position={[4, 0, 0]}/>
                 <Box position={[0, 0, -4]}/>
@@ -182,7 +182,7 @@ export const CoordinatedGroups: Story = (args: any) => {
                 <Box position={[0, 4, 0]}/>
             </CoordinatedGroup>
         </group>,
-        upperArenaGeodeticCenter
+        upperArenaLongitudeLatitudeHeight
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(
@@ -196,17 +196,17 @@ export const CoordinatedGroups: Story = (args: any) => {
         let handledKey = false;
         switch (e.key) {
             case "1":
-                sceneViewModel.moveCameraTo(upperArenaGeodeticCenter)
+                sceneViewModel.moveCameraTo(upperArenaLongitudeLatitudeHeight)
                 handledKey = true
                 break
 
             case "2":
-                sceneViewModel.moveCameraTo(lowerArenaGeodeticCenter)
+                sceneViewModel.moveCameraTo(lowerArenaLongitudeLatitudeHeight)
                 handledKey = true
                 break
 
             case "3":
-                sceneViewModel.moveCameraTo(railayBeachGeodeticCenter)
+                sceneViewModel.moveCameraTo(railayBeachLongitudeLatitudeHeight)
                 handledKey = true
                 break
         }

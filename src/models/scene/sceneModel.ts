@@ -9,7 +9,10 @@ import {
     sampleTerrainMostDetailed
 } from "cesium";
 import { PointCloudOctree, Potree } from "gle-potree";
-import { getEastNorthUpOffset } from "../../services/projection/projectionService";
+import {
+    getScenePositionForLongitudeLatitudeHeight,
+    getSceneSurfaceNormalForLongitudeLatitudeHeight
+} from "../../services/projection/projectionService";
 
 export class SceneModel {
 
@@ -40,10 +43,16 @@ export class SceneModel {
     constructor(
         public name: string,
         public threeScene: JSX.Element,
-        public geodeticCenter: Vector3
+        public sceneCenterLongitudeLatitudeHeight: Vector3
     ) {
         // initialize scene center
-        Cartesian3.fromDegrees(geodeticCenter.x, geodeticCenter.y, geodeticCenter.z, Ellipsoid.WGS84, this.sceneCenterCartesian)
+        Cartesian3.fromDegrees(
+            sceneCenterLongitudeLatitudeHeight.x,
+            sceneCenterLongitudeLatitudeHeight.y,
+            sceneCenterLongitudeLatitudeHeight.z,
+            Ellipsoid.WGS84,
+            this.sceneCenterCartesian
+        )
 
         // initialize point clouds
         this.pointBudget = 2_000_000
@@ -52,30 +61,18 @@ export class SceneModel {
         makeAutoObservable(this)
     }
 
-    getScenePositionForLongitudeLatitudeHeight = (longitudeLatitudeHeightVector: Vector3, scenePosition = new Vector3()): Vector3 => {
-        const coordinateCartesian = Cartesian3.fromDegrees(longitudeLatitudeHeightVector.x, longitudeLatitudeHeightVector.y, longitudeLatitudeHeightVector.z)
-        const offsetEastNorthUp = getEastNorthUpOffset(this.sceneCenterCartesian, coordinateCartesian)
-        scenePosition.set(
-            this.sceneCenter.x + -offsetEastNorthUp.x,
-            this.sceneCenter.y + -offsetEastNorthUp.z,
-            this.sceneCenter.z + offsetEastNorthUp.y
-        )
+    getScenePositionForLongitudeLatitudeHeight = (longitudeLatitudeHeight: Vector3, scenePosition = new Vector3()): Vector3 => {
+        getScenePositionForLongitudeLatitudeHeight(this.sceneCenter, this.sceneCenterCartesian, longitudeLatitudeHeight, scenePosition)
         return scenePosition
     }
 
-    getSceneSurfaceNormalForLongitudeLatitudeHeight = (longitudeLatitudeHeightVector: Vector3, sceneSurfaceNormal = new Vector3()): Vector3 => {
-        const coordinateCartesian = Cartesian3.fromDegrees(longitudeLatitudeHeightVector.x, longitudeLatitudeHeightVector.y, longitudeLatitudeHeightVector.z)
-        const geodeticSurfaceNormal = Ellipsoid.WGS84.geodeticSurfaceNormal(coordinateCartesian)
-        sceneSurfaceNormal.set(
-            geodeticSurfaceNormal.x,
-            -geodeticSurfaceNormal.z,
-            geodeticSurfaceNormal.y
-        )
+    getSceneSurfaceNormalForLongitudeLatitudeHeight = (longitudeLatitudeHeight: Vector3, sceneSurfaceNormal = new Vector3()): Vector3 => {
+        getSceneSurfaceNormalForLongitudeLatitudeHeight(longitudeLatitudeHeight, sceneSurfaceNormal)
         return sceneSurfaceNormal
     }
 
-    queryTerrainHeight = async (longitude: number, latitude: number): Promise<number> => {
-        return this.sampleTerrainHeightAtCartographicPosition(new Cartographic(longitude, latitude)).then((cartographic) => {
+    queryHeightAtLongitudeLatitude = async (longitude: number, latitude: number): Promise<number> => {
+        return this.sampleTerrainHeightAtCartographicPosition(Cartographic.fromDegrees(longitude, latitude)).then((cartographic) => {
             return cartographic.height;
         })
     }

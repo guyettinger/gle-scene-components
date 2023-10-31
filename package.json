@@ -30,8 +30,6 @@
     "gle-potree": "^1.0.0",
     "mobx": "^6.10.2",
     "mobx-react": "^9.0.1",
-    "proj4": "^2.9.0",
-    "prop-types": "^15.8.1",
     "resium": "^1.17.1",
     "styled-components": "^6.0.8",
     "three": "^0.157.0"

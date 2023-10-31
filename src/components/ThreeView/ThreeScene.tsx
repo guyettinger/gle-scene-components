@@ -10,7 +10,7 @@ import {
 } from "cesium";
 import { useRef, useState } from "react";
 import { useSceneModel, useSceneViewModel } from "../../providers";
-import { normalizeAngle, offsetCartesianByVector } from "../../services";
+import { normalizeAngle, offsetCartesianPositionBySceneOffset } from "../../services";
 
 export const ThreeScene = () => {
     const sceneViewModel = useSceneViewModel()
@@ -98,7 +98,7 @@ export const ThreeScene = () => {
 
         // three camera target
         let threeCameraTarget = cameraControls.getTarget(new Vector3())
-        let cesiumCameraTargetCartesian = offsetCartesianByVector(sceneModel.sceneCenterCartesian, threeCameraTarget)
+        let cesiumCameraTargetCartesian = offsetCartesianPositionBySceneOffset(sceneModel.sceneCenterCartesian, threeCameraTarget)
 
         // cesium camera look at
         const transform = Transforms.eastNorthUpToFixedFrame(cesiumCameraTargetCartesian)
