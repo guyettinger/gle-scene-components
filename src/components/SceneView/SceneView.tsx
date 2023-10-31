@@ -1,19 +1,22 @@
 import { StoreProvider, SceneProvider, SceneViewProvider } from "../../providers";
-import { SceneViewModel } from "../../models";
+import styled from "styled-components";
 import { CesiumView } from "../CesiumView";
 import { ThreeView } from "../ThreeView";
+import { SceneViewProps } from "./SceneView.types";
 
-export const SceneView = (props: { sceneViewModel: SceneViewModel }) => {
-    const {sceneViewModel} = props;
-
+const SceneViewContent = styled.div`
+`
+export const SceneView = ({sceneViewModel, ...divProps}: SceneViewProps) => {
     return (
-        <StoreProvider>
-            <SceneProvider sceneModel={sceneViewModel.sceneModel}>
-                <SceneViewProvider sceneViewModel={sceneViewModel}>
-                    <CesiumView/>
-                    <ThreeView/>
-                </SceneViewProvider>
-            </SceneProvider>
-        </StoreProvider>
+        <SceneViewContent className='gle-scene-view' {...divProps} >
+            <StoreProvider>
+                <SceneProvider sceneModel={sceneViewModel.sceneModel}>
+                    <SceneViewProvider sceneViewModel={sceneViewModel}>
+                        <CesiumView/>
+                        <ThreeView/>
+                    </SceneViewProvider>
+                </SceneProvider>
+            </StoreProvider>
+        </SceneViewContent>
     )
 }

@@ -1,11 +1,13 @@
 import { Meta, StoryObj } from "@storybook/react";
+import { KeyboardEvent } from "react";
 import { Euler, MathUtils, Vector3 } from "three";
+import { PointCloudOctree } from "gle-potree";
+import { SceneModel, SceneViewModel } from "../../models";
 import { SceneView } from "./SceneView";
 import { Box } from "../Box";
-import { SceneModel, SceneViewModel } from "../../models";
 import { PointCloud } from "../PointCloud";
 import { GaussianSplatCloud } from "../GaussianSplatCloud";
-import { PointCloudOctree } from "gle-potree";
+import { CoordinatedGroup } from "../CoordinatedGroup";
 
 const meta: Meta<typeof SceneView> = {
     component: SceneView,
@@ -35,7 +37,7 @@ export const Boxes: Story = (args: any) => {
     )
 
     return (
-        <SceneView data-testId="SceneView-id" sceneViewModel={sceneViewModel}/>
+        <SceneView data-testid="SceneView-id" sceneViewModel={sceneViewModel}/>
     )
 }
 Boxes.args = {};
@@ -44,7 +46,7 @@ Boxes.args = {};
 export const PointClouds: Story = (args: any) => {
     const farmGeodeticCenter = new Vector3(-83.765350, 34.401279, 357.0)
 
-    const handlePointCloud1Load = (pco:PointCloudOctree)=>{
+    const handlePointCloud1Load = (pco: PointCloudOctree) => {
         // translate the point cloud
         pco.translateX(pco.pcoGeometry.offset.x)
         pco.translateY(-pco.pcoGeometry.offset.y)
@@ -53,7 +55,7 @@ export const PointClouds: Story = (args: any) => {
         pco.rotateX(-Math.PI / 2)
     }
 
-    const handlePointCloud2Load = (pco:PointCloudOctree)=>{
+    const handlePointCloud2Load = (pco: PointCloudOctree) => {
         // translate the point cloud
         pco.translateX(pco.pcoGeometry.offset.x)
         pco.translateY(-pco.pcoGeometry.offset.y)
@@ -87,7 +89,7 @@ export const PointClouds: Story = (args: any) => {
     )
 
     return (
-        <SceneView data-testId="SceneView-id" sceneViewModel={sceneViewModel}/>
+        <SceneView data-testid="SceneView-id" sceneViewModel={sceneViewModel}/>
     )
 }
 PointClouds.args = {};
@@ -124,7 +126,7 @@ export const GaussianSplatClouds: Story = (args: any) => {
     )
 
     return (
-        <SceneView data-testId="SceneView-id" sceneViewModel={sceneViewModel}/>
+        <SceneView data-testid="SceneView-id" sceneViewModel={sceneViewModel}/>
     )
 }
 GaussianSplatClouds.args = {};
@@ -132,7 +134,7 @@ GaussianSplatClouds.args = {};
 export const Mixed: Story = (args: any) => {
     const farmGeodeticCenter = new Vector3(-83.765350, 34.401279, 357.0)
 
-    const handlePointCloud1Load = (pco:PointCloudOctree)=>{
+    const handlePointCloud1Load = (pco: PointCloudOctree) => {
         // translate the point cloud
         pco.translateX(pco.pcoGeometry.offset.x)
         pco.translateY(-pco.pcoGeometry.offset.y)
@@ -141,7 +143,7 @@ export const Mixed: Story = (args: any) => {
         pco.rotateX(-Math.PI / 2)
     }
 
-    const handlePointCloud2Load = (pco:PointCloudOctree)=>{
+    const handlePointCloud2Load = (pco: PointCloudOctree) => {
         // translate the point cloud
         pco.translateX(pco.pcoGeometry.offset.x)
         pco.translateY(-pco.pcoGeometry.offset.y)
@@ -178,7 +180,58 @@ export const Mixed: Story = (args: any) => {
     )
 
     return (
-        <SceneView data-testId="SceneView-id" sceneViewModel={sceneViewModel}/>
+        <SceneView data-testid="SceneView-id" sceneViewModel={sceneViewModel}/>
     )
 }
 Mixed.args = {};
+
+
+export const CoordinatedGroups: Story = (args: any) => {
+    const farmGeodeticCenter = new Vector3(-83.765350, 34.401279, 357.0)
+    const lowerArenaGeodeticCenter = new Vector3(-83.76612684589652, 34.40024525982904, 350.0)
+    const beachGeodeticCenter = new Vector3(-80.17731456319245, 25.710195530113904, 10)
+
+    const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+        console.log('key down', e)
+        e.stopPropagation()
+        e.preventDefault()
+    }
+
+    const sceneModel: SceneModel = new SceneModel(
+        'Scene1',
+        <group>
+            <CoordinatedGroup coordinates={farmGeodeticCenter}>
+                <Box position={[0, 0, 0]}/>
+                <Box position={[4, 0, 0]}/>
+                <Box position={[0, 0, -4]}/>
+                <Box position={[-4, 0, 0]}/>
+                <Box position={[0, 4, 0]}/>
+            </CoordinatedGroup>
+            <CoordinatedGroup coordinates={lowerArenaGeodeticCenter}>
+                <Box position={[0, 0, 0]}/>
+                <Box position={[4, 0, 0]}/>
+                <Box position={[0, 0, -4]}/>
+                <Box position={[-4, 0, 0]}/>
+                <Box position={[0, 4, 0]}/>
+            </CoordinatedGroup>
+            <CoordinatedGroup coordinates={beachGeodeticCenter}>
+                <Box position={[0, 0, 0]}/>
+                <Box position={[4, 0, 0]}/>
+                <Box position={[0, 0, -4]}/>
+                <Box position={[-4, 0, 0]}/>
+                <Box position={[0, 4, 0]}/>
+            </CoordinatedGroup>
+        </group>,
+        farmGeodeticCenter
+    )
+
+    const sceneViewModel: SceneViewModel = new SceneViewModel(
+        'SceneView1',
+        sceneModel
+    )
+
+    return (
+        <SceneView data-testid="SceneView-id" tabIndex={0} sceneViewModel={sceneViewModel} onKeyDown={handleKeyDown}/>
+    )
+}
+CoordinatedGroups.args = {};
