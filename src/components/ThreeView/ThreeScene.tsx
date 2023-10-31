@@ -82,6 +82,7 @@ export const ThreeScene = () => {
         // wait for camera controls
         const cameraControls = threeCameraControlsReference.current
         if (!cameraControls) return
+        sceneViewModel.cameraControls = cameraControls
 
         // wait for three camera
         const threeCamera = cameraControls?.camera

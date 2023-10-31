@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { Group, Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
-import { Cartesian3, Ellipsoid, Matrix4, Transforms } from "cesium";
 import { CoordinatedGroupProps } from "./CoordinatedGroup.types";
 import { useSceneViewModel } from "../../providers";
 
@@ -31,10 +30,11 @@ export const CoordinatedGroup = ({coordinates, children, ...groupProps}: Coordin
         // desired coordinates
         const groupCoordinates = new Vector3().copy(coordinates)
 
+        /*
         // find the offset between the scene center and the group center
         const sceneCenterCartesian = sceneModel.sceneCenterCartesian
         const groupCenterCartesian = Cartesian3.fromDegrees(groupCoordinates.x, groupCoordinates.y, groupCoordinates.z)
-        const offset = Cartesian3.subtract(sceneCenterCartesian, groupCenterCartesian, new Cartesian3());
+        const offset = Cartesian3.subtract(sceneCenterCartesian, groupCenterCartesian, new Cartesian3())
 
         // using the East-North-Up transform of the scene center
         const transform = Transforms.eastNorthUpToFixedFrame(sceneCenterCartesian);
@@ -55,6 +55,16 @@ export const CoordinatedGroup = ({coordinates, children, ...groupProps}: Coordin
         group.up.set(normal.x, -normal.z, normal.y)
 
         // set group coordinates
+        setGroupCoordinates(groupCoordinates)
+         */
+
+        // set the group's position
+        sceneModel.getScenePositionForLongitudeLatitudeHeight(groupCoordinates, group.position)
+
+        // set the group's up to the surface normal
+        sceneModel.getSceneSurfaceNormalForLongitudeLatitudeHeight(groupCoordinates, group.up)
+
+        // save group coordinates
         setGroupCoordinates(groupCoordinates)
     }
 

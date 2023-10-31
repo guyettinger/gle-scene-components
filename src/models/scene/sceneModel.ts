@@ -9,10 +9,12 @@ import {
     sampleTerrainMostDetailed
 } from "cesium";
 import { PointCloudOctree, Potree } from "gle-potree";
+import { getEastNorthUpOffset } from "../../services/projection/projectionService";
 
 export class SceneModel {
 
     // scene center
+    sceneCenter: Vector3 = new Vector3(0, 0, 0)
     sceneCenterCartesian: Cartesian3 = new Cartesian3()
 
     // cesium terrain
@@ -48,6 +50,28 @@ export class SceneModel {
 
         // begin observation
         makeAutoObservable(this)
+    }
+
+    getScenePositionForLongitudeLatitudeHeight = (longitudeLatitudeHeightVector: Vector3, scenePosition = new Vector3()): Vector3 => {
+        const coordinateCartesian = Cartesian3.fromDegrees(longitudeLatitudeHeightVector.x, longitudeLatitudeHeightVector.y, longitudeLatitudeHeightVector.z)
+        const offsetEastNorthUp = getEastNorthUpOffset(this.sceneCenterCartesian, coordinateCartesian)
+        scenePosition.set(
+            this.sceneCenter.x + -offsetEastNorthUp.x,
+            this.sceneCenter.y + -offsetEastNorthUp.z,
+            this.sceneCenter.z + offsetEastNorthUp.y
+        )
+        return scenePosition
+    }
+
+    getSceneSurfaceNormalForLongitudeLatitudeHeight = (longitudeLatitudeHeightVector: Vector3, sceneSurfaceNormal = new Vector3()): Vector3 => {
+        const coordinateCartesian = Cartesian3.fromDegrees(longitudeLatitudeHeightVector.x, longitudeLatitudeHeightVector.y, longitudeLatitudeHeightVector.z)
+        const geodeticSurfaceNormal = Ellipsoid.WGS84.geodeticSurfaceNormal(coordinateCartesian)
+        sceneSurfaceNormal.set(
+            geodeticSurfaceNormal.x,
+            -geodeticSurfaceNormal.z,
+            geodeticSurfaceNormal.y
+        )
+        return sceneSurfaceNormal
     }
 
     queryTerrainHeight = async (longitude: number, latitude: number): Promise<number> => {
