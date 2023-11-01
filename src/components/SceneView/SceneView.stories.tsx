@@ -16,14 +16,12 @@ const meta: Meta<typeof SceneView> = {
 };
 export default meta;
 
-// well-known coordinates
-const upperArenaLongitudeLatitudeHeight = new Vector3(-83.765350, 34.401279, 357.0)
-const lowerArenaLongitudeLatitudeHeight = new Vector3(-83.76612684589652, 34.40024525982904, 350.0)
-const railayBeachLongitudeLatitudeHeight = new Vector3(98.83703938567413, 8.012837715484707, 0)
-
 type Story = StoryObj<typeof SceneView>;
 
 export const Boxes: Story = (args: any) => {
+
+    // coordinates
+    const upperArenaLongitudeLatitudeHeight = new Vector3(-83.765350, 34.401279, 357.0)
 
     // create a scene with 3 boxes in the farm's upper arena
     const sceneModel: SceneModel = new SceneModel(
@@ -49,6 +47,9 @@ Boxes.args = {};
 
 
 export const PointClouds: Story = (args: any) => {
+
+    // coordinates
+    const upperArenaLongitudeLatitudeHeight = new Vector3(-83.765350, 34.401279, 357.0)
 
     // create a scene with 2 point clouds in the farm's upper arena
     const sceneModel: SceneModel = new SceneModel(
@@ -82,6 +83,10 @@ export const PointClouds: Story = (args: any) => {
 PointClouds.args = {};
 
 export const GaussianSplatClouds: Story = (args: any) => {
+
+    // coordinates
+    const upperArenaLongitudeLatitudeHeight = new Vector3(-83.765350, 34.401279, 357.0)
+
     // position of center of the splat cloud
     const positionX = 0
     const positionY = 3
@@ -118,6 +123,9 @@ export const GaussianSplatClouds: Story = (args: any) => {
 GaussianSplatClouds.args = {};
 
 export const Mixed: Story = (args: any) => {
+
+    // coordinates
+    const upperArenaLongitudeLatitudeHeight = new Vector3(-83.765350, 34.401279, 357.0)
 
     // create a scene with multiple types of 3D elements in the farm's upper arena
     const sceneModel: SceneModel = new SceneModel(
@@ -156,6 +164,11 @@ Mixed.args = {};
 
 export const CoordinatedGroups: Story = (args: any) => {
 
+    // coordinates
+    const upperArenaLongitudeLatitudeHeight = new Vector3(-83.765350, 34.401279, 357.0)
+    const lowerArenaLongitudeLatitudeHeight = new Vector3(-83.76612684589652, 34.40024525982904, 350.0)
+    const railayBeachLongitudeLatitudeHeight = new Vector3(98.83703938567413, 8.012837715484707, 0)
+
     // create a scene with boxes in the upper arena, the lower arena, and at Railay Beach
     const sceneModel: SceneModel = new SceneModel(
         'Scene1',
@@ -191,7 +204,7 @@ export const CoordinatedGroups: Story = (args: any) => {
     )
 
 
-    // switch the camera between locations
+    // switch the camera between locations using the number keys
     const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
         let handledKey = false;
         switch (e.key) {
