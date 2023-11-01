@@ -49,6 +49,9 @@ export const GaussianSplatCloud = (
 
                         // notify splat mesh load
                         onSplatMeshLoad?.(splatMesh)
+
+                        // invalidate the scene
+                        sceneViewModel.invalidate()
                     }
                     console.log('Loading gaussian splat cloud success')
                 }).catch((reason) => {

@@ -211,6 +211,9 @@ export class SceneViewModel {
         // determine the next camera position
         const nextPosition = new Vector3().copy(nextTarget).add(positionOffset)
         this.cameraControls?.setPosition(nextPosition.x, nextPosition.y, nextPosition.z)
+
+        // invalidate the scene
+        this.invalidate()
     }
 
 }
