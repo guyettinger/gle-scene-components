@@ -1,16 +1,21 @@
-import { ThreeElements, useFrame } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
 import { Mesh } from "three";
+import { useSceneViewModel } from "../../providers";
+import { BoxProps } from "./Box.types";
 
-export const Box = (props: ThreeElements['mesh']) => {
+export const Box = ({animate, ...meshProps}: BoxProps) => {
     const meshRef = useRef<Mesh>(null!);
     const [hovered, setHovered] = useState(false);
     const [active, setActive] = useState(false);
+    const sceneViewModel = useSceneViewModel()
     useFrame((state, delta) => {
-        // meshRef.current.rotation.y += delta
+        if(!animate) return
+        meshRef.current.rotation.y += delta
+        sceneViewModel.invalidate()
     })
     return (
-        <mesh  {...props}
+        <mesh  {...meshProps}
                ref={meshRef}
                scale={active ? 1.5 : 1}
                onClick={(event) => setActive(!active)}

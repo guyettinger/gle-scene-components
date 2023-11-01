@@ -45,6 +45,33 @@ export const Boxes: Story = (args: any) => {
 }
 Boxes.args = {};
 
+export const AnimatedBoxes: Story = (args: any) => {
+
+    // coordinates
+    const upperArenaLongitudeLatitudeHeight = new Vector3(-83.765350, 34.401279, 357.0)
+
+    // create a scene with 3 boxes in the farm's upper arena
+    const sceneModel: SceneModel = new SceneModel(
+        'Scene1',
+        <group>
+            <Box position={[4, 0, 0]} animate={true}/>
+            <Box position={[0, 0, -4]} animate={true}/>
+            <Box position={[-4, 0, 0]} animate={true}/>
+        </group>,
+        upperArenaLongitudeLatitudeHeight
+    )
+
+    const sceneViewModel: SceneViewModel = new SceneViewModel(
+        'SceneView1',
+        sceneModel
+    )
+
+    return (
+        <SceneView data-testid="SceneView-id" sceneViewModel={sceneViewModel}/>
+    )
+}
+AnimatedBoxes.args = {};
+
 
 export const PointClouds: Story = (args: any) => {
 

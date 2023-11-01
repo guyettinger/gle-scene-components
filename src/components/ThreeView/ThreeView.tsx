@@ -6,7 +6,7 @@ const ThreeCanvas = styled(Canvas)`
 `
 export const ThreeView = () => {
     return (
-        <ThreeCanvas style={{top: 0, bottom: 0, left: 0, right: 0, position: "absolute"}}>
+        <ThreeCanvas style={{top: 0, bottom: 0, left: 0, right: 0, position: "absolute"}} frameloop="demand">
             <ThreeScene/>
         </ThreeCanvas>
     )
