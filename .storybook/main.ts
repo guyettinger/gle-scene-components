@@ -9,6 +9,8 @@ const config: StorybookConfig = {
         "@storybook/addon-essentials",
         "@storybook/addon-onboarding",
         "@storybook/addon-interactions",
+        "@storybook/addon-docs",
+        "@storybook/addon-storysource"
     ],
     framework: {
         name: "@storybook/react-vite",
