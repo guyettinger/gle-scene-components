@@ -50,6 +50,9 @@ export const GaussianSplatCloud = (
                         // notify splat mesh load
                         onSplatMeshLoad?.(splatMesh)
 
+                        console.log('splat rendering initialized', gaussianSplatViewer.splatRenderingInitialized)
+                        console.log('splat render count', gaussianSplatViewer.splatRenderCount)
+
                         // invalidate the scene
                         sceneViewModel.invalidate()
                     }
