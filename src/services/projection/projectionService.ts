@@ -25,6 +25,10 @@ export const getOffsetEastNorthUpCartesian = (centerCartesian: Cartesian3, desti
 
 export const getScenePositionForLongitudeLatitudeHeight = (sceneCenter: Vector3, sceneCenterCartesian: Cartesian3, longitudeLatitudeHeight: Vector3, scenePosition = new Vector3()): Vector3 => {
     const scenePositionCartesian = Cartesian3.fromDegrees(longitudeLatitudeHeight.x, longitudeLatitudeHeight.y, longitudeLatitudeHeight.z)
+    return getScenePositionForCartesian(sceneCenter, sceneCenterCartesian, scenePositionCartesian, scenePosition)
+}
+
+export const getScenePositionForCartesian = (sceneCenter: Vector3, sceneCenterCartesian: Cartesian3, scenePositionCartesian: Cartesian3, scenePosition = new Vector3()): Vector3 => {
     const offsetEastNorthUp = getOffsetEastNorthUpCartesian(sceneCenterCartesian, scenePositionCartesian)
     scenePosition.set(
         sceneCenter.x + -offsetEastNorthUp.x,
@@ -36,6 +40,10 @@ export const getScenePositionForLongitudeLatitudeHeight = (sceneCenter: Vector3,
 
 export const getSceneSurfaceNormalForLongitudeLatitudeHeight = (longitudeLatitudeHeight: Vector3, sceneSurfaceNormal = new Vector3()): Vector3 => {
     const scenePositionCartesian = Cartesian3.fromDegrees(longitudeLatitudeHeight.x, longitudeLatitudeHeight.y, longitudeLatitudeHeight.z)
+    return getSceneSurfaceNormalForCartesian(scenePositionCartesian, sceneSurfaceNormal)
+}
+
+export const getSceneSurfaceNormalForCartesian = (scenePositionCartesian: Cartesian3, sceneSurfaceNormal = new Vector3()): Vector3 => {
     const surfaceNormalCartesian = Ellipsoid.WGS84.geodeticSurfaceNormal(scenePositionCartesian)
     sceneSurfaceNormal.set(
         surfaceNormalCartesian.x,

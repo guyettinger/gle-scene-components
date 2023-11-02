@@ -23,8 +23,13 @@ export const ThreeScene = () => {
         sceneViewModel.syncCameras();
     }
 
+    const handlePointerMissed = (e: MouseEvent) => {
+        // mouse event did not hit any scene objects, pass to scene view
+        sceneViewModel.passMouseEvent(e)
+    }
+
     return (
-        <scene>
+        <scene onPointerMissed={handlePointerMissed}>
             <ambientLight></ambientLight>
             <CameraControls
                 ref={threeCameraControlsReference}

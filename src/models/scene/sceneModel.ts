@@ -10,6 +10,7 @@ import {
 } from "cesium";
 import { PointCloudOctree, Potree } from "gle-potree";
 import {
+    getScenePositionForCartesian,
     getScenePositionForLongitudeLatitudeHeight,
     getSceneSurfaceNormalForLongitudeLatitudeHeight
 } from "../../services/projection/projectionService";
@@ -63,6 +64,11 @@ export class SceneModel {
 
     getScenePositionForLongitudeLatitudeHeight = (longitudeLatitudeHeight: Vector3, scenePosition = new Vector3()): Vector3 => {
         getScenePositionForLongitudeLatitudeHeight(this.sceneCenter, this.sceneCenterCartesian, longitudeLatitudeHeight, scenePosition)
+        return scenePosition
+    }
+
+    getScenePositionForCartesian = (scenePositionCartesian: Cartesian3, scenePosition = new Vector3()): Vector3 => {
+        getScenePositionForCartesian(this.sceneCenter, this.sceneCenterCartesian, scenePositionCartesian, scenePosition)
         return scenePosition
     }
 

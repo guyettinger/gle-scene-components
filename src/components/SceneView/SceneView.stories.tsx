@@ -8,6 +8,7 @@ import { PointCloud } from "../PointCloud";
 import { GaussianSplatCloud } from "../GaussianSplatCloud";
 import { CoordinatedGroup } from "../CoordinatedGroup";
 import { rotatePointCloudOctreeYUp } from "../../services";
+import styled from "styled-components";
 
 const meta: Meta<typeof SceneView> = {
     component: SceneView,
@@ -188,6 +189,21 @@ export const Mixed: Story = (args: any) => {
 }
 Mixed.args = {};
 
+const SceneButton = styled.button`
+  position: relative;
+  margin-right: 10px;
+  padding: 4px 8px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px rgba(0, 0, 0, 0.5);
+  }
+`
+
 
 export const CoordinatedGroups: Story = (args: any) => {
 
@@ -230,34 +246,19 @@ export const CoordinatedGroups: Story = (args: any) => {
         sceneModel
     )
 
-
-    // switch the camera between locations using the number keys
-    const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-        let handledKey = false;
-        switch (e.key) {
-            case "1":
-                sceneViewModel.moveCameraTo(upperArenaLongitudeLatitudeHeight)
-                handledKey = true
-                break
-
-            case "2":
-                sceneViewModel.moveCameraTo(lowerArenaLongitudeLatitudeHeight)
-                handledKey = true
-                break
-
-            case "3":
-                sceneViewModel.moveCameraTo(railayBeachLongitudeLatitudeHeight)
-                handledKey = true
-                break
-        }
-
-        if (!handledKey) return
-        e.stopPropagation()
-        e.preventDefault()
-    }
-
     return (
-        <SceneView data-testid="SceneView-id" tabIndex={0} sceneViewModel={sceneViewModel} onKeyDown={handleKeyDown}/>
+        <>
+            <SceneButton onClick={()=>sceneViewModel.moveCameraToLongitudeLatitudeHeight(upperArenaLongitudeLatitudeHeight)}>
+                Upper Arena
+            </SceneButton>
+            <SceneButton onClick={()=>sceneViewModel.moveCameraToLongitudeLatitudeHeight(lowerArenaLongitudeLatitudeHeight)}>
+                Lower Arena
+            </SceneButton>
+            <SceneButton onClick={()=>sceneViewModel.moveCameraToLongitudeLatitudeHeight(railayBeachLongitudeLatitudeHeight)}>
+                Railay Beach
+            </SceneButton>
+            <SceneView data-testid="SceneView-id" tabIndex={0} sceneViewModel={sceneViewModel}/>
+        </>
     )
 }
 CoordinatedGroups.args = {};

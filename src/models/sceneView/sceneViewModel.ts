@@ -1,6 +1,7 @@
 import { RootState } from "@react-three/fiber";
 import { MathUtils, OrthographicCamera, PerspectiveCamera, Vector3 } from "three";
 import {
+    Cartesian2, Cartesian3,
     DebugModelMatrixPrimitive,
     HeadingPitchRange, OrthographicFrustum,
     PerspectiveFrustum,
@@ -11,6 +12,7 @@ import { CameraControls } from "@react-three/drei";
 import { Viewer as GaussianSplatViewer } from "gle-gs3d"
 import { SceneModel } from "../scene";
 import { normalizeAngle, offsetCartesianPositionBySceneOffset } from "../../services";
+import { getScenePositionForCartesian } from "../../services/projection/projectionService";
 
 export class SceneViewModel {
 
@@ -191,7 +193,19 @@ export class SceneViewModel {
         }
     }
 
-    moveCameraTo = (longitudeLatitudeHeight: Vector3) => {
+    moveCameraToLongitudeLatitudeHeight = (longitudeLatitudeHeight: Vector3) => {
+        const scenePosition = new Vector3()
+        this.sceneModel.getScenePositionForLongitudeLatitudeHeight(longitudeLatitudeHeight, scenePosition)
+        this.moveCameraToScenePosition(scenePosition)
+    }
+
+    moveCameraToCartesian = (scenePositionCartesian: Cartesian3) => {
+        const scenePosition = new Vector3()
+        this.sceneModel.getScenePositionForCartesian(scenePositionCartesian, scenePosition)
+        this.moveCameraToScenePosition(scenePosition)
+    }
+
+    moveCameraToScenePosition = (scenePosition: Vector3) => {
         // get current camera target
         const currentTarget = this.cameraControls?.getTarget(new Vector3())
         if (!currentTarget) return
@@ -204,16 +218,57 @@ export class SceneViewModel {
         const positionOffset = new Vector3().copy(currentPosition).sub(currentTarget)
 
         // determine the next camera target
-        const nextTarget = new Vector3()
-        this.sceneModel.getScenePositionForLongitudeLatitudeHeight(longitudeLatitudeHeight, nextTarget)
-        this.cameraControls?.setTarget(nextTarget.x, nextTarget.y, nextTarget.z)
+        this.cameraControls?.setTarget(scenePosition.x, scenePosition.y, scenePosition.z)
 
         // determine the next camera position
-        const nextPosition = new Vector3().copy(nextTarget).add(positionOffset)
+        const nextPosition = new Vector3().copy(scenePosition).add(positionOffset)
         this.cameraControls?.setPosition(nextPosition.x, nextPosition.y, nextPosition.z)
 
         // invalidate the scene
         this.invalidate()
+    }
+
+    passMouseEvent = (e: MouseEvent) => {
+        if (!e) return
+        if (!this.cesiumViewer) return;
+        this.passMouseEventToCesium(e)
+    }
+
+    passMouseEventToCesium = (e: MouseEvent) => {
+        if (!e) return
+
+        switch (e.type) {
+            case 'click':
+                // ignore second click of double click
+                if (e.detail > 1) return
+                break;
+            case 'dblclick':
+                this.performDoubleClickOnCesium(e)
+                break;
+        }
+    }
+
+    performDoubleClickOnCesium = (e: MouseEvent) => {
+        const cesiumViewer = this.cesiumViewer
+        if (!cesiumViewer) return
+
+        const cesiumCamera = cesiumViewer.camera
+        if (!cesiumCamera) return
+
+        const cesiumScene = cesiumViewer.scene
+        if (!cesiumScene) return
+
+        const globe = cesiumScene?.globe
+        if (!globe) return
+
+        const windowCoordinates = new Cartesian2(e.x, e.y)
+        const ray = cesiumCamera.getPickRay(windowCoordinates)
+        if (!ray) return
+        const intersection = globe.pick(ray, cesiumScene)
+
+        if (!intersection) return
+        console.log('cesium intersection', intersection)
+        this.moveCameraToCartesian(intersection)
     }
 
 }

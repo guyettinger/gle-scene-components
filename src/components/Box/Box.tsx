@@ -23,6 +23,7 @@ export const Box = ({animate, ...meshProps}: BoxProps) => {
                onPointerOut={(event) => setHovered(false)}>
             <boxGeometry args={[1, 1, 1]} />
             <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
+            <pointLight position={[1.1, 1.1, 1.1]}/>
         </mesh>
     )
 }
