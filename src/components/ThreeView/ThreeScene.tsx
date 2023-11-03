@@ -12,6 +12,7 @@ export const ThreeScene = () => {
     useThree((threeRootState) => {
         sceneViewModel.threeRootState = threeRootState
         sceneViewModel.cameraControls = threeCameraControlsReference.current
+        sceneViewModel.threeRaycaster = threeRootState.raycaster
     })
 
     // render loop

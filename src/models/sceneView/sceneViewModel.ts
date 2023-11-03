@@ -1,5 +1,5 @@
-import { RootState } from "@react-three/fiber";
-import { MathUtils, OrthographicCamera, PerspectiveCamera, Vector3 } from "three";
+import { RootState, ThreeEvent } from "@react-three/fiber";
+import { MathUtils, OrthographicCamera, PerspectiveCamera, Raycaster, Vector3 } from "three";
 import {
     Cartesian2, Cartesian3,
     DebugModelMatrixPrimitive,
@@ -12,13 +12,16 @@ import { CameraControls } from "@react-three/drei";
 import { Viewer as GaussianSplatViewer } from "gle-gs3d"
 import { SceneModel } from "../scene";
 import { normalizeAngle, offsetCartesianPositionBySceneOffset } from "../../services";
-import { getScenePositionForCartesian } from "../../services/projection/projectionService";
 
 export class SceneViewModel {
 
     // three
     threeInitialized: boolean = false
     threeRootState: RootState | null = null
+
+    // raycaster
+    threeRaycasterInitialized: boolean = false
+    threeRaycaster: Raycaster | null = null
 
     // gaussian splat viewer
     gaussianSplatViewer: GaussianSplatViewer | null = null
@@ -43,12 +46,20 @@ export class SceneViewModel {
     }
 
     render = (state: RootState, delta: number) => {
+        // get three state
         const {gl, scene, camera} = state;
 
         // initialize three
         if (!this.threeInitialized) {
             this.threeInitialized = true
             console.log('three initialized')
+        }
+
+        // initialize three raycaster
+        if (!this.threeRaycasterInitialized && this.threeRaycaster) {
+            this.threeRaycasterInitialized = true
+            this.threeRaycaster.params.Points.threshold = 0.01
+            console.log('three raycaster initialized')
         }
 
         // wait for cesium
@@ -81,8 +92,11 @@ export class SceneViewModel {
 
         // initialize cameras
         if (!this.camerasInitialized) {
-            this.syncCameras()
             this.camerasInitialized = true
+
+            // perform initial camera sync
+            this.syncCameras()
+
             console.log('camera controls initialized')
         }
 
@@ -108,6 +122,8 @@ export class SceneViewModel {
 
         // render cesium tiles
         if (this.cesiumLoadingTileCount > 0) {
+
+            // invalidate the scene (re-render) until all cesium tiles have loaded
             this.invalidate()
         }
     }
@@ -134,7 +150,7 @@ export class SceneViewModel {
         if (!cesiumCamera) return
 
         // three camera target
-        let threeCameraTarget = cameraControls.getTarget(new Vector3())
+        let threeCameraTarget = cameraControls.getTarget(new Vector3(), true)
         let cesiumCameraTargetCartesian = offsetCartesianPositionBySceneOffset(this.sceneModel.sceneCenterCartesian, threeCameraTarget)
 
         // cesium camera look at
@@ -193,39 +209,85 @@ export class SceneViewModel {
         }
     }
 
-    moveCameraToLongitudeLatitudeHeight = (longitudeLatitudeHeight: Vector3) => {
+    moveCameraToLongitudeLatitudeHeight = (longitudeLatitudeHeight: Vector3, enableTransitions: boolean = false): Promise<void> => {
         const scenePosition = new Vector3()
         this.sceneModel.getScenePositionForLongitudeLatitudeHeight(longitudeLatitudeHeight, scenePosition)
-        this.moveCameraToScenePosition(scenePosition)
+        return this.moveCameraToScenePosition(scenePosition, enableTransitions)
     }
 
-    moveCameraToCartesian = (scenePositionCartesian: Cartesian3) => {
+    moveCameraToCartesian = (scenePositionCartesian: Cartesian3, enableTransitions: boolean = false): Promise<void> => {
         const scenePosition = new Vector3()
         this.sceneModel.getScenePositionForCartesian(scenePositionCartesian, scenePosition)
-        this.moveCameraToScenePosition(scenePosition)
+        return this.moveCameraToScenePosition(scenePosition, enableTransitions)
     }
 
-    moveCameraToScenePosition = (scenePosition: Vector3) => {
-        // get current camera target
-        const currentTarget = this.cameraControls?.getTarget(new Vector3())
-        if (!currentTarget) return
+    moveCameraToScenePosition = (scenePosition: Vector3, enableTransitions: boolean = false): Promise<void> => {
+        return new Promise<void>((resolve, reject) => {
+            // get current camera target
+            const currentTarget = this.cameraControls?.getTarget(new Vector3(), true)
+            if (!currentTarget) {
+                reject('target is undefined')
+                return
+            }
 
-        // get current camera position
-        const currentPosition = this.cameraControls?.getPosition(new Vector3())
-        if (!currentPosition) return
+            // get current camera position
+            const currentPosition = this.cameraControls?.getPosition(new Vector3(), true)
+            if (!currentPosition) {
+                reject('position is undefined')
+                return
+            }
 
-        // get offset between current camera position and target
-        const positionOffset = new Vector3().copy(currentPosition).sub(currentTarget)
+            // get offset between current camera position and target
+            const positionOffset = new Vector3().copy(currentPosition).sub(currentTarget)
 
-        // determine the next camera target
-        this.cameraControls?.setTarget(scenePosition.x, scenePosition.y, scenePosition.z)
+            // determine the next camera position
+            const nextPosition = new Vector3().copy(scenePosition).add(positionOffset)
 
-        // determine the next camera position
-        const nextPosition = new Vector3().copy(scenePosition).add(positionOffset)
-        this.cameraControls?.setPosition(nextPosition.x, nextPosition.y, nextPosition.z)
+            return this.setCameraLookAt(nextPosition, scenePosition, enableTransitions).then(() => {
+                resolve()
+            })
+        })
+    }
 
-        // invalidate the scene
-        this.invalidate()
+    setCameraTargetCartesian = (targetCartesian: Cartesian3, enableTransitions: boolean = false): Promise<void> => {
+        let sceneTarget = new Vector3()
+        this.sceneModel.getScenePositionForCartesian(targetCartesian, sceneTarget)
+        return this.setCameraTarget(sceneTarget, enableTransitions)
+    }
+
+    setCameraTarget = (target: Vector3, enableTransitions: boolean = false): Promise<void> => {
+        return new Promise<void>((resolve, reject) => {
+            let cameraPosition = this.cameraControls?.getPosition(new Vector3(), true)
+            if (!cameraPosition) {
+                reject('camera position is undefined')
+                return
+            }
+
+            return this.setCameraLookAt(cameraPosition, target, enableTransitions).then(() => {
+                resolve()
+            })
+        })
+    }
+
+    setCameraLookAt = (position: Vector3, target: Vector3, enableTransitions: boolean = false): Promise<void> => {
+        return new Promise<void>((resolve, reject) => {
+            let cameraControls = this.cameraControls
+            if (!cameraControls) {
+                reject('camera controls are null')
+                return
+            }
+
+            cameraControls.setLookAt(position.x, position.y, position.z, target.x, target.y, target.z, enableTransitions).then(() => {
+
+                // synchronize cameras
+                this.syncCameras()
+
+                // invalidate the scene
+                this.invalidate()
+
+                resolve()
+            })
+        })
     }
 
     passMouseEvent = (e: MouseEvent) => {
@@ -264,11 +326,19 @@ export class SceneViewModel {
         const windowCoordinates = new Cartesian2(e.x, e.y)
         const ray = cesiumCamera.getPickRay(windowCoordinates)
         if (!ray) return
-        const intersection = globe.pick(ray, cesiumScene)
+        const intersectionCartesian = globe.pick(ray, cesiumScene)
 
+        if (!intersectionCartesian) return
+        console.log('cesium intersection', intersectionCartesian)
+        this.setCameraTargetCartesian(intersectionCartesian)
+    }
+
+    performDoubleClickOnPointCloud = (e: ThreeEvent<MouseEvent>) => {
+        if (!e) return
+        const intersection = e.point
         if (!intersection) return
-        console.log('cesium intersection', intersection)
-        this.moveCameraToCartesian(intersection)
+        console.log('point cloud intersection', intersection)
+        this.setCameraTarget(intersection)
     }
 
 }
