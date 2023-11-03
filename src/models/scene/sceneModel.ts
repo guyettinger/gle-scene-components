@@ -1,4 +1,3 @@
-import { makeAutoObservable } from "mobx";
 import { Vector3 } from "three";
 import {
     Cartesian3,
@@ -57,9 +56,6 @@ export class SceneModel {
 
         // initialize point clouds
         this.pointBudget = 2_000_000
-
-        // begin observation
-        makeAutoObservable(this)
     }
 
     getScenePositionForLongitudeLatitudeHeight = (longitudeLatitudeHeight: Vector3, scenePosition = new Vector3()): Vector3 => {
