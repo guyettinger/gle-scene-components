@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import { Group } from "three";
-import { useFrame } from "@react-three/fiber";
+import { Group, Vector2 } from "three";
+import { ThreeEvent, useFrame } from "@react-three/fiber";
 import { Viewer as GaussianSplatViewer } from "gle-gs3d";
 import { useSceneViewModel } from "../../providers";
 import { GaussianSplatCloudProps } from "./GaussianSplatCloud.types";
@@ -45,13 +45,36 @@ export const GaussianSplatCloud = (
                         // add the splat mesh to the group
                         if (group) {
                             group.add(splatMesh)
+
+                            // use viewer raycaster
+                            group.raycast = (raycaster, intersects) => {
+
+                                const renderDimensions = new Vector2()
+                                gl.getSize(renderDimensions)
+
+                                const viewerMousePosition = gaussianSplatViewer.mousePosition
+                                const viewerRaycaster = gaussianSplatViewer.raycaster
+
+                                viewerRaycaster.setFromCameraAndScreenPosition(camera, viewerMousePosition, renderDimensions);
+                                const outHits = viewerRaycaster.intersectSplatMesh(splatMesh)
+
+                                outHits?.forEach((hit) => {
+                                    intersects.push({
+                                        distance: hit.distance,
+                                        point: hit.origin,
+                                        normal: hit.normal,
+                                        object: splatMesh
+                                    })
+                                })
+
+                            }
                         }
 
                         // notify splat mesh load
                         onSplatMeshLoad?.(splatMesh)
                     }
                     console.log('Loading gaussian splat cloud success')
-                }).catch((reason) => {
+                }).catch((reason: any) => {
                     console.log('Loading gaussian splat cloud failed', reason)
                 }).finally(() => {
                     // finished loading
@@ -59,7 +82,7 @@ export const GaussianSplatCloud = (
                     setGaussianSplatCloudLoading(false)
 
                     // let loading complete and invalidate the scene
-                    setTimeout(()=> {
+                    setTimeout(() => {
                         sceneViewModel.invalidate()
                     }, 100)
                 })
@@ -68,8 +91,13 @@ export const GaussianSplatCloud = (
 
     }, 1)
 
+    const handleDoubleClick = (e: ThreeEvent<MouseEvent>) => {
+        e.stopPropagation()
+        sceneViewModel.performDoubleClickOnGaussianSplatCloud(e)
+    }
+
     return (
-        <group {...groupProps} ref={gaussianSplatCloudGroupReference}>
+        <group {...groupProps} ref={gaussianSplatCloudGroupReference} onDoubleClick={handleDoubleClick}>
         </group>
     )
 }

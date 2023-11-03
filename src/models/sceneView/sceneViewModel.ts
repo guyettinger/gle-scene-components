@@ -341,4 +341,12 @@ export class SceneViewModel {
         this.setCameraTarget(intersection)
     }
 
+    performDoubleClickOnGaussianSplatCloud = (e: ThreeEvent<MouseEvent>) => {
+        if (!e) return
+        const intersection = e.point
+        if (!intersection) return
+        console.log('gaussian splat cloud intersection', e, intersection)
+        this.setCameraTarget(intersection)
+    }
+
 }
