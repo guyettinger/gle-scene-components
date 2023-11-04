@@ -9,7 +9,7 @@ import {
     Viewer as CesiumViewer
 } from "cesium";
 import { CameraControls } from "@react-three/drei";
-import { Viewer as GaussianSplatViewer } from "gle-gs3d"
+import {Viewer as GaussianSplatViewer} from "gle-gaussian-splat-3d";
 import { SceneModel } from "../scene";
 import { normalizeAngle, offsetCartesianPositionBySceneOffset } from "../../services";
 
@@ -24,6 +24,7 @@ export class SceneViewModel {
     threeRaycaster: Raycaster | null = null
 
     // gaussian splat viewer
+    gaussianSplatViewerInitialized: boolean = false
     gaussianSplatViewer: GaussianSplatViewer | null = null
 
     // cesium
@@ -105,7 +106,7 @@ export class SceneViewModel {
 
         // render gaussian splats
         const gaussianSplatViewer = this.gaussianSplatViewer
-        if (gaussianSplatViewer) {
+        if (gaussianSplatViewer && this.gaussianSplatViewerInitialized) {
             gaussianSplatViewer.update()
             gaussianSplatViewer.render()
         }

@@ -117,7 +117,7 @@ export const GaussianSplatClouds: Story = (args: any) => {
 
     // position of center of the splat cloud
     const positionX = 0
-    const positionY = 3
+    const positionY = 2
     const positionZ = 0
     const position = new Vector3(positionX, positionY, positionZ)
 
@@ -132,7 +132,7 @@ export const GaussianSplatClouds: Story = (args: any) => {
         'Scene1',
         <group>
             <GaussianSplatCloud baseUrl="./"
-                                fileName="splats/garden/garden_high.splat"
+                                fileName="splats/ornament/ornament.splat"
                                 position={position}
                                 rotation={rotation}/>
         </group>,
