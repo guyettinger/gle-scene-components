@@ -155,12 +155,16 @@ export const Mixed: Story = (args: any) => {
     // coordinates
     const upperArenaLongitudeLatitudeHeight = new Vector3(-83.765350, 34.401279, 357.0)
 
+    // rotation of the splat cloud
+    const rotateX = MathUtils.degToRad(-30)
+    const rotateY = MathUtils.degToRad(-45)
+    const rotateZ = MathUtils.degToRad(180)
+    const rotation = new Euler(rotateX, rotateY, rotateZ, 'ZYX')
+
     // create a scene with multiple types of 3D elements in the farm's upper arena
     const sceneModel: SceneModel = new SceneModel(
         'Scene1',
         <group>
-            <Box position={[4, 0, 0]}/>
-            <Box position={[0, 0, -4]}/>
             <Box position={[-4, 0, 0]}/>
             <PointCloud
                 baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
@@ -168,12 +172,10 @@ export const Mixed: Story = (args: any) => {
                 onPointCloudLoad={rotatePointCloudOctreeYUp}
                 position={[0, -.75, 0]}
             />
-            <PointCloud
-                baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
-                fileName="cloud.js"
-                onPointCloudLoad={rotatePointCloudOctreeYUp}
-                position={[10, -.75, 0]}
-            />
+            <GaussianSplatCloud baseUrl="./"
+                                fileName="splats/ornament/ornament.splat"
+                                position={[4,2,0]}
+                                rotation={rotation}/>
         </group>,
         upperArenaLongitudeLatitudeHeight
     )
