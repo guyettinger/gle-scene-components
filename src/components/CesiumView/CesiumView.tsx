@@ -15,6 +15,7 @@ import { useSceneViewModel } from "../../providers";
  */
 export const CesiumView = observer(() => {
     const sceneViewModel = useSceneViewModel()
+    const cesiumSceneViewModel = sceneViewModel.cesiumSceneViewModel
     const sceneModel = sceneViewModel.sceneModel
     const creditContainer = typeof document !== 'undefined' ? document?.createElement("div") : null!
 
@@ -26,7 +27,7 @@ export const CesiumView = observer(() => {
     }
 
     const handleCesiumViewer = (cesiumViewer: CesiumViewer) => {
-        sceneViewModel.cesiumViewer = cesiumViewer;
+        cesiumSceneViewModel.cesiumViewer = cesiumViewer;
     }
 
     return (

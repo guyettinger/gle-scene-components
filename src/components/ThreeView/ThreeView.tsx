@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
-import { ThreeScene } from "./ThreeScene";
 import styled from "styled-components";
+import { ThreeScene } from "./ThreeScene";
 
 const ThreeCanvas = styled(Canvas)`
 `

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Group } from "three";
-import { useSceneViewModel } from "../../providers";
-import { PointCloudProps } from "./PointCloud.types";
 import { ThreeEvent } from "@react-three/fiber";
+import { PointCloudProps } from "./PointCloud.types";
+import { useSceneViewModel } from "../../providers";
 
 export const PointCloud = ({fileName, baseUrl, onPointCloudLoad, ...groupProps}: PointCloudProps) => {
     const sceneViewModel = useSceneViewModel()
@@ -44,16 +44,9 @@ export const PointCloud = ({fileName, baseUrl, onPointCloudLoad, ...groupProps}:
             });
     }, [fileName, baseUrl]);
 
-    const handlePointerDown = (e:any) => {
-        // Only the mesh closest to the camera will be processed
+    const handleDoubleClick = (e: ThreeEvent<MouseEvent>) => {
         e.stopPropagation()
-        // You may optionally capture the target
-        e.target.setPointerCapture(e.pointerId)
-    }
-
-    const handleDoubleClick = (e:ThreeEvent<MouseEvent>) => {
-        e.stopPropagation()
-        sceneViewModel.performDoubleClickOnPointCloud(e)
+        sceneViewModel.pointCloudsSceneViewModel.performDoubleClick(e)
     }
 
     return (

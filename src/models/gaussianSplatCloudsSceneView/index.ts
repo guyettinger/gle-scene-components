@@ -1,0 +1,1 @@
+export { GaussianSplatCloudsSceneViewModel } from './gaussianSplatCloudsSceneViewModel'

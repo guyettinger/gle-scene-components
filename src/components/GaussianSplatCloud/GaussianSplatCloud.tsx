@@ -2,8 +2,8 @@ import { useRef, useState } from "react";
 import { Group } from "three";
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 import { Viewer as GaussianSplatViewer } from "gle-gaussian-splat-3d";
-import { useSceneViewModel } from "../../providers";
 import { GaussianSplatCloudProps } from "./GaussianSplatCloud.types";
+import { useSceneViewModel } from "../../providers";
 
 export const GaussianSplatCloud = (
     {
@@ -13,12 +13,13 @@ export const GaussianSplatCloud = (
         ...groupProps
     }: GaussianSplatCloudProps) => {
     const sceneViewModel = useSceneViewModel()
+    const gaussianSplatCloudsSceneViewModel = sceneViewModel.gaussianSplatCloudsSceneViewModel
     const [gaussianSplatCloudLoading, setGaussianSplatCloudLoading] = useState<boolean>(false)
     const [gaussianSplatCloudLoaded, setGaussianSplatCloudLoaded] = useState<boolean>(false)
     const gaussianSplatCloudGroupReference = useRef<Group>(null)
 
     useFrame(({gl, scene, camera}) => {
-        const gaussianSplatViewer = sceneViewModel.gaussianSplatViewer
+        const gaussianSplatViewer = sceneViewModel.gaussianSplatCloudsSceneViewModel.gaussianSplatViewer
         if (!gaussianSplatViewer) {
             // initialize gaussian splat viewer
             const gaussianSplatViewer = new GaussianSplatViewer({
@@ -30,7 +31,7 @@ export const GaussianSplatCloud = (
                 ignoreDevicePixelRatio: false
             })
             gaussianSplatViewer.init()
-            sceneViewModel.gaussianSplatViewer = gaussianSplatViewer
+            gaussianSplatCloudsSceneViewModel.gaussianSplatViewer = gaussianSplatViewer
         } else {
             if (!gaussianSplatCloudLoaded && !gaussianSplatCloudLoading) {
                 // load gaussian splat cloud
@@ -75,7 +76,7 @@ export const GaussianSplatCloud = (
                     setGaussianSplatCloudLoading(false)
 
                     // gaussian splat viewer initialized
-                    sceneViewModel.gaussianSplatViewerInitialized = true;
+                    gaussianSplatCloudsSceneViewModel.gaussianSplatViewerInitialized = true;
 
                     // let loading complete and invalidate the scene
                     setTimeout(() => {
@@ -89,7 +90,7 @@ export const GaussianSplatCloud = (
 
     const handleDoubleClick = (e: ThreeEvent<MouseEvent>) => {
         e.stopPropagation()
-        sceneViewModel.performDoubleClickOnGaussianSplatCloud(e)
+        gaussianSplatCloudsSceneViewModel.performDoubleClick(e)
     }
 
     return (

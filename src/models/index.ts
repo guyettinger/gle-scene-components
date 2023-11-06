@@ -1,2 +1,5 @@
 export * from "./scene"
+export * from "./cesiumSceneView"
+export * from "./pointCloudsSceneView"
+export * from "./gaussianSplatCloudsSceneView"
 export * from "./sceneView"
