@@ -1,5 +1,5 @@
 <a href="/">
-    <img alt="logo" src="public/images/logo.png" align="left" width="120" height="120"/>
+    <img alt="logo" src="public/images/logo-flipped.png" align="right" width="120" height="120"/>
 </a>
 
 # gle-scene-components
