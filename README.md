@@ -1,5 +1,3 @@
-<img alt="logo" src="public/images/logo.png" style="float: left;" width="128"/>
-
 # gle-scene-components
 A React component library for building 3D scenes.
 
