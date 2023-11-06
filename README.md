@@ -2,9 +2,15 @@
     <img alt="logo" src="public/images/logo-flipped.png" align="right" width="120" height="120"/>
 </a>
 
-# gle-scene-components
+# GLE Scene Components
 
 A React component library for building 3D scenes.
+
+## Supports
+- [React Three Fiber](https://github.com/pmndrs/react-three-fiber)
+- [Resium](https://github.com/reearth/resium)
+- [Potree](https://github.com/guyettinger/gle-potree)
+- [Gaussian Splatting](https://github.com/guyettinger/gle-gaussian-splat-3d)
 
 ## Documentation
 [Storybook](https://guyettinger.github.io/gle-scene-components/)
