@@ -15,6 +15,13 @@ A React component library for building 3D scenes.
 ## Documentation
 [Storybook](https://guyettinger.github.io/gle-scene-components/)
 
+## Demos
+- [Boxes](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--boxes)
+- [Animated Boxes](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--animated-boxes)
+- [Point Clouds](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--point-clouds)
+- [Gaussian Splatting](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--gaussian-splat-clouds)
+- [Coordinated Groups](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--coordinated-groups)
+
 ## Example
 ![example-screenshot.png](public%2Fimages%2Fexample-screenshot.png)
 ```tsx
@@ -78,6 +85,7 @@ export const ExampleScene = () => {
     )
 }
 ```
+[Example Demo](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--everything)
 
 ## Installation
 ```shell
