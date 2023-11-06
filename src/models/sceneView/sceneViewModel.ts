@@ -9,17 +9,17 @@ import { GaussianSplatCloudsSceneViewModel } from "../gaussianSplatCloudsSceneVi
 
 export class SceneViewModel {
 
-    // three
-    threeInitialized: boolean = false
-    threeRootState: RootState | null = null
+    // scene
+    sceneInitialized: boolean = false
+    sceneRootState: RootState | null = null
 
-    // cameras
-    camerasInitialized: boolean = false
+    // camera controls
+    cameraControlsInitialized: boolean = false
     cameraControls: CameraControls | null = null
 
     // raycaster
-    threeRaycasterInitialized: boolean = false
-    threeRaycaster: Raycaster | null = null
+    raycasterInitialized: boolean = false
+    raycaster: Raycaster | null = null
 
     // gaussian splat clouds
     gaussianSplatCloudsSceneViewModel: GaussianSplatCloudsSceneViewModel
@@ -46,22 +46,22 @@ export class SceneViewModel {
         // get three state
         const {gl, scene, camera} = state;
 
-        // initialize three
-        if (!this.threeInitialized) {
-            this.threeInitialized = true
-            console.log('three initialized')
+        // initialize scene
+        if (!this.sceneInitialized) {
+            this.sceneInitialized = true
+            console.log('scene initialized')
         }
 
         // initialize three raycaster
-        if (!this.threeRaycasterInitialized && this.threeRaycaster) {
-            this.threeRaycasterInitialized = true
-            this.threeRaycaster.params.Points.threshold = 0.01
-            console.log('three raycaster initialized')
+        if (!this.raycasterInitialized && this.raycaster) {
+            this.raycasterInitialized = true
+            this.raycaster.params.Points.threshold = 0.01
+            console.log('raycaster initialized')
         }
 
         // initialize cameras
-        if (!this.camerasInitialized) {
-            this.camerasInitialized = true
+        if (!this.cameraControlsInitialized) {
+            this.cameraControlsInitialized = true
 
             // perform initial camera sync
             this.syncCameras()
@@ -69,7 +69,7 @@ export class SceneViewModel {
             console.log('camera controls initialized')
         }
 
-        // render three scene
+        // render scene
         gl.render(scene, camera)
 
         // render gaussian splats
@@ -83,7 +83,7 @@ export class SceneViewModel {
     }
 
     invalidate = (frames?: number) => {
-        this.threeRootState?.invalidate(frames)
+        this.sceneRootState?.invalidate(frames)
     }
 
     syncCameras = () => {

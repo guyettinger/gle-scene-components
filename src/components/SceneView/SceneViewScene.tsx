@@ -2,17 +2,18 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
 import { useRef } from "react";
 import { useSceneModel, useSceneViewModel } from "../../providers";
+import { SceneViewSceneProps } from "./SceneView.types";
 
-export const ThreeScene = () => {
+export const SceneViewScene = ({...sceneProps}:SceneViewSceneProps) => {
     const sceneViewModel = useSceneViewModel()
     const {threeScene} = useSceneModel()
-    const threeCameraControlsReference = useRef<CameraControls>(null)
+    const cameraControlsReference = useRef<CameraControls>(null)
     const debug = sceneViewModel.debug
 
     useThree((threeRootState) => {
-        sceneViewModel.threeRootState = threeRootState
-        sceneViewModel.cameraControls = threeCameraControlsReference.current
-        sceneViewModel.threeRaycaster = threeRootState.raycaster
+        sceneViewModel.sceneRootState = threeRootState
+        sceneViewModel.cameraControls = cameraControlsReference.current
+        sceneViewModel.raycaster = threeRootState.raycaster
     })
 
     // render loop
@@ -30,10 +31,10 @@ export const ThreeScene = () => {
     }
 
     return (
-        <scene onPointerMissed={handlePointerMissed}>
+        <scene onPointerMissed={handlePointerMissed} {...sceneProps}>
             <ambientLight></ambientLight>
             <CameraControls
-                ref={threeCameraControlsReference}
+                ref={cameraControlsReference}
                 smoothTime={0}
                 draggingSmoothTime={0}
                 onChange={handleCameraControlsChange}

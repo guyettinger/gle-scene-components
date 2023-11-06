@@ -12,7 +12,7 @@ export const CoordinatedGroup = ({longitudeLatitudeHeight, children, ...groupPro
 
     useFrame(({}) => {
         // wait for camera initialization
-        if (!sceneViewModel.camerasInitialized) return
+        if (!sceneViewModel.cameraControlsInitialized) return
 
         // only when the group coordinates are different then the desired coordinates
         if (!!groupLongitudeLatitudeHeight && groupLongitudeLatitudeHeight.equals(longitudeLatitudeHeight)) return
