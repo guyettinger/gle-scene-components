@@ -259,7 +259,8 @@ export const Everything: Story = (args: any) => {
                                         MathUtils.degToRad(180), 'ZYX']}
                 />
             </CoordinatedGroup>
-        </group>
+        </group>,
+        <GoogleMapsPhotorealistic3DTiles/>
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(

@@ -9,6 +9,7 @@ A React component library for building 3D scenes.
 ## Supports
 - [React Three Fiber](https://github.com/pmndrs/react-three-fiber)
 - [Resium](https://github.com/reearth/resium)
+- [Cesium 3D Tilesets](https://cesium.com/blog/2023/10/26/photorealistic-3d-tiles-in-cesium-ion/)
 - [Potree](https://github.com/guyettinger/gle-potree)
 - [Gaussian Splatting](https://github.com/guyettinger/gle-gaussian-splat-3d)
 
@@ -21,6 +22,7 @@ A React component library for building 3D scenes.
 - [Point Clouds](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--point-clouds)
 - [Gaussian Splatting](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--gaussian-splat-clouds)
 - [Coordinated Groups](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--coordinated-groups)
+- [Google Photorealistic 3D Tiles](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--google-tiles)
 
 ## Example
 ![example-screenshot.png](public%2Fimages%2Fexample-screenshot.png)
@@ -33,6 +35,7 @@ const lowerArenaLongitudeLatitudeHeight = new Vector3(-83.76612684589652, 34.400
 // create a scene
 const sceneModel: SceneModel = new SceneModel(
     'Scene1',
+    upperArenaLongitudeLatitudeHeight,
     <group>
         <CoordinatedGroup longitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}>
             <PointCloud
@@ -56,7 +59,7 @@ const sceneModel: SceneModel = new SceneModel(
             />
         </CoordinatedGroup>
     </group>,
-    upperArenaLongitudeLatitudeHeight
+    <GoogleMapsPhotorealistic3DTiles/>
 )
 
 // create a view of the scene
