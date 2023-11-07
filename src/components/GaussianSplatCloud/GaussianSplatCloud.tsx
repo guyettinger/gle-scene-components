@@ -30,7 +30,6 @@ export const GaussianSplatCloud = (
                 useBuiltInControls: false,
                 ignoreDevicePixelRatio: false
             })
-            gaussianSplatViewer.init()
             gaussianSplatCloudsSceneViewModel.gaussianSplatViewer = gaussianSplatViewer
         } else {
             if (!gaussianSplatCloudLoaded && !gaussianSplatCloudLoading) {
