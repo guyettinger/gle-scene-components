@@ -1,4 +1,6 @@
+import { ReactNode } from "react";
 import { Vector3 } from "three";
+import { Globe, Sun } from "resium";
 import {
     Cartesian3,
     Cartographic,
@@ -42,8 +44,9 @@ export class SceneModel {
 
     constructor(
         public name: string,
-        public threeScene: JSX.Element,
-        public sceneCenterLongitudeLatitudeHeight: Vector3
+        public sceneCenterLongitudeLatitudeHeight: Vector3,
+        public threeScene?: ReactNode,
+        public cesiumScene?: ReactNode
     ) {
         // initialize scene center
         Cartesian3.fromDegrees(
@@ -53,6 +56,19 @@ export class SceneModel {
             Ellipsoid.WGS84,
             this.sceneCenterCartesian
         )
+
+        // default three scene
+        if (!this.threeScene) {
+            this.threeScene = <group></group>
+        }
+
+        // default cesium scene
+        if (!this.cesiumScene) {
+            this.cesiumScene = <>
+                <Sun glowFactor={20}/>
+                <Globe enableLighting={true}/>
+            </>
+        }
 
         // initialize point clouds
         this.pointBudget = 2_000_000

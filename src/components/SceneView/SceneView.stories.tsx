@@ -8,6 +8,7 @@ import { PointCloud } from "../PointCloud";
 import { GaussianSplatCloud } from "../GaussianSplatCloud";
 import { CoordinatedGroup } from "../CoordinatedGroup";
 import { rotatePointCloudOctreeYUp } from "../../services";
+import { GoogleMapsPhotorealistic3DTiles } from "../Cesium3DTilesets";
 
 const meta: Meta<typeof SceneView> = {
     component: SceneView,
@@ -41,12 +42,12 @@ export const Boxes: Story = (args: any) => {
     // create a scene with 3 boxes in the farm's upper arena
     const sceneModel: SceneModel = new SceneModel(
         'Scene1',
+        upperArenaLongitudeLatitudeHeight,
         <group>
             <Box position={[4, 0, 0]}/>
             <Box position={[0, 0, -4]}/>
             <Box position={[-4, 0, 0]}/>
-        </group>,
-        upperArenaLongitudeLatitudeHeight
+        </group>
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(
@@ -68,12 +69,12 @@ export const AnimatedBoxes: Story = (args: any) => {
     // create a scene with 3 boxes in the farm's upper arena
     const sceneModel: SceneModel = new SceneModel(
         'Scene1',
+        upperArenaLongitudeLatitudeHeight,
         <group>
             <Box position={[4, 0, 0]} animate={true}/>
             <Box position={[0, 0, -4]} animate={true}/>
             <Box position={[-4, 0, 0]} animate={true}/>
-        </group>,
-        upperArenaLongitudeLatitudeHeight
+        </group>
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(
@@ -96,6 +97,7 @@ export const PointClouds: Story = (args: any) => {
     // create a scene with 2 point clouds in the farm's upper arena
     const sceneModel: SceneModel = new SceneModel(
         'Scene1',
+        upperArenaLongitudeLatitudeHeight,
         <group>
             <PointCloud
                 baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
@@ -103,8 +105,7 @@ export const PointClouds: Story = (args: any) => {
                 onPointCloudLoad={rotatePointCloudOctreeYUp}
                 position={[0, -.75, 0]}
             />
-        </group>,
-        upperArenaLongitudeLatitudeHeight
+        </group>
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(
@@ -126,6 +127,7 @@ export const GaussianSplatClouds: Story = (args: any) => {
     // create a scene with a garden splat cloud in the farm's upper arena
     const sceneModel: SceneModel = new SceneModel(
         'Scene1',
+        upperArenaLongitudeLatitudeHeight,
         <group>
             <GaussianSplatCloud baseUrl="./"
                                 fileName="splats/ornament/ornament.splat"
@@ -135,8 +137,7 @@ export const GaussianSplatClouds: Story = (args: any) => {
                                     MathUtils.degToRad(-45),
                                     MathUtils.degToRad(180), 'ZYX']}
             />
-        </group>,
-        upperArenaLongitudeLatitudeHeight
+        </group>
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(
@@ -161,6 +162,7 @@ export const CoordinatedGroups: Story = (args: any) => {
     // create a scene with boxes in the upper arena, the lower arena, and at Railay Beach
     const sceneModel: SceneModel = new SceneModel(
         'Scene1',
+        upperArenaLongitudeLatitudeHeight,
         <group>
             <CoordinatedGroup longitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}>
                 <Box position={[0, 0, 0]}/>
@@ -171,8 +173,7 @@ export const CoordinatedGroups: Story = (args: any) => {
             <CoordinatedGroup longitudeLatitudeHeight={lowerArenaLongitudeLatitudeHeight}>
                 <Box position={[0, 0, 0]}/>
             </CoordinatedGroup>
-        </group>,
-        upperArenaLongitudeLatitudeHeight
+        </group>
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(
@@ -200,6 +201,30 @@ export const CoordinatedGroups: Story = (args: any) => {
 }
 CoordinatedGroups.args = {};
 
+export const GoogleTiles: Story = (args: any) => {
+
+    // coordinates
+    const bobbyDoddStadiumLongitudeLatitudeHeight = new Vector3(-84.39285552774608, 33.772504710962814, 250.0)
+
+    // create a scene with boxes in the upper arena, the lower arena, and at Railay Beach
+    const sceneModel: SceneModel = new SceneModel(
+        'Scene1',
+        bobbyDoddStadiumLongitudeLatitudeHeight,
+        <Box position={[0, 0, 0]}/>,
+        <GoogleMapsPhotorealistic3DTiles/>
+    )
+
+    const sceneViewModel: SceneViewModel = new SceneViewModel(
+        'SceneView1',
+        sceneModel
+    )
+
+    return (
+        <SceneView data-testid="SceneView-id" tabIndex={0} sceneViewModel={sceneViewModel}/>
+    )
+}
+GoogleTiles.args = {};
+
 
 export const Everything: Story = (args: any) => {
 
@@ -211,6 +236,7 @@ export const Everything: Story = (args: any) => {
     // create a scene with multiple types of 3D elements in the farm's upper arena
     const sceneModel: SceneModel = new SceneModel(
         'Scene1',
+        upperArenaLongitudeLatitudeHeight,
         <group>
             <CoordinatedGroup longitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}>
                 <PointCloud
@@ -233,8 +259,7 @@ export const Everything: Story = (args: any) => {
                                         MathUtils.degToRad(180), 'ZYX']}
                 />
             </CoordinatedGroup>
-        </group>,
-        upperArenaLongitudeLatitudeHeight
+        </group>
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(

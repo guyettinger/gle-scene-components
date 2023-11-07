@@ -2,6 +2,7 @@ import { CesiumComponentRef, Viewer } from 'resium'
 import { SceneMode, Viewer as CesiumViewer } from "cesium"
 import { observer } from "mobx-react";
 import { useSceneViewModel } from "../../providers";
+import { CesiumViewProps } from "./CesiumView.types";
 
 /*
     Component Lifecycle
@@ -13,17 +14,18 @@ import { useSceneViewModel } from "../../providers";
     4. Update: Changed properties of the Cesium element are updated. If "Cesium read-only properties" are changed, the Cesium element will be reinitialized.
     5. Unmount: The Cesium element is destroyed.
  */
-export const CesiumView = observer(() => {
+export const CesiumView = observer(({}: CesiumViewProps) => {
     const sceneViewModel = useSceneViewModel()
     const cesiumSceneViewModel = sceneViewModel.cesiumSceneViewModel
     const sceneModel = sceneViewModel.sceneModel
+    const {cesiumScene} = sceneModel
     const creditContainer = typeof document !== 'undefined' ? document?.createElement("div") : null!
 
     const handleRef = (e: CesiumComponentRef<CesiumViewer> | null) => {
         if (!e) return;
-        const cesiumViewer = e.cesiumElement;
+        const cesiumViewer = e.cesiumElement
         if (!cesiumViewer) return;
-        handleCesiumViewer(cesiumViewer);
+        handleCesiumViewer(cesiumViewer)
     }
 
     const handleCesiumViewer = (cesiumViewer: CesiumViewer) => {
@@ -46,6 +48,7 @@ export const CesiumView = observer(() => {
                 fullscreenButton={false}
                 sceneMode={SceneMode.SCENE3D}
         >
+            {cesiumScene}
         </Viewer>
     )
 })

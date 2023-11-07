@@ -1,5 +1,6 @@
 export * from "./Box"
 export * from "./CesiumView"
+export * from "./Cesium3DTilesets"
 export * from "./CoordinatedGroup"
 export * from "./GaussianSplatCloud"
 export * from "./PointCloud"
