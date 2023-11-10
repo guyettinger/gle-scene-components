@@ -6,6 +6,7 @@ import { SceneModel } from "../scene";
 import { CesiumSceneViewModel } from "../cesiumSceneView";
 import { PointCloudsSceneViewModel } from "../pointCloudsSceneView";
 import { GaussianSplatCloudsSceneViewModel } from "../gaussianSplatCloudsSceneView";
+import { Ogc3DTilesSceneViewModel } from "../ogc3DTilesSceneView";
 
 export class SceneViewModel {
 
@@ -27,6 +28,9 @@ export class SceneViewModel {
     // point clouds
     pointCloudsSceneViewModel: PointCloudsSceneViewModel
 
+    // ogc 3D Tiles
+    ogc3DTilesSceneViewModel: Ogc3DTilesSceneViewModel
+
     // cesium
     cesiumSceneViewModel: CesiumSceneViewModel
 
@@ -39,6 +43,7 @@ export class SceneViewModel {
     ) {
         this.gaussianSplatCloudsSceneViewModel = new GaussianSplatCloudsSceneViewModel('gaussianSplatClouds', this)
         this.pointCloudsSceneViewModel = new PointCloudsSceneViewModel('pointClouds', this)
+        this.ogc3DTilesSceneViewModel = new Ogc3DTilesSceneViewModel('ogc3DTiles', this)
         this.cesiumSceneViewModel = new CesiumSceneViewModel('cesium', this)
     }
 
@@ -77,6 +82,9 @@ export class SceneViewModel {
 
         // render potree
         this.pointCloudsSceneViewModel.render(state, delta)
+
+        // render ogc 3D Tiles
+        this.ogc3DTilesSceneViewModel.render(state, delta)
 
         // render cesium
         this.cesiumSceneViewModel.render(state, delta)

@@ -9,6 +9,7 @@ import { GaussianSplatCloud } from "../GaussianSplatCloud";
 import { CoordinatedGroup } from "../CoordinatedGroup";
 import { rotatePointCloudOctreeYUp } from "../../services";
 import { GoogleMapsPhotorealistic3DTiles } from "../Cesium3DTilesets";
+import { OGC3DTiles } from "../OGC3DTiles";
 
 const meta: Meta<typeof SceneView> = {
     component: SceneView,
@@ -135,7 +136,8 @@ export const GaussianSplatClouds: Story = (args: any) => {
                                 rotation={[
                                     MathUtils.degToRad(-30),
                                     MathUtils.degToRad(-45),
-                                    MathUtils.degToRad(180), 'ZYX']}
+                                    MathUtils.degToRad(180), 'ZYX'
+                                ]}
             />
         </group>
     )
@@ -225,6 +227,38 @@ export const GoogleTiles: Story = (args: any) => {
 }
 GoogleTiles.args = {};
 
+export const ThreeDTiles: Story = (args: any) => {
+
+    // coordinates
+    const lowerArenaLongitudeLatitudeHeight = new Vector3(-83.76612684589652, 34.40024525982904, 349.0)
+
+    // create a scene with boxes in the upper arena, the lower arena, and at Railay Beach
+    const sceneModel: SceneModel = new SceneModel(
+        'Scene1',
+        lowerArenaLongitudeLatitudeHeight,
+        <group>
+            <OGC3DTiles url={"https://storage.googleapis.com/ogc-3d-tiles/museumMeshed/tileset.json"}
+                        position={[0, -2, 0]}
+                        rotation={[
+                            MathUtils.degToRad(0),
+                            MathUtils.degToRad(90),
+                            MathUtils.degToRad(180), 'XYZ'
+                        ]}
+            />
+        </group>,
+    )
+
+    const sceneViewModel: SceneViewModel = new SceneViewModel(
+        'SceneView1',
+        sceneModel
+    )
+
+    return (
+        <SceneView data-testid="SceneView-id" tabIndex={0} sceneViewModel={sceneViewModel}/>
+    )
+}
+ThreeDTiles.args = {};
+
 
 export const Everything: Story = (args: any) => {
 
@@ -250,14 +284,23 @@ export const Everything: Story = (args: any) => {
                 <Box position={[0, 0, 0]}/>
             </CoordinatedGroup>
             <CoordinatedGroup longitudeLatitudeHeight={lowerArenaLongitudeLatitudeHeight}>
-                <GaussianSplatCloud baseUrl="./"
-                                    fileName="splats/ornament/ornament.splat"
-                                    position={[0, 1, 0]}
-                                    rotation={[
-                                        MathUtils.degToRad(-30),
-                                        MathUtils.degToRad(-45),
-                                        MathUtils.degToRad(180), 'ZYX']}
-                />
+                <group position={[0, 2.60, -15]}
+                       rotation={[MathUtils.degToRad(30), 0, 0, 'XYZ']}>
+                    <GaussianSplatCloud baseUrl="./"
+                                        fileName="splats/ornament/ornament.splat"
+                                        rotation={[
+                                            MathUtils.degToRad(-38),
+                                            MathUtils.degToRad(-85),
+                                            MathUtils.degToRad(180), 'ZYX']}
+                    />
+                </group>
+                <OGC3DTiles url={"https://storage.googleapis.com/ogc-3d-tiles/museumMeshed/tileset.json"}
+                            position={[0, -2, 0]}
+                            rotation={[
+                                MathUtils.degToRad(0),
+                                MathUtils.degToRad(90),
+                                MathUtils.degToRad(180), 'XYZ'
+                            ]}/>
             </CoordinatedGroup>
         </group>,
         <GoogleMapsPhotorealistic3DTiles/>

@@ -9,9 +9,10 @@ A React component library for building 3D scenes.
 ## Supports
 - [React Three Fiber](https://github.com/pmndrs/react-three-fiber)
 - [Resium](https://github.com/reearth/resium)
-- [Cesium 3D Tilesets](https://cesium.com/blog/2023/10/26/photorealistic-3d-tiles-in-cesium-ion/)
 - [Potree](https://github.com/guyettinger/gle-potree)
 - [Gaussian Splatting](https://github.com/guyettinger/gle-gaussian-splat-3d)
+- [Cesium 3D Tiles](https://cesium.com/blog/2023/10/26/photorealistic-3d-tiles-in-cesium-ion/)
+- [ThreeJS 3D Tiles](https://github.com/ebeaufay/threedtiles)
 
 ## Documentation
 [Storybook](https://guyettinger.github.io/gle-scene-components/)
@@ -23,6 +24,7 @@ A React component library for building 3D scenes.
 - [Gaussian Splatting](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--gaussian-splat-clouds)
 - [Coordinated Groups](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--coordinated-groups)
 - [Google Photorealistic 3D Tiles](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--google-tiles)
+- [Mesh 3D Tiles](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--three-d-tiles)
 
 ## Example
 ![example-screenshot.png](public%2Fimages%2Fexample-screenshot.png)
