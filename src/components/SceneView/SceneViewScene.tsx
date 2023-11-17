@@ -13,7 +13,6 @@ export const SceneViewScene = ({...sceneProps}:SceneViewSceneProps) => {
     useThree((threeRootState) => {
         sceneViewModel.sceneRootState = threeRootState
         sceneViewModel.cameraControls = cameraControlsReference.current
-        sceneViewModel.raycaster = threeRootState.raycaster
     })
 
     // render loop

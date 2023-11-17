@@ -4,11 +4,11 @@ import { GroupProps, ThreeEvent, useFrame } from "@react-three/fiber";
 import { OGC3DTile } from "gle-threedtiles";
 import { useSceneViewModel } from "../../providers";
 import { OGC3DTilesProps } from "./OGC3DTiles.types";
-import { Ogc3DTilesSceneViewExtension } from "../../extensions";
+import { ExtensionNames, Ogc3DTilesSceneViewExtension } from "../../extensions";
 
 export const OGC3DTiles = (ogc3DTilesProps: OGC3DTilesProps) => {
     const sceneViewModel = useSceneViewModel()
-    const ogc3DTilesSceneViewExtension = sceneViewModel.sceneViewExtensions.get('ogc3DTiles') as Ogc3DTilesSceneViewExtension
+    const ogc3DTilesSceneViewExtension = sceneViewModel.getSceneViewExtension<Ogc3DTilesSceneViewExtension>(ExtensionNames.OGC3DTiles)
     const [initialized, setInitialized] = useState(false)
     const groupReference = useRef<Group>(null)
     const groupProps = ogc3DTilesProps as GroupProps

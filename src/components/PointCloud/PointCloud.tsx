@@ -3,12 +3,12 @@ import { Group } from "three";
 import { ThreeEvent } from "@react-three/fiber";
 import { PointCloudProps } from "./PointCloud.types";
 import { useSceneViewModel } from "../../providers";
-import { PointCloudsSceneViewExtension } from "../../extensions";
+import { ExtensionNames, PointCloudsSceneViewExtension } from "../../extensions";
 
 export const PointCloud = ({fileName, baseUrl, onPointCloudLoad, ...groupProps}: PointCloudProps) => {
     const sceneViewModel = useSceneViewModel()
     const pointCloudGroupReference = useRef<Group>(null)
-    const pointCloudsSceneViewExtension = sceneViewModel.sceneViewExtensions.get('pointClouds') as PointCloudsSceneViewExtension
+    const pointCloudsSceneViewExtension = sceneViewModel.getSceneViewExtension<PointCloudsSceneViewExtension>(ExtensionNames.PointClouds)
     const pointCloudsSceneExtension = pointCloudsSceneViewExtension.pointCloudsSceneExtension
 
     useEffect(() => {

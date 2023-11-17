@@ -22,9 +22,6 @@ export class GaussianSplatCloudsSceneViewExtension extends SceneViewExtensionMod
     }
 
     render(state: RootState, delta: number) {
-        // get three state
-        const {gl, scene, camera} = state;
-
         // render gaussian splats
         const gaussianSplatViewer = this.gaussianSplatViewer
         if (gaussianSplatViewer && this.gaussianSplatViewerInitialized) {

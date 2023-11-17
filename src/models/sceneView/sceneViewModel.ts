@@ -30,7 +30,7 @@ export class SceneViewModel {
         public sceneModel: SceneModel
     ) {
         // scene view extensions
-        this.sceneModel.sceneExtensions.forEach((sceneExtensionModel, sceneExtensionName) => {
+        this.sceneModel.sceneExtensions.forEach((sceneExtensionModel) => {
             const sceneViewExtensionModel = sceneExtensionModel.createSceneViewExtension(this)
             this.sceneViewExtensions.set(sceneViewExtensionModel.name, sceneViewExtensionModel)
         })
@@ -190,5 +190,9 @@ export class SceneViewModel {
 
     performDoubleClickOnCesium = (e: MouseEvent) => {
         this.cesiumSceneViewModel.performDoubleClick(e)
+    }
+
+    getSceneViewExtension<T extends SceneViewExtensionModel>(name: string): T {
+        return this.sceneViewExtensions.get(name) as T
     }
 }

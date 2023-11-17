@@ -4,7 +4,7 @@ import { ThreeEvent, useFrame } from "@react-three/fiber";
 import { Viewer as GaussianSplatViewer } from "gle-gaussian-splat-3d";
 import { GaussianSplatCloudProps } from "./GaussianSplatCloud.types";
 import { useSceneViewModel } from "../../providers";
-import { GaussianSplatCloudsSceneViewExtension } from "../../extensions";
+import { ExtensionNames, GaussianSplatCloudsSceneViewExtension } from "../../extensions";
 
 export const GaussianSplatCloud = (
     {
@@ -14,7 +14,7 @@ export const GaussianSplatCloud = (
         ...groupProps
     }: GaussianSplatCloudProps) => {
     const sceneViewModel = useSceneViewModel()
-    const gaussianSplatCloudsSceneViewExtension = sceneViewModel.sceneViewExtensions.get('gaussianSplatClouds') as GaussianSplatCloudsSceneViewExtension
+    const gaussianSplatCloudsSceneViewExtension = sceneViewModel.getSceneViewExtension<GaussianSplatCloudsSceneViewExtension>(ExtensionNames.GaussianSplatClouds)
     const [gaussianSplatCloudLoading, setGaussianSplatCloudLoading] = useState<boolean>(false)
     const [gaussianSplatCloudLoaded, setGaussianSplatCloudLoaded] = useState<boolean>(false)
     const gaussianSplatCloudGroupReference = useRef<Group>(null)

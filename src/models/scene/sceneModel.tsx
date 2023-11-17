@@ -15,7 +15,12 @@ import {
     getSceneSurfaceNormalForLongitudeLatitudeHeight
 } from "../../services/projection/projectionService";
 import { SceneExtensionModel } from "../sceneExtension";
-import { GaussianSplatCloudsSceneExtension, Ogc3DTilesSceneExtension, PointCloudsSceneExtension } from "../../extensions";
+import {
+    ExtensionNames,
+    GaussianSplatCloudsSceneExtension,
+    Ogc3DTilesSceneExtension,
+    PointCloudsSceneExtension
+} from "../../extensions";
 
 export class SceneModel {
 
@@ -61,18 +66,18 @@ export class SceneModel {
                 <Globe enableLighting={true}/>
             </>
         }
+
         // gaussian splat clouds
-        const gaussianSplatCloudsSceneExtensionModel = new GaussianSplatCloudsSceneExtension('gaussianSplatClouds', this)
+        const gaussianSplatCloudsSceneExtensionModel = new GaussianSplatCloudsSceneExtension(ExtensionNames.GaussianSplatClouds, this)
         this.sceneExtensions.set(gaussianSplatCloudsSceneExtensionModel.name, gaussianSplatCloudsSceneExtensionModel)
 
         // point clouds
-        const pointCloudsSceneExtensionModel = new PointCloudsSceneExtension('pointClouds', this)
+        const pointCloudsSceneExtensionModel = new PointCloudsSceneExtension(ExtensionNames.PointClouds, this)
         this.sceneExtensions.set(pointCloudsSceneExtensionModel.name, pointCloudsSceneExtensionModel)
 
         // OGC 3D Tiles
-        const ogc3DTilesSceneExtensionModel = new Ogc3DTilesSceneExtension('ogc3DTiles', this)
+        const ogc3DTilesSceneExtensionModel = new Ogc3DTilesSceneExtension(ExtensionNames.OGC3DTiles, this)
         this.sceneExtensions.set(ogc3DTilesSceneExtensionModel.name, ogc3DTilesSceneExtensionModel)
-
     }
 
     getScenePositionForLongitudeLatitudeHeight = (longitudeLatitudeHeight: Vector3, scenePosition = new Vector3()): Vector3 => {
