@@ -4,10 +4,11 @@ import { GroupProps, ThreeEvent, useFrame } from "@react-three/fiber";
 import { OGC3DTile } from "gle-threedtiles";
 import { useSceneViewModel } from "../../providers";
 import { OGC3DTilesProps } from "./OGC3DTiles.types";
+import { Ogc3DTilesSceneViewExtension } from "../../extensions";
 
 export const OGC3DTiles = (ogc3DTilesProps: OGC3DTilesProps) => {
     const sceneViewModel = useSceneViewModel()
-    const ogc3DTilesSceneViewModel = sceneViewModel.ogc3DTilesSceneViewModel
+    const ogc3DTilesSceneViewExtension = sceneViewModel.sceneViewExtensions.get('ogc3DTiles') as Ogc3DTilesSceneViewExtension
     const [initialized, setInitialized] = useState(false)
     const groupReference = useRef<Group>(null)
     const groupProps = ogc3DTilesProps as GroupProps
@@ -25,7 +26,7 @@ export const OGC3DTiles = (ogc3DTilesProps: OGC3DTilesProps) => {
             }
 
             const ogc3DTile = new OGC3DTile(properties)
-            ogc3DTilesSceneViewModel.addOGC3DTile(ogc3DTile)
+            ogc3DTilesSceneViewExtension.addOGC3DTile(ogc3DTile)
             group.add(ogc3DTile)
         }
 
@@ -34,7 +35,7 @@ export const OGC3DTiles = (ogc3DTilesProps: OGC3DTilesProps) => {
 
     const handleDoubleClick = (e: ThreeEvent<MouseEvent>) => {
         e.stopPropagation()
-        sceneViewModel.ogc3DTilesSceneViewModel.performDoubleClick(e)
+        ogc3DTilesSceneViewExtension.performDoubleClick(e)
     }
 
     return (

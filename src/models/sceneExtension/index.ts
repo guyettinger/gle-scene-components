@@ -1,0 +1,1 @@
+export { SceneExtensionModel } from './sceneExtensionModel'

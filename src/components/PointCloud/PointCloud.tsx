@@ -1,33 +1,34 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Group } from "three";
 import { ThreeEvent } from "@react-three/fiber";
 import { PointCloudProps } from "./PointCloud.types";
 import { useSceneViewModel } from "../../providers";
+import { PointCloudsSceneViewExtension } from "../../extensions";
 
 export const PointCloud = ({fileName, baseUrl, onPointCloudLoad, ...groupProps}: PointCloudProps) => {
     const sceneViewModel = useSceneViewModel()
-    const sceneModel = sceneViewModel.sceneModel
-    const [pointCloudLoading, setPointCloudLoading] = useState<boolean>(false)
     const pointCloudGroupReference = useRef<Group>(null)
+    const pointCloudsSceneViewExtension = sceneViewModel.sceneViewExtensions.get('pointClouds') as PointCloudsSceneViewExtension
+    const pointCloudsSceneExtension = pointCloudsSceneViewExtension.pointCloudsSceneExtension
 
     useEffect(() => {
-        // wait for point cloud group
+
+        // ensure point cloud group
         const pointCloudGroup = pointCloudGroupReference?.current;
-        if (!pointCloudGroup) return;
+        if (!pointCloudGroup) return
 
         console.log('point cloud loading')
-        setPointCloudLoading(true)
 
         // load point cloud
-        sceneModel.potree
+        pointCloudsSceneExtension.potree
             .loadPointCloud(
                 fileName,
                 relativeUrl => `${baseUrl}${relativeUrl}`,
             )
             .then(pco => {
 
-                // add the point cloud to the scene model
-                sceneModel.pointClouds.push(pco)
+                // register the point cloud
+                pointCloudsSceneExtension.pointClouds.push(pco)
 
                 // add the point cloud to the group
                 pointCloudGroup.add(pco)
@@ -38,15 +39,12 @@ export const PointCloud = ({fileName, baseUrl, onPointCloudLoad, ...groupProps}:
             })
             .finally(() => {
                 console.log("point cloud loaded")
-
-                // finished loading
-                setPointCloudLoading(false)
-            });
+            })
     }, [fileName, baseUrl]);
 
     const handleDoubleClick = (e: ThreeEvent<MouseEvent>) => {
         e.stopPropagation()
-        sceneViewModel.pointCloudsSceneViewModel.performDoubleClick(e)
+        pointCloudsSceneViewExtension.performDoubleClick(e)
     }
 
     return (

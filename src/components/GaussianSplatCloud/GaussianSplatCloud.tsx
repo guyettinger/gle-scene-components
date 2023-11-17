@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
-import { Group } from "three";
+import { Group, Vector2 } from "three";
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 import { Viewer as GaussianSplatViewer } from "gle-gaussian-splat-3d";
 import { GaussianSplatCloudProps } from "./GaussianSplatCloud.types";
 import { useSceneViewModel } from "../../providers";
+import { GaussianSplatCloudsSceneViewExtension } from "../../extensions";
 
 export const GaussianSplatCloud = (
     {
@@ -13,13 +14,13 @@ export const GaussianSplatCloud = (
         ...groupProps
     }: GaussianSplatCloudProps) => {
     const sceneViewModel = useSceneViewModel()
-    const gaussianSplatCloudsSceneViewModel = sceneViewModel.gaussianSplatCloudsSceneViewModel
+    const gaussianSplatCloudsSceneViewExtension = sceneViewModel.sceneViewExtensions.get('gaussianSplatClouds') as GaussianSplatCloudsSceneViewExtension
     const [gaussianSplatCloudLoading, setGaussianSplatCloudLoading] = useState<boolean>(false)
     const [gaussianSplatCloudLoaded, setGaussianSplatCloudLoaded] = useState<boolean>(false)
     const gaussianSplatCloudGroupReference = useRef<Group>(null)
 
-    useFrame(({gl, scene, camera}) => {
-        const gaussianSplatViewer = sceneViewModel.gaussianSplatCloudsSceneViewModel.gaussianSplatViewer
+    useFrame(({gl, scene, camera, pointer, size}) => {
+        const gaussianSplatViewer = gaussianSplatCloudsSceneViewExtension.gaussianSplatViewer
         if (!gaussianSplatViewer) {
             // initialize gaussian splat viewer
             const gaussianSplatViewer = new GaussianSplatViewer({
@@ -30,7 +31,7 @@ export const GaussianSplatCloud = (
                 useBuiltInControls: false,
                 ignoreDevicePixelRatio: false
             })
-            gaussianSplatCloudsSceneViewModel.gaussianSplatViewer = gaussianSplatViewer
+            gaussianSplatCloudsSceneViewExtension.gaussianSplatViewer = gaussianSplatViewer
         } else {
             if (!gaussianSplatCloudLoaded && !gaussianSplatCloudLoading) {
                 // load gaussian splat cloud
@@ -50,7 +51,13 @@ export const GaussianSplatCloud = (
 
                             // use viewer raycaster
                             group.raycast = (raycaster, intersects) => {
-                                const mousePosition = gaussianSplatViewer.getMousePosition()
+
+                                // convert pointer to screen coordinates
+                                let x = ((pointer.x + 1) / 2) * size.width
+                                let y = size.height - ((pointer.y + 1) / 2) * size.height
+                                const mousePosition = new Vector2(x, y)
+
+                                // perform raycast
                                 const outHits: any[] = gaussianSplatViewer.performRaycast(camera, mousePosition)
                                 outHits?.forEach((hit) => {
                                     intersects.push({
@@ -75,7 +82,7 @@ export const GaussianSplatCloud = (
                     setGaussianSplatCloudLoading(false)
 
                     // gaussian splat viewer initialized
-                    gaussianSplatCloudsSceneViewModel.gaussianSplatViewerInitialized = true;
+                    gaussianSplatCloudsSceneViewExtension.gaussianSplatViewerInitialized = true;
 
                     // let loading complete and invalidate the scene
                     setTimeout(() => {
@@ -89,7 +96,7 @@ export const GaussianSplatCloud = (
 
     const handleDoubleClick = (e: ThreeEvent<MouseEvent>) => {
         e.stopPropagation()
-        gaussianSplatCloudsSceneViewModel.performDoubleClick(e)
+        gaussianSplatCloudsSceneViewExtension.performDoubleClick(e)
     }
 
     return (

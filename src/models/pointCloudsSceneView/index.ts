@@ -1,1 +1,0 @@
-export { PointCloudsSceneViewModel } from './pointCloudsSceneViewModel'

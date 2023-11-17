@@ -1,25 +1,27 @@
 import { RootState, ThreeEvent } from "@react-three/fiber";
-import { SceneViewModel } from "../sceneView";
-import { SceneModel } from "../scene";
 import { Viewer as GaussianSplatViewer } from "gle-gaussian-splat-3d";
+import { SceneViewModel } from "../../models/sceneView";
+import { SceneViewExtensionModel } from "../../models/sceneViewExtension";
+import { GaussianSplatCloudsSceneExtension } from "./gaussianSplatCloudsSceneExtension";
 
-export class GaussianSplatCloudsSceneViewModel {
-
-    // scene model
-    sceneModel: SceneModel
+export class GaussianSplatCloudsSceneViewExtension extends SceneViewExtensionModel {
 
     // gaussian splat viewer
     gaussianSplatViewerInitialized: boolean = false
     gaussianSplatViewer: GaussianSplatViewer | null = null
 
     constructor(
-        public name: string,
-        public sceneViewModel: SceneViewModel
+        name: string,
+        sceneViewModel: SceneViewModel,
+        public gaussianSplatCloudSceneExtension: GaussianSplatCloudsSceneExtension
     ) {
-        this.sceneModel = sceneViewModel.sceneModel
+        super(name, sceneViewModel, gaussianSplatCloudSceneExtension)
     }
 
-    render = (state: RootState, delta: number) => {
+    initialize(state: RootState, delta: number): void {
+    }
+
+    render(state: RootState, delta: number) {
         // get three state
         const {gl, scene, camera} = state;
 
@@ -35,7 +37,7 @@ export class GaussianSplatCloudsSceneViewModel {
         if (!e) return
         const intersection = e.point
         if (!intersection) return
-        console.log('point cloud intersection', intersection)
+        console.log('gaussian splat cloud intersection', intersection)
         this.sceneViewModel.setCameraTarget(intersection)
     }
 }

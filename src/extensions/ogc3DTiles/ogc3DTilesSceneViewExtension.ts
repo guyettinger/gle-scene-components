@@ -1,25 +1,26 @@
-import { Group } from "three";
 import { RootState, ThreeEvent } from "@react-three/fiber";
 import { OGC3DTile } from "gle-threedtiles";
-import { SceneViewModel } from "../sceneView";
-import { SceneModel } from "../scene";
+import { SceneViewModel } from "../../models/sceneView";
+import { SceneViewExtensionModel } from "../../models/sceneViewExtension";
+import { Ogc3DTilesSceneExtension } from "./ogc3DTilesSceneExtension";
 
-export class Ogc3DTilesSceneViewModel {
-
-    // scene model
-    sceneModel: SceneModel
+export class Ogc3DTilesSceneViewExtension extends SceneViewExtensionModel {
 
     // tilesets
     ogc3DTiles: OGC3DTile[] = []
 
     constructor(
-        public name: string,
-        public sceneViewModel: SceneViewModel
+        name: string,
+        sceneViewModel: SceneViewModel,
+        public ogc3DTilesSceneExtension: Ogc3DTilesSceneExtension
     ) {
-        this.sceneModel = sceneViewModel.sceneModel
+        super(name, sceneViewModel, ogc3DTilesSceneExtension)
     }
 
-    render = (state: RootState, delta: number) => {
+    initialize(state: RootState, delta: number): void {
+    }
+
+    render(state: RootState, delta: number) {
         // get three state
         const {gl, scene, camera} = state;
         this.ogc3DTiles.forEach((ogc3DTile:OGC3DTile)=>{
@@ -27,7 +28,7 @@ export class Ogc3DTilesSceneViewModel {
         })
     }
 
-    performDoubleClick = (e: ThreeEvent<MouseEvent>) => {
+    performDoubleClick(e: ThreeEvent<MouseEvent>) {
         if (!e) return
         const intersection = e.point
         if (!intersection) return

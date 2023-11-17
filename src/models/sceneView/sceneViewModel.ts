@@ -1,12 +1,10 @@
-import { Raycaster, Vector3 } from "three";
+import { Vector3 } from "three";
 import { Cartesian3 } from "cesium";
 import { RootState } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
 import { SceneModel } from "../scene";
 import { CesiumSceneViewModel } from "../cesiumSceneView";
-import { PointCloudsSceneViewModel } from "../pointCloudsSceneView";
-import { GaussianSplatCloudsSceneViewModel } from "../gaussianSplatCloudsSceneView";
-import { Ogc3DTilesSceneViewModel } from "../ogc3DTilesSceneView";
+import { SceneViewExtensionModel } from "../sceneViewExtension";
 
 export class SceneViewModel {
 
@@ -18,18 +16,8 @@ export class SceneViewModel {
     cameraControlsInitialized: boolean = false
     cameraControls: CameraControls | null = null
 
-    // raycaster
-    raycasterInitialized: boolean = false
-    raycaster: Raycaster | null = null
-
-    // gaussian splat clouds
-    gaussianSplatCloudsSceneViewModel: GaussianSplatCloudsSceneViewModel
-
-    // point clouds
-    pointCloudsSceneViewModel: PointCloudsSceneViewModel
-
-    // ogc 3D Tiles
-    ogc3DTilesSceneViewModel: Ogc3DTilesSceneViewModel
+    // scene view extensions
+    sceneViewExtensions: Map<string, SceneViewExtensionModel> = new Map<string, SceneViewExtensionModel>()
 
     // cesium
     cesiumSceneViewModel: CesiumSceneViewModel
@@ -41,9 +29,12 @@ export class SceneViewModel {
         public name: string,
         public sceneModel: SceneModel
     ) {
-        this.gaussianSplatCloudsSceneViewModel = new GaussianSplatCloudsSceneViewModel('gaussianSplatClouds', this)
-        this.pointCloudsSceneViewModel = new PointCloudsSceneViewModel('pointClouds', this)
-        this.ogc3DTilesSceneViewModel = new Ogc3DTilesSceneViewModel('ogc3DTiles', this)
+        // scene view extensions
+        this.sceneModel.sceneExtensions.forEach((sceneExtensionModel, sceneExtensionName) => {
+            const sceneViewExtensionModel = sceneExtensionModel.createSceneViewExtension(this)
+            this.sceneViewExtensions.set(sceneViewExtensionModel.name, sceneViewExtensionModel)
+        })
+
         this.cesiumSceneViewModel = new CesiumSceneViewModel('cesium', this)
     }
 
@@ -57,12 +48,12 @@ export class SceneViewModel {
             console.log('scene initialized')
         }
 
-        // initialize three raycaster
-        if (!this.raycasterInitialized && this.raycaster) {
-            this.raycasterInitialized = true
-            this.raycaster.params.Points.threshold = 0.01
-            console.log('raycaster initialized')
-        }
+        // initialize scene view extensions
+        this.sceneViewExtensions.forEach((sceneViewExtension) => {
+            if (!sceneViewExtension.initialized) {
+                sceneViewExtension.initialize(state, delta)
+            }
+        })
 
         // initialize cameras
         if (!this.cameraControlsInitialized) {
@@ -77,14 +68,10 @@ export class SceneViewModel {
         // render scene
         gl.render(scene, camera)
 
-        // render gaussian splats
-        this.gaussianSplatCloudsSceneViewModel.render(state, delta)
-
-        // render potree
-        this.pointCloudsSceneViewModel.render(state, delta)
-
-        // render ogc 3D Tiles
-        this.ogc3DTilesSceneViewModel.render(state, delta)
+        // render scene view extensions
+        this.sceneViewExtensions.forEach((sceneViewExtension) => {
+            sceneViewExtension.render(state, delta)
+        })
 
         // render cesium
         this.cesiumSceneViewModel.render(state, delta)
