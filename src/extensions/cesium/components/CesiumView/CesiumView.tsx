@@ -1,9 +1,9 @@
 import { CesiumComponentRef, Viewer } from 'resium'
 import { SceneMode, Viewer as CesiumViewer } from "cesium"
 import { observer } from "mobx-react";
-import { useSceneViewModel } from "../../providers";
+import { useSceneViewModel } from "../../../../providers";
 import { CesiumViewProps } from "./CesiumView.types";
-import { CesiumSceneViewExtension, ExtensionNames } from "../../extensions";
+import { CesiumSceneViewExtension, ExtensionNames } from "../../../index";
 
 /*
     Component Lifecycle

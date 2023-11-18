@@ -20,7 +20,7 @@ import { normalizeAngle, offsetCartesianPositionBySceneOffset } from "../../serv
 import { SceneViewModel } from "../../models/sceneView";
 import { SceneViewBackgroundExtension } from "../../models/sceneViewExtension";
 import { CesiumSceneExtension } from "./cesiumSceneExtension";
-import { CesiumView, CesiumViewProps } from "../../components";
+import { CesiumView, CesiumViewProps } from "./components";
 
 export class CesiumSceneViewExtension extends SceneViewBackgroundExtension {
 

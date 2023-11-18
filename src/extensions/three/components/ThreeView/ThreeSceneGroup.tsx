@@ -1,6 +1,6 @@
-import { useSceneViewModel } from "../../providers";
+import { useSceneViewModel } from "../../../../providers";
 import { ThreeSceneGroupProps } from "./ThreeView.types";
-import { ExtensionNames, ThreeSceneViewExtension } from "../../extensions";
+import { ExtensionNames, ThreeSceneViewExtension } from "../../../index";
 
 export const ThreeSceneGroup = ({}: ThreeSceneGroupProps) => {
     const sceneViewModel = useSceneViewModel()

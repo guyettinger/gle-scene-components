@@ -3,16 +3,13 @@ import { MathUtils, Vector3 } from "three";
 import styled from "styled-components";
 import { SceneModel, SceneViewModel } from "../../models";
 import { SceneView } from "./SceneView";
-import { Box } from "../Box";
-import { PointCloud } from "../PointCloud";
-import { GaussianSplatCloud } from "../GaussianSplatCloud";
-import { CoordinatedGroup } from "../CoordinatedGroup";
-import { rotatePointCloudOctreeYUp } from "../../services";
-import { GoogleMapsPhotorealistic3DTiles } from "../Cesium3DTilesets";
-import { OGC3DTiles } from "../OGC3DTiles";
-import { ThreeSceneContent } from "../ThreeSceneContent/ThreeSceneContent";
 import { SceneContent } from "../SceneContent";
-import { CesiumSceneContent } from "../CesiumSceneContent/CesiumSceneContent";
+import { CoordinatedGroup } from "../CoordinatedGroup";
+import { Box, ThreeSceneContent } from "../../extensions/three";
+import { CesiumSceneContent, GoogleMapsPhotorealistic3DTiles } from "../../extensions/cesium";
+import { PointCloud, rotatePointCloudOctreeYUp } from "../../extensions/pointClouds";
+import { GaussianSplatCloud } from "../../extensions/gaussianSplatClouds";
+import { OGC3DTiles } from "../../extensions/ogc3DTiles";
 
 const meta: Meta<typeof SceneView> = {
     component: SceneView,

@@ -1,4 +1,4 @@
-import { SceneViewBackgroundProps } from "../../models";
+import { SceneViewBackgroundProps } from "../../../../models";
 
 export interface CesiumViewProps extends SceneViewBackgroundProps {
 

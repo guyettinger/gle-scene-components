@@ -3,8 +3,8 @@ import { Group, Vector2 } from "three";
 import { ThreeEvent, useFrame } from "@react-three/fiber";
 import { Viewer as GaussianSplatViewer } from "gle-gaussian-splat-3d";
 import { GaussianSplatCloudProps } from "./GaussianSplatCloud.types";
-import { useSceneViewModel } from "../../providers";
-import { ExtensionNames, GaussianSplatCloudsSceneViewExtension } from "../../extensions";
+import { useSceneViewModel } from "../../../../providers";
+import { ExtensionNames, GaussianSplatCloudsSceneViewExtension } from "../../../index";
 
 export const GaussianSplatCloud = (
     {

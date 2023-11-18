@@ -1,10 +1,9 @@
 import { ReactElement } from "react";
 import { RootState } from "@react-three/fiber";
 import { SceneViewModel } from "../../models/sceneView";
+import { SceneViewForegroundExtension } from "../../models/sceneViewExtension";
 import { ThreeSceneExtension } from "./threeSceneExtension";
-import { SceneViewForegroundExtension } from "../../models/sceneViewExtension/sceneViewForegroundExtension";
-import { ThreeScene, ThreeSceneGroup, ThreeView } from "../../components";
-import { ThreeSceneGroupProps } from "../../components/ThreeView/ThreeView.types";
+import { ThreeScene, ThreeSceneGroup, ThreeView, ThreeSceneGroupProps } from "./components";
 
 export class ThreeSceneViewExtension extends SceneViewForegroundExtension {
 

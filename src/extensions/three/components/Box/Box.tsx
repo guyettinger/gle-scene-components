@@ -1,7 +1,7 @@
 import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
 import { Mesh } from "three";
-import { useSceneViewModel } from "../../providers";
+import { useSceneViewModel } from "../../../../providers";
 import { BoxProps } from "./Box.types";
 
 export const Box = ({animate, ...meshProps}: BoxProps) => {

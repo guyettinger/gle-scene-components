@@ -2,9 +2,9 @@ import { useRef, useState } from "react";
 import { Group } from "three";
 import { GroupProps, ThreeEvent, useFrame } from "@react-three/fiber";
 import { OGC3DTile } from "gle-threedtiles";
-import { useSceneViewModel } from "../../providers";
+import { useSceneViewModel } from "../../../../providers";
 import { OGC3DTilesProps } from "./OGC3DTiles.types";
-import { ExtensionNames, Ogc3DTilesSceneViewExtension } from "../../extensions";
+import { ExtensionNames, Ogc3DTilesSceneViewExtension } from "../../../index";
 
 export const OGC3DTiles = (ogc3DTilesProps: OGC3DTilesProps) => {
     const sceneViewModel = useSceneViewModel()

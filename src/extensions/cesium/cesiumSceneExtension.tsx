@@ -6,7 +6,7 @@ import { SceneModel } from "../../models/scene";
 import { SceneExtensionModel } from "../../models/sceneExtension";
 import { SceneViewModel } from "../../models/sceneView";
 import { CesiumSceneViewExtension } from "./cesiumSceneViewExtension";
-import { CesiumSceneContent } from "../../components";
+import { CesiumSceneContent } from "./components";
 
 export class CesiumSceneExtension extends SceneExtensionModel {
 

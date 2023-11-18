@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { Cesium3DTileset } from "cesium";
-import { useSceneViewModel } from "../../../providers";
+import { useSceneViewModel } from "../../../../../providers";
 import { Cesium3DTilesProps } from "./Cesium3DTiles.types";
-import { CesiumSceneViewExtension, ExtensionNames } from "../../../extensions";
+import { CesiumSceneViewExtension, ExtensionNames } from "../../../../index";
 
 export const Cesium3DTiles = ({url, options}: Cesium3DTilesProps) => {
     const sceneViewModel = useSceneViewModel()
