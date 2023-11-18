@@ -3,13 +3,15 @@ import { Cartesian3 } from "cesium";
 import { RootState } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
 import { SceneModel } from "../scene";
-import { SceneViewExtensionModel } from "../sceneViewExtension";
-import { CesiumSceneViewExtension, ExtensionNames } from "../../extensions";
+import {
+    SceneViewExtensionModel,
+    SceneViewBackgroundExtension,
+    SceneViewForegroundExtension
+} from "../sceneViewExtension";
 
 export class SceneViewModel {
 
     // scene
-    sceneInitialized: boolean = false
     sceneRootState: RootState | null = null
 
     // camera controls
@@ -37,15 +39,27 @@ export class SceneViewModel {
         return this.sceneViewExtensions.get(name) as T
     }
 
+    getSceneViewForegroundExtensions(): SceneViewForegroundExtension[] {
+        const sceneViewForegroundExtensions: SceneViewForegroundExtension[] = []
+        this.sceneViewExtensions.forEach((sceneViewExtension) => {
+            if (!(sceneViewExtension instanceof SceneViewForegroundExtension)) return
+            sceneViewForegroundExtensions.push(sceneViewExtension)
+        })
+        return sceneViewForegroundExtensions
+    }
+
+    getSceneViewBackgroundExtensions(): SceneViewBackgroundExtension[] {
+        const sceneViewBackgroundExtensions: SceneViewBackgroundExtension[] = []
+        this.sceneViewExtensions.forEach((sceneViewExtension) => {
+            if (!(sceneViewExtension instanceof SceneViewBackgroundExtension)) return
+            sceneViewBackgroundExtensions.push(sceneViewExtension)
+        })
+        return sceneViewBackgroundExtensions
+    }
+
     render(state: RootState, delta: number) {
         // get three state
         const {gl, scene, camera} = state;
-
-        // initialize scene
-        if (!this.sceneInitialized) {
-            this.sceneInitialized = true
-            console.log('scene initialized')
-        }
 
         // initialize scene view extensions
         this.sceneViewExtensions.forEach((sceneViewExtension) => {
@@ -169,25 +183,10 @@ export class SceneViewModel {
 
     passMouseEvent(e: MouseEvent) {
         if (!e) return
-        this.passMouseEventToBaseLayer(e)
-    }
-
-    passMouseEventToBaseLayer(e: MouseEvent) {
-        if (!e) return
-
-        switch (e.type) {
-            case 'click':
-                // ignore second click of double click
-                if (e.detail > 1) return
-                break;
-            case 'dblclick':
-                this.performDoubleClickOnBaseLayer(e)
-                break;
-        }
-    }
-
-    performDoubleClickOnBaseLayer(e: MouseEvent) {
-        const cesiumSceneViewExtension = this.getSceneViewExtension<CesiumSceneViewExtension>(ExtensionNames.Cesium)
-        cesiumSceneViewExtension.performDoubleClick(e)
+        let handled = false
+        this.getSceneViewBackgroundExtensions().forEach((sceneViewBackgroundExtension) => {
+            if (handled) return
+            handled = sceneViewBackgroundExtension.handleMouseEvent(e)
+        })
     }
 }

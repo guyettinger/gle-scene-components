@@ -2,9 +2,9 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
 import { useRef } from "react";
 import { useSceneViewModel } from "../../providers";
-import { SceneViewSceneProps } from "./SceneView.types";
+import { ThreeSceneProps } from "./ThreeView.types";
 
-export const SceneViewScene = ({children, ...sceneProps}: SceneViewSceneProps) => {
+export const ThreeScene = ({children, ...sceneProps}: ThreeSceneProps) => {
     const sceneViewModel = useSceneViewModel()
     const cameraControlsReference = useRef<CameraControls>(null)
 

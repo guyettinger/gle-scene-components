@@ -1,10 +1,6 @@
 import { StoreProvider, SceneProvider, SceneViewProvider } from "../../providers";
 import styled from "styled-components";
-import { SceneViewCanvas } from "./SceneViewCanvas";
 import { SceneViewProps } from "./SceneView.types";
-import { SceneViewScene } from "./SceneViewScene";
-import { CesiumView } from "../CesiumView";
-import { ThreeView } from "../ThreeView";
 
 const SceneViewContent = styled.div`
 `
@@ -14,12 +10,16 @@ export const SceneView = ({sceneViewModel, ...divProps}: SceneViewProps) => {
             <StoreProvider>
                 <SceneProvider sceneModel={sceneViewModel.sceneModel}>
                     <SceneViewProvider sceneViewModel={sceneViewModel}>
-                        <CesiumView/>
-                        <SceneViewCanvas>
-                            <SceneViewScene>
-                                <ThreeView/>
-                            </SceneViewScene>
-                        </SceneViewCanvas>
+                        {sceneViewModel.getSceneViewBackgroundExtensions().map((sceneViewBackgroundExtension) => {
+                            return (
+                                sceneViewBackgroundExtension.createBackgroundView({key: sceneViewBackgroundExtension.name})
+                            )
+                        })}
+                        {sceneViewModel.getSceneViewForegroundExtensions().map((sceneViewForegroundExtension) => {
+                            return (
+                                sceneViewForegroundExtension.createForegroundView({key: sceneViewForegroundExtension.name})
+                            )
+                        })}
                     </SceneViewProvider>
                 </SceneProvider>
             </StoreProvider>

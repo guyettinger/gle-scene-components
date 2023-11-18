@@ -1,3 +1,4 @@
+import { ReactElement } from "react";
 import { RootState } from "@react-three/fiber";
 import { MathUtils, OrthographicCamera, PerspectiveCamera, Vector3 } from "three";
 import {
@@ -17,10 +18,11 @@ import {
 import { CameraControls } from "@react-three/drei";
 import { normalizeAngle, offsetCartesianPositionBySceneOffset } from "../../services";
 import { SceneViewModel } from "../../models/sceneView";
+import { SceneViewBackgroundExtension } from "../../models/sceneViewExtension";
 import { CesiumSceneExtension } from "./cesiumSceneExtension";
-import { SceneViewExtensionModel } from "../../models/sceneViewExtension";
+import { CesiumView, CesiumViewProps } from "../../components";
 
-export class CesiumSceneViewExtension extends SceneViewExtensionModel {
+export class CesiumSceneViewExtension extends SceneViewBackgroundExtension {
 
     // cesium
     cesiumViewer: CesiumViewer | null = null
@@ -257,5 +259,20 @@ export class CesiumSceneViewExtension extends SceneViewExtensionModel {
                 removeCallback()
             }
         }
+    }
+
+    createBackgroundView(cesiumViewProps: CesiumViewProps): ReactElement<CesiumViewProps> {
+        return <CesiumView {...cesiumViewProps}/>
+    }
+
+    handleMouseEvent(e: MouseEvent): boolean {
+        let handled = false
+        switch (e.type) {
+            case 'dblclick':
+                this.performDoubleClick(e)
+                handled = true
+                break;
+        }
+        return handled
     }
 }
