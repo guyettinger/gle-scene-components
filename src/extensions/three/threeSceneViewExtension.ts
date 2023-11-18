@@ -1,7 +1,7 @@
 import { RootState } from "@react-three/fiber";
 import { SceneViewModel } from "../../models/sceneView";
-import { ThreeSceneExtension } from "./threeSceneExtension";
 import { SceneViewExtensionModel } from "../../models/sceneViewExtension";
+import { ThreeSceneExtension } from "./threeSceneExtension";
 
 export class ThreeSceneViewExtension extends SceneViewExtensionModel {
 
@@ -11,9 +11,6 @@ export class ThreeSceneViewExtension extends SceneViewExtensionModel {
         public threeSceneExtension: ThreeSceneExtension
     ) {
         super(name, sceneViewModel, threeSceneExtension)
-    }
-
-    initialize(state: RootState, delta: number): void {
     }
 
     render(state: RootState, delta: number) {

@@ -14,8 +14,13 @@ export class ThreeSceneExtension extends SceneExtensionModel {
     constructor(name: string, sceneModel: SceneModel) {
         super(name, sceneModel)
 
-        const {sceneContent} = sceneModel;
-        const threeSceneNodes = getChildrenByType(sceneContent.props.children, [ThreeSceneContent]);
+        // using the scene content
+        const {sceneContent} = sceneModel
+
+        // find the three scene content
+        const threeSceneNodes = getChildrenByType(sceneContent.props.children, [ThreeSceneContent])
+
+        // set the three scene or use the default
         let threeScene = threeSceneNodes?.[0]
         this.threeScene = threeScene
             ? threeScene

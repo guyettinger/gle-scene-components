@@ -1,31 +1,36 @@
 import { ReactNode } from "react";
-import { Cartographic, CesiumTerrainProvider, createWorldTerrainAsync, sampleTerrainMostDetailed } from "cesium";
 import { getChildrenByType } from "react-nanny";
-import { CesiumSceneContent } from "../../components";
+import { Cartographic, CesiumTerrainProvider, createWorldTerrainAsync, sampleTerrainMostDetailed } from "cesium";
 import { Globe, Sun } from "resium";
-import { CesiumSceneViewExtension } from "./cesiumSceneViewExtension";
 import { SceneModel } from "../../models/scene";
 import { SceneExtensionModel } from "../../models/sceneExtension";
 import { SceneViewModel } from "../../models/sceneView";
+import { CesiumSceneViewExtension } from "./cesiumSceneViewExtension";
+import { CesiumSceneContent } from "../../components";
 
 export class CesiumSceneExtension extends SceneExtensionModel {
+
+    // cesium scene
+    cesiumScene: ReactNode
 
     // cesium terrain
     cesiumTerrainProvider: CesiumTerrainProvider | null = null
     cesiumTerrainProviderFactory: Promise<CesiumTerrainProvider> = new Promise(async (resolve) => {
         const cesiumTerrainProvider = await createWorldTerrainAsync()
         this.cesiumTerrainProvider = cesiumTerrainProvider
-        resolve(cesiumTerrainProvider);
+        resolve(cesiumTerrainProvider)
     })
-
-    // cesium scene
-    public cesiumScene: ReactNode
 
     constructor(name: string, sceneModel: SceneModel) {
         super(name, sceneModel)
 
-        const {sceneContent} = sceneModel;
-        const cesiumSceneNodes = getChildrenByType(sceneContent.props.children, [CesiumSceneContent]);
+        // using the scene content
+        const {sceneContent} = sceneModel
+
+        // find the cesium scene content
+        const cesiumSceneNodes = getChildrenByType(sceneContent.props.children, [CesiumSceneContent])
+
+        // set the cesium scene or use the default
         let cesiumScene = cesiumSceneNodes?.[0]
         this.cesiumScene = cesiumScene
             ? cesiumScene
@@ -41,7 +46,7 @@ export class CesiumSceneExtension extends SceneExtensionModel {
 
     queryHeightAtLongitudeLatitude = async (longitude: number, latitude: number): Promise<number> => {
         return this.sampleTerrainHeightAtCartographicPosition(Cartographic.fromDegrees(longitude, latitude)).then((cartographic) => {
-            return cartographic.height;
+            return cartographic.height
         })
     }
 
@@ -52,6 +57,6 @@ export class CesiumSceneExtension extends SceneExtensionModel {
 
     sampleTerrainHeightAtCartographicPositions = async (cartographicPositionArray: Cartographic[]): Promise<Cartographic[]> => {
         if (!this.cesiumTerrainProvider) throw new Error('Cesium Terrain Provider not initialized')
-        return await sampleTerrainMostDetailed(this.cesiumTerrainProvider, cartographicPositionArray);
+        return await sampleTerrainMostDetailed(this.cesiumTerrainProvider, cartographicPositionArray)
     }
 }

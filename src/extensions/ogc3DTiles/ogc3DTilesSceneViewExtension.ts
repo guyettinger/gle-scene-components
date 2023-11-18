@@ -17,9 +17,6 @@ export class Ogc3DTilesSceneViewExtension extends SceneViewExtensionModel {
         super(name, sceneViewModel, ogc3DTilesSceneExtension)
     }
 
-    initialize(state: RootState, delta: number): void {
-    }
-
     render(state: RootState, delta: number) {
         // get three state
         const {gl, scene, camera} = state;

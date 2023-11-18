@@ -9,5 +9,5 @@ export interface SceneViewProps extends HTMLAttributes<HTMLDivElement> {
 export interface SceneViewCanvasProps extends CanvasProps {
 }
 
-export interface SceneViewSceneProps extends SceneProps{
+export interface SceneViewSceneProps extends SceneProps {
 }

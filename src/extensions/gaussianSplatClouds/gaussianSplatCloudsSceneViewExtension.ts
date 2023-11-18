@@ -18,9 +18,6 @@ export class GaussianSplatCloudsSceneViewExtension extends SceneViewExtensionMod
         super(name, sceneViewModel, gaussianSplatCloudSceneExtension)
     }
 
-    initialize(state: RootState, delta: number): void {
-    }
-
     render(state: RootState, delta: number) {
         // render gaussian splats
         const gaussianSplatViewer = this.gaussianSplatViewer
@@ -30,7 +27,7 @@ export class GaussianSplatCloudsSceneViewExtension extends SceneViewExtensionMod
         }
     }
 
-    performDoubleClick = (e: ThreeEvent<MouseEvent>) => {
+    performDoubleClick(e: ThreeEvent<MouseEvent>) {
         if (!e) return
         const intersection = e.point
         if (!intersection) return

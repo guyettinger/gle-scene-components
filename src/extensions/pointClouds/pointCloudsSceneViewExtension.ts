@@ -43,7 +43,7 @@ export class PointCloudsSceneViewExtension extends SceneViewExtensionModel {
         }
     }
 
-    performDoubleClick = (e: ThreeEvent<MouseEvent>) => {
+    performDoubleClick(e: ThreeEvent<MouseEvent>) {
         if (!e) return
         const intersection = e.point
         if (!intersection) return

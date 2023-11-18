@@ -115,9 +115,6 @@ export class CesiumSceneViewExtension extends SceneViewExtensionModel {
         }
     }
 
-    invalidate(frames?: number) {
-        this.sceneViewModel?.invalidate(frames)
-    }
 
     syncCameras(cameraControls: CameraControls) {
 
