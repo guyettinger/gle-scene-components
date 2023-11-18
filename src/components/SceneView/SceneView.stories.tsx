@@ -10,6 +10,9 @@ import { CoordinatedGroup } from "../CoordinatedGroup";
 import { rotatePointCloudOctreeYUp } from "../../services";
 import { GoogleMapsPhotorealistic3DTiles } from "../Cesium3DTilesets";
 import { OGC3DTiles } from "../OGC3DTiles";
+import { ThreeSceneContent } from "../ThreeSceneContent/ThreeSceneContent";
+import { SceneContent } from "../SceneContent";
+import { CesiumSceneContent } from "../CesiumSceneContent/CesiumSceneContent";
 
 const meta: Meta<typeof SceneView> = {
     component: SceneView,
@@ -44,11 +47,13 @@ export const Boxes: Story = (args: any) => {
     const sceneModel: SceneModel = new SceneModel(
         'Scene1',
         upperArenaLongitudeLatitudeHeight,
-        <group>
-            <Box position={[4, 0, 0]}/>
-            <Box position={[0, 0, -4]}/>
-            <Box position={[-4, 0, 0]}/>
-        </group>
+        <SceneContent>
+            <ThreeSceneContent>
+                <Box position={[4, 0, 0]}/>
+                <Box position={[0, 0, -4]}/>
+                <Box position={[-4, 0, 0]}/>
+            </ThreeSceneContent>
+        </SceneContent>
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(
@@ -71,11 +76,13 @@ export const AnimatedBoxes: Story = (args: any) => {
     const sceneModel: SceneModel = new SceneModel(
         'Scene1',
         upperArenaLongitudeLatitudeHeight,
-        <group>
-            <Box position={[4, 0, 0]} animate={true}/>
-            <Box position={[0, 0, -4]} animate={true}/>
-            <Box position={[-4, 0, 0]} animate={true}/>
-        </group>
+        <SceneContent>
+            <ThreeSceneContent>
+                <Box position={[4, 0, 0]} animate={true}/>
+                <Box position={[0, 0, -4]} animate={true}/>
+                <Box position={[-4, 0, 0]} animate={true}/>
+            </ThreeSceneContent>
+        </SceneContent>
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(
@@ -99,14 +106,16 @@ export const PointClouds: Story = (args: any) => {
     const sceneModel: SceneModel = new SceneModel(
         'Scene1',
         upperArenaLongitudeLatitudeHeight,
-        <group>
-            <PointCloud
-                baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
-                fileName="cloud.js"
-                onPointCloudLoad={rotatePointCloudOctreeYUp}
-                position={[0, -.75, 0]}
-            />
-        </group>
+        <SceneContent>
+            <ThreeSceneContent>
+                <PointCloud
+                    baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
+                    fileName="cloud.js"
+                    onPointCloudLoad={rotatePointCloudOctreeYUp}
+                    position={[0, -.75, 0]}
+                />
+            </ThreeSceneContent>
+        </SceneContent>
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(
@@ -129,17 +138,19 @@ export const GaussianSplatClouds: Story = (args: any) => {
     const sceneModel: SceneModel = new SceneModel(
         'Scene1',
         upperArenaLongitudeLatitudeHeight,
-        <group>
-            <GaussianSplatCloud baseUrl="./"
-                                fileName="splats/ornament/ornament.splat"
-                                position={[0, 2, 0]}
-                                rotation={[
-                                    MathUtils.degToRad(-30),
-                                    MathUtils.degToRad(-45),
-                                    MathUtils.degToRad(180), 'ZYX'
-                                ]}
-            />
-        </group>
+        <SceneContent>
+            <ThreeSceneContent>
+                <GaussianSplatCloud baseUrl="./"
+                                    fileName="splats/ornament/ornament.splat"
+                                    position={[0, 2, 0]}
+                                    rotation={[
+                                        MathUtils.degToRad(-30),
+                                        MathUtils.degToRad(-45),
+                                        MathUtils.degToRad(180), 'ZYX'
+                                    ]}
+                />
+            </ThreeSceneContent>
+        </SceneContent>
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(
@@ -165,17 +176,19 @@ export const CoordinatedGroups: Story = (args: any) => {
     const sceneModel: SceneModel = new SceneModel(
         'Scene1',
         upperArenaLongitudeLatitudeHeight,
-        <group>
-            <CoordinatedGroup longitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}>
-                <Box position={[0, 0, 0]}/>
-            </CoordinatedGroup>
-            <CoordinatedGroup longitudeLatitudeHeight={barnParkingLotLongitudeLatitudeHeight}>
-                <Box position={[0, 0, 0]}/>
-            </CoordinatedGroup>
-            <CoordinatedGroup longitudeLatitudeHeight={lowerArenaLongitudeLatitudeHeight}>
-                <Box position={[0, 0, 0]}/>
-            </CoordinatedGroup>
-        </group>
+        <SceneContent>
+            <ThreeSceneContent>
+                <CoordinatedGroup longitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}>
+                    <Box position={[0, 0, 0]}/>
+                </CoordinatedGroup>
+                <CoordinatedGroup longitudeLatitudeHeight={barnParkingLotLongitudeLatitudeHeight}>
+                    <Box position={[0, 0, 0]}/>
+                </CoordinatedGroup>
+                <CoordinatedGroup longitudeLatitudeHeight={lowerArenaLongitudeLatitudeHeight}>
+                    <Box position={[0, 0, 0]}/>
+                </CoordinatedGroup>
+            </ThreeSceneContent>
+        </SceneContent>
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(
@@ -212,8 +225,14 @@ export const GoogleTiles: Story = (args: any) => {
     const sceneModel: SceneModel = new SceneModel(
         'Scene1',
         bobbyDoddStadiumLongitudeLatitudeHeight,
-        <Box position={[0, 0, 0]}/>,
-        <GoogleMapsPhotorealistic3DTiles/>
+        <SceneContent>
+            <ThreeSceneContent>
+                <Box position={[0, 0, 0]}/>,
+            </ThreeSceneContent>
+            <CesiumSceneContent>
+                <GoogleMapsPhotorealistic3DTiles/>
+            </CesiumSceneContent>
+        </SceneContent>
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(
@@ -236,16 +255,18 @@ export const ThreeDTiles: Story = (args: any) => {
     const sceneModel: SceneModel = new SceneModel(
         'Scene1',
         lowerArenaLongitudeLatitudeHeight,
-        <group>
-            <OGC3DTiles url={"https://storage.googleapis.com/ogc-3d-tiles/museumMeshed/tileset.json"}
-                        position={[0, -2, 0]}
-                        rotation={[
-                            MathUtils.degToRad(0),
-                            MathUtils.degToRad(90),
-                            MathUtils.degToRad(180), 'XYZ'
-                        ]}
-            />
-        </group>,
+        <SceneContent>
+            <ThreeSceneContent>
+                <OGC3DTiles url={"https://storage.googleapis.com/ogc-3d-tiles/museumMeshed/tileset.json"}
+                            position={[0, -2, 0]}
+                            rotation={[
+                                MathUtils.degToRad(0),
+                                MathUtils.degToRad(90),
+                                MathUtils.degToRad(180), 'XYZ'
+                            ]}
+                />
+            </ThreeSceneContent>
+        </SceneContent>
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(
@@ -271,39 +292,43 @@ export const Everything: Story = (args: any) => {
     const sceneModel: SceneModel = new SceneModel(
         'Scene1',
         upperArenaLongitudeLatitudeHeight,
-        <group>
-            <CoordinatedGroup longitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}>
-                <PointCloud
-                    baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
-                    fileName="cloud.js"
-                    onPointCloudLoad={rotatePointCloudOctreeYUp}
-                    position={[0, -.75, 0]}
-                />
-            </CoordinatedGroup>
-            <CoordinatedGroup longitudeLatitudeHeight={barnParkingLotLongitudeLatitudeHeight}>
-                <Box position={[0, 0, 0]}/>
-            </CoordinatedGroup>
-            <CoordinatedGroup longitudeLatitudeHeight={lowerArenaLongitudeLatitudeHeight}>
-                <group position={[0, 2.60, -15]}
-                       rotation={[MathUtils.degToRad(30), 0, 0, 'XYZ']}>
-                    <GaussianSplatCloud baseUrl="./"
-                                        fileName="splats/ornament/ornament.splat"
-                                        rotation={[
-                                            MathUtils.degToRad(-38),
-                                            MathUtils.degToRad(-85),
-                                            MathUtils.degToRad(180), 'ZYX']}
+        <SceneContent>
+            <ThreeSceneContent>
+                <CoordinatedGroup longitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}>
+                    <PointCloud
+                        baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
+                        fileName="cloud.js"
+                        onPointCloudLoad={rotatePointCloudOctreeYUp}
+                        position={[0, -.75, 0]}
                     />
-                </group>
-                <OGC3DTiles url={"https://storage.googleapis.com/ogc-3d-tiles/museumMeshed/tileset.json"}
-                            position={[0, -2, 0]}
-                            rotation={[
-                                MathUtils.degToRad(0),
-                                MathUtils.degToRad(90),
-                                MathUtils.degToRad(180), 'XYZ'
-                            ]}/>
-            </CoordinatedGroup>
-        </group>,
-        <GoogleMapsPhotorealistic3DTiles/>
+                </CoordinatedGroup>
+                <CoordinatedGroup longitudeLatitudeHeight={barnParkingLotLongitudeLatitudeHeight}>
+                    <Box position={[0, 0, 0]}/>
+                </CoordinatedGroup>
+                <CoordinatedGroup longitudeLatitudeHeight={lowerArenaLongitudeLatitudeHeight}>
+                    <group position={[0, 2.60, -15]}
+                           rotation={[MathUtils.degToRad(30), 0, 0, 'XYZ']}>
+                        <GaussianSplatCloud baseUrl="./"
+                                            fileName="splats/ornament/ornament.splat"
+                                            rotation={[
+                                                MathUtils.degToRad(-38),
+                                                MathUtils.degToRad(-85),
+                                                MathUtils.degToRad(180), 'ZYX']}
+                        />
+                    </group>
+                    <OGC3DTiles url={"https://storage.googleapis.com/ogc-3d-tiles/museumMeshed/tileset.json"}
+                                position={[0, -2, 0]}
+                                rotation={[
+                                    MathUtils.degToRad(0),
+                                    MathUtils.degToRad(90),
+                                    MathUtils.degToRad(180), 'XYZ'
+                                ]}/>
+                </CoordinatedGroup>
+            </ThreeSceneContent>
+            <CesiumSceneContent>
+                <GoogleMapsPhotorealistic3DTiles/>
+            </CesiumSceneContent>
+        </SceneContent>
     )
 
     const sceneViewModel: SceneViewModel = new SceneViewModel(

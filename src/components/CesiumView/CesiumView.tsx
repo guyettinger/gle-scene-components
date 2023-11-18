@@ -3,6 +3,7 @@ import { SceneMode, Viewer as CesiumViewer } from "cesium"
 import { observer } from "mobx-react";
 import { useSceneViewModel } from "../../providers";
 import { CesiumViewProps } from "./CesiumView.types";
+import { CesiumSceneViewExtension, ExtensionNames } from "../../extensions";
 
 /*
     Component Lifecycle
@@ -16,9 +17,9 @@ import { CesiumViewProps } from "./CesiumView.types";
  */
 export const CesiumView = observer(({}: CesiumViewProps) => {
     const sceneViewModel = useSceneViewModel()
-    const cesiumSceneViewModel = sceneViewModel.cesiumSceneViewModel
-    const sceneModel = sceneViewModel.sceneModel
-    const {cesiumScene} = sceneModel
+    const cesiumSceneViewExtension = sceneViewModel.getSceneViewExtension<CesiumSceneViewExtension>(ExtensionNames.Cesium)
+    const cesiumSceneExtension = cesiumSceneViewExtension.cesiumSceneExtension
+    const {cesiumScene} = cesiumSceneExtension
     const creditContainer = typeof document !== 'undefined' ? document?.createElement("div") : null!
 
     const handleRef = (e: CesiumComponentRef<CesiumViewer> | null) => {
@@ -29,7 +30,7 @@ export const CesiumView = observer(({}: CesiumViewProps) => {
     }
 
     const handleCesiumViewer = (cesiumViewer: CesiumViewer) => {
-        cesiumSceneViewModel.cesiumViewer = cesiumViewer;
+        cesiumSceneViewExtension.cesiumViewer = cesiumViewer;
     }
 
     return (
@@ -39,7 +40,7 @@ export const CesiumView = observer(({}: CesiumViewProps) => {
                 creditContainer={creditContainer}
                 homeButton={false}
                 navigationHelpButton={false}
-                terrainProvider={sceneModel.cesiumTerrainProviderFactory}
+                terrainProvider={cesiumSceneExtension.cesiumTerrainProviderFactory}
                 timeline={false}
                 useDefaultRenderLoop={false}
                 geocoder={false}

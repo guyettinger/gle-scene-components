@@ -38,30 +38,43 @@ const lowerArenaLongitudeLatitudeHeight = new Vector3(-83.76612684589652, 34.400
 const sceneModel: SceneModel = new SceneModel(
     'Scene1',
     upperArenaLongitudeLatitudeHeight,
-    <group>
-        <CoordinatedGroup longitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}>
-            <PointCloud
-                baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
-                fileName="cloud.js"
-                onPointCloudLoad={rotatePointCloudOctreeYUp}
-                position={[0, -.75, 0]}
-            />
-        </CoordinatedGroup>
-        <CoordinatedGroup longitudeLatitudeHeight={barnParkingLotLongitudeLatitudeHeight}>
-            <Box position={[0, 0, 0]}/>
-        </CoordinatedGroup>
-        <CoordinatedGroup longitudeLatitudeHeight={lowerArenaLongitudeLatitudeHeight}>
-            <GaussianSplatCloud baseUrl="./"
-                                fileName="splats/ornament/ornament.splat"
-                                position={[0, 1, 0]}
-                                rotation={[
-                                    MathUtils.degToRad(-30),
-                                    MathUtils.degToRad(-45),
-                                    MathUtils.degToRad(180), 'ZYX']}
-            />
-        </CoordinatedGroup>
-    </group>,
-    <GoogleMapsPhotorealistic3DTiles/>
+    <SceneContent>
+        <ThreeSceneContent>
+            <CoordinatedGroup longitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}>
+                <PointCloud
+                    baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
+                    fileName="cloud.js"
+                    onPointCloudLoad={rotatePointCloudOctreeYUp}
+                    position={[0, -.75, 0]}
+                />
+            </CoordinatedGroup>
+            <CoordinatedGroup longitudeLatitudeHeight={barnParkingLotLongitudeLatitudeHeight}>
+                <Box position={[0, 0, 0]}/>
+            </CoordinatedGroup>
+            <CoordinatedGroup longitudeLatitudeHeight={lowerArenaLongitudeLatitudeHeight}>
+                <group position={[0, 2.60, -15]}
+                       rotation={[MathUtils.degToRad(30), 0, 0, 'XYZ']}>
+                    <GaussianSplatCloud baseUrl="./"
+                                        fileName="splats/ornament/ornament.splat"
+                                        rotation={[
+                                            MathUtils.degToRad(-38),
+                                            MathUtils.degToRad(-85),
+                                            MathUtils.degToRad(180), 'ZYX']}
+                    />
+                </group>
+                <OGC3DTiles url={"https://storage.googleapis.com/ogc-3d-tiles/museumMeshed/tileset.json"}
+                            position={[0, -2, 0]}
+                            rotation={[
+                                MathUtils.degToRad(0),
+                                MathUtils.degToRad(90),
+                                MathUtils.degToRad(180), 'XYZ'
+                            ]}/>
+            </CoordinatedGroup>
+        </ThreeSceneContent>
+        <CesiumSceneContent>
+            <GoogleMapsPhotorealistic3DTiles/>
+        </CesiumSceneContent>
+    </SceneContent>
 )
 
 // create a view of the scene

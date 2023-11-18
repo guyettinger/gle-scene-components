@@ -3,8 +3,8 @@ import { Cartesian3 } from "cesium";
 import { RootState } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
 import { SceneModel } from "../scene";
-import { CesiumSceneViewModel } from "../cesiumSceneView";
 import { SceneViewExtensionModel } from "../sceneViewExtension";
+import { CesiumSceneViewExtension, ExtensionNames } from "../../extensions";
 
 export class SceneViewModel {
 
@@ -19,9 +19,6 @@ export class SceneViewModel {
     // scene view extensions
     sceneViewExtensions: Map<string, SceneViewExtensionModel> = new Map<string, SceneViewExtensionModel>()
 
-    // cesium
-    cesiumSceneViewModel: CesiumSceneViewModel
-
     // debug
     debug: boolean = false
 
@@ -34,11 +31,13 @@ export class SceneViewModel {
             const sceneViewExtensionModel = sceneExtensionModel.createSceneViewExtension(this)
             this.sceneViewExtensions.set(sceneViewExtensionModel.name, sceneViewExtensionModel)
         })
-
-        this.cesiumSceneViewModel = new CesiumSceneViewModel('cesium', this)
     }
 
-    render = (state: RootState, delta: number) => {
+    getSceneViewExtension<T extends SceneViewExtensionModel>(name: string): T {
+        return this.sceneViewExtensions.get(name) as T
+    }
+
+    render(state: RootState, delta: number) {
         // get three state
         const {gl, scene, camera} = state;
 
@@ -72,35 +71,34 @@ export class SceneViewModel {
         this.sceneViewExtensions.forEach((sceneViewExtension) => {
             sceneViewExtension.render(state, delta)
         })
-
-        // render cesium
-        this.cesiumSceneViewModel.render(state, delta)
     }
 
-    invalidate = (frames?: number) => {
+    invalidate(frames?: number) {
         this.sceneRootState?.invalidate(frames)
     }
 
-    syncCameras = () => {
+    syncCameras() {
         // wait for camera controls
         const cameraControls = this.cameraControls
         if (!cameraControls) return
-        this.cesiumSceneViewModel.syncCameras(cameraControls)
+        this.sceneViewExtensions.forEach((sceneViewExtension) => {
+            sceneViewExtension.syncCameras(cameraControls)
+        })
     }
 
-    moveCameraToLongitudeLatitudeHeight = (longitudeLatitudeHeight: Vector3, enableTransitions: boolean = false): Promise<void> => {
+    moveCameraToLongitudeLatitudeHeight(longitudeLatitudeHeight: Vector3, enableTransitions: boolean = false): Promise<void> {
         const scenePosition = new Vector3()
         this.sceneModel.getScenePositionForLongitudeLatitudeHeight(longitudeLatitudeHeight, scenePosition)
         return this.moveCameraToScenePosition(scenePosition, enableTransitions)
     }
 
-    moveCameraToCartesian = (scenePositionCartesian: Cartesian3, enableTransitions: boolean = false): Promise<void> => {
+    moveCameraToCartesian(scenePositionCartesian: Cartesian3, enableTransitions: boolean = false): Promise<void> {
         const scenePosition = new Vector3()
         this.sceneModel.getScenePositionForCartesian(scenePositionCartesian, scenePosition)
         return this.moveCameraToScenePosition(scenePosition, enableTransitions)
     }
 
-    moveCameraToScenePosition = (scenePosition: Vector3, enableTransitions: boolean = false): Promise<void> => {
+    moveCameraToScenePosition(scenePosition: Vector3, enableTransitions: boolean = false): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             // get current camera target
             const currentTarget = this.cameraControls?.getTarget(new Vector3(), true)
@@ -128,13 +126,13 @@ export class SceneViewModel {
         })
     }
 
-    setCameraTargetCartesian = (targetCartesian: Cartesian3, enableTransitions: boolean = false): Promise<void> => {
+    setCameraTargetCartesian(targetCartesian: Cartesian3, enableTransitions: boolean = false): Promise<void> {
         let sceneTarget = new Vector3()
         this.sceneModel.getScenePositionForCartesian(targetCartesian, sceneTarget)
         return this.setCameraTarget(sceneTarget, enableTransitions)
     }
 
-    setCameraTarget = (target: Vector3, enableTransitions: boolean = false): Promise<void> => {
+    setCameraTarget(target: Vector3, enableTransitions: boolean = false): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             let cameraPosition = this.cameraControls?.getPosition(new Vector3(), true)
             if (!cameraPosition) {
@@ -148,7 +146,7 @@ export class SceneViewModel {
         })
     }
 
-    setCameraLookAt = (position: Vector3, target: Vector3, enableTransitions: boolean = false): Promise<void> => {
+    setCameraLookAt(position: Vector3, target: Vector3, enableTransitions: boolean = false): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             let cameraControls = this.cameraControls
             if (!cameraControls) {
@@ -169,12 +167,12 @@ export class SceneViewModel {
         })
     }
 
-    passMouseEvent = (e: MouseEvent) => {
+    passMouseEvent(e: MouseEvent) {
         if (!e) return
-        this.passMouseEventToCesium(e)
+        this.passMouseEventToBaseLayer(e)
     }
 
-    passMouseEventToCesium = (e: MouseEvent) => {
+    passMouseEventToBaseLayer(e: MouseEvent) {
         if (!e) return
 
         switch (e.type) {
@@ -183,16 +181,13 @@ export class SceneViewModel {
                 if (e.detail > 1) return
                 break;
             case 'dblclick':
-                this.performDoubleClickOnCesium(e)
+                this.performDoubleClickOnBaseLayer(e)
                 break;
         }
     }
 
-    performDoubleClickOnCesium = (e: MouseEvent) => {
-        this.cesiumSceneViewModel.performDoubleClick(e)
-    }
-
-    getSceneViewExtension<T extends SceneViewExtensionModel>(name: string): T {
-        return this.sceneViewExtensions.get(name) as T
+    performDoubleClickOnBaseLayer(e: MouseEvent) {
+        const cesiumSceneViewExtension = this.getSceneViewExtension<CesiumSceneViewExtension>(ExtensionNames.Cesium)
+        cesiumSceneViewExtension.performDoubleClick(e)
     }
 }

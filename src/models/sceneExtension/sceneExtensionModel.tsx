@@ -8,4 +8,5 @@ export abstract class SceneExtensionModel {
     }
 
     abstract createSceneViewExtension(sceneViewModel: SceneViewModel): SceneViewExtensionModel
+
 }

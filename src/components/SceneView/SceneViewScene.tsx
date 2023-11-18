@@ -1,12 +1,14 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
 import { useRef } from "react";
-import { useSceneModel, useSceneViewModel } from "../../providers";
+import { useSceneViewModel } from "../../providers";
 import { SceneViewSceneProps } from "./SceneView.types";
+import { ExtensionNames, ThreeSceneViewExtension } from "../../extensions";
 
-export const SceneViewScene = ({...sceneProps}:SceneViewSceneProps) => {
+export const SceneViewScene = ({...sceneProps}: SceneViewSceneProps) => {
     const sceneViewModel = useSceneViewModel()
-    const {threeScene} = useSceneModel()
+    const threeSceneViewExtension = sceneViewModel.getSceneViewExtension<ThreeSceneViewExtension>(ExtensionNames.Three)
+    const {threeScene} = threeSceneViewExtension.threeSceneExtension
     const cameraControlsReference = useRef<CameraControls>(null)
     const debug = sceneViewModel.debug
 

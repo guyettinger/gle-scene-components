@@ -1,4 +1,3 @@
-export * from "./cesiumSceneView"
 export * from "./scene"
 export * from "./sceneView"
 export * from "./sceneExtension"

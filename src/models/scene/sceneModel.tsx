@@ -1,13 +1,8 @@
-import { ReactNode } from "react";
+import { ReactElement } from "react";
 import { Vector3 } from "three";
-import { Globe, Sun } from "resium";
 import {
     Cartesian3,
-    Cartographic,
-    CesiumTerrainProvider,
-    createWorldTerrainAsync,
-    Ellipsoid,
-    sampleTerrainMostDetailed
+    Ellipsoid
 } from "cesium";
 import {
     getScenePositionForCartesian,
@@ -19,8 +14,11 @@ import {
     ExtensionNames,
     GaussianSplatCloudsSceneExtension,
     Ogc3DTilesSceneExtension,
-    PointCloudsSceneExtension
+    PointCloudsSceneExtension,
+    CesiumSceneExtension,
+    ThreeSceneExtension
 } from "../../extensions";
+import { SceneContentProps } from "../../components";
 
 export class SceneModel {
 
@@ -31,19 +29,10 @@ export class SceneModel {
     // scene extensions
     sceneExtensions: Map<string, SceneExtensionModel> = new Map<string, SceneExtensionModel>()
 
-    // cesium terrain
-    cesiumTerrainProvider: CesiumTerrainProvider | null = null
-    cesiumTerrainProviderFactory: Promise<CesiumTerrainProvider> = new Promise(async (resolve) => {
-        const cesiumTerrainProvider = await createWorldTerrainAsync()
-        this.cesiumTerrainProvider = cesiumTerrainProvider
-        resolve(cesiumTerrainProvider);
-    })
-
     constructor(
         public name: string,
         public sceneCenterLongitudeLatitudeHeight: Vector3,
-        public threeScene?: ReactNode,
-        public cesiumScene?: ReactNode
+        public sceneContent: ReactElement<SceneContentProps>,
     ) {
         // initialize scene center
         Cartesian3.fromDegrees(
@@ -54,18 +43,9 @@ export class SceneModel {
             this.sceneCenterCartesian
         )
 
-        // default three scene
-        if (!this.threeScene) {
-            this.threeScene = <group></group>
-        }
-
-        // default cesium scene
-        if (!this.cesiumScene) {
-            this.cesiumScene = <>
-                <Sun glowFactor={20}/>
-                <Globe enableLighting={true}/>
-            </>
-        }
+        // three
+        const threeSceneExtensionModel = new ThreeSceneExtension(ExtensionNames.Three, this)
+        this.sceneExtensions.set(threeSceneExtensionModel.name, threeSceneExtensionModel)
 
         // gaussian splat clouds
         const gaussianSplatCloudsSceneExtensionModel = new GaussianSplatCloudsSceneExtension(ExtensionNames.GaussianSplatClouds, this)
@@ -78,36 +58,24 @@ export class SceneModel {
         // OGC 3D Tiles
         const ogc3DTilesSceneExtensionModel = new Ogc3DTilesSceneExtension(ExtensionNames.OGC3DTiles, this)
         this.sceneExtensions.set(ogc3DTilesSceneExtensionModel.name, ogc3DTilesSceneExtensionModel)
+
+        // cesium
+        const cesiumSceneExtensionModel = new CesiumSceneExtension(ExtensionNames.Cesium, this)
+        this.sceneExtensions.set(cesiumSceneExtensionModel.name, cesiumSceneExtensionModel)
     }
 
-    getScenePositionForLongitudeLatitudeHeight = (longitudeLatitudeHeight: Vector3, scenePosition = new Vector3()): Vector3 => {
+    getScenePositionForLongitudeLatitudeHeight(longitudeLatitudeHeight: Vector3, scenePosition = new Vector3()): Vector3 {
         getScenePositionForLongitudeLatitudeHeight(this.sceneCenter, this.sceneCenterCartesian, longitudeLatitudeHeight, scenePosition)
         return scenePosition
     }
 
-    getScenePositionForCartesian = (scenePositionCartesian: Cartesian3, scenePosition = new Vector3()): Vector3 => {
+    getScenePositionForCartesian(scenePositionCartesian: Cartesian3, scenePosition = new Vector3()): Vector3 {
         getScenePositionForCartesian(this.sceneCenter, this.sceneCenterCartesian, scenePositionCartesian, scenePosition)
         return scenePosition
     }
 
-    getSceneSurfaceNormalForLongitudeLatitudeHeight = (longitudeLatitudeHeight: Vector3, sceneSurfaceNormal = new Vector3()): Vector3 => {
+    getSceneSurfaceNormalForLongitudeLatitudeHeight(longitudeLatitudeHeight: Vector3, sceneSurfaceNormal = new Vector3()): Vector3 {
         getSceneSurfaceNormalForLongitudeLatitudeHeight(longitudeLatitudeHeight, sceneSurfaceNormal)
         return sceneSurfaceNormal
-    }
-
-    queryHeightAtLongitudeLatitude = async (longitude: number, latitude: number): Promise<number> => {
-        return this.sampleTerrainHeightAtCartographicPosition(Cartographic.fromDegrees(longitude, latitude)).then((cartographic) => {
-            return cartographic.height;
-        })
-    }
-
-    sampleTerrainHeightAtCartographicPosition = async (cartographicPosition: Cartographic): Promise<Cartographic> => {
-        const positionArray = await this.sampleTerrainHeightAtCartographicPositions([cartographicPosition])
-        return positionArray[0]
-    }
-
-    sampleTerrainHeightAtCartographicPositions = async (cartographicPositionArray: Cartographic[]): Promise<Cartographic[]> => {
-        if (!this.cesiumTerrainProvider) throw new Error('Cesium Terrain Provider not initialized')
-        return await sampleTerrainMostDetailed(this.cesiumTerrainProvider, cartographicPositionArray);
     }
 }

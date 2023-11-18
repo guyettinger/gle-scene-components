@@ -1,5 +1,7 @@
 export enum ExtensionNames {
+    Cesium = "Cesium",
     GaussianSplatClouds = 'Gaussian Splat Clouds',
     OGC3DTiles = "OGC 3D Tiles",
-    PointClouds = "Point Clouds"
+    PointClouds = "Point Clouds",
+    Three = "Three"
 }

@@ -2,6 +2,7 @@ import { SceneModel } from "../scene";
 import { SceneViewModel } from "../sceneView";
 import { SceneExtensionModel } from "../sceneExtension";
 import { RootState } from "@react-three/fiber";
+import { CameraControls } from "@react-three/drei";
 
 export abstract class SceneViewExtensionModel {
 
@@ -18,4 +19,8 @@ export abstract class SceneViewExtensionModel {
     abstract initialize(state: RootState, delta: number): void
 
     abstract render(state: RootState, delta: number): void
+
+    syncCameras(cameraControls: CameraControls) {
+        // override
+    }
 }

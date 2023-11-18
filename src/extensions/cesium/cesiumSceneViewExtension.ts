@@ -16,16 +16,13 @@ import {
 } from "cesium";
 import { CameraControls } from "@react-three/drei";
 import { normalizeAngle, offsetCartesianPositionBySceneOffset } from "../../services";
-import { SceneViewModel } from "../sceneView";
-import { SceneModel } from "../scene";
+import { SceneViewModel } from "../../models/sceneView";
+import { CesiumSceneExtension } from "./cesiumSceneExtension";
+import { SceneViewExtensionModel } from "../../models/sceneViewExtension";
 
-export class CesiumSceneViewModel {
-
-    // scene model
-    sceneModel: SceneModel
+export class CesiumSceneViewExtension extends SceneViewExtensionModel {
 
     // cesium
-    cesiumInitialized: boolean = false
     cesiumViewer: CesiumViewer | null = null
     cesiumCamera: CesiumCamera | null = null
     cesiumScene: CesiumScene | null = null
@@ -47,12 +44,13 @@ export class CesiumSceneViewModel {
 
     constructor(
         public name: string,
-        public sceneViewModel: SceneViewModel
+        public sceneViewModel: SceneViewModel,
+        public cesiumSceneExtension: CesiumSceneExtension
     ) {
-        this.sceneModel = sceneViewModel.sceneModel
+        super(name, sceneViewModel, cesiumSceneExtension)
     }
 
-    render = (state: RootState, delta: number) => {
+    initialize(state: RootState, delta: number): void {
 
         // wait for cesium
         const cesiumViewer = this.cesiumViewer
@@ -62,10 +60,10 @@ export class CesiumSceneViewModel {
         }
 
         // initialize cesium
-        if (!this.cesiumInitialized) {
+        if (!this.initialized) {
 
             // cesium initialized
-            this.cesiumInitialized = true;
+            this.initialized = true;
 
             // initialize camera
             this.cesiumCamera = cesiumViewer.camera;
@@ -88,6 +86,13 @@ export class CesiumSceneViewModel {
 
             console.log('cesium initialized')
         }
+    }
+
+    render(state: RootState, delta: number) {
+
+        // wait for cesium
+        const cesiumViewer = this.cesiumViewer
+        if (!cesiumViewer) return
 
         // render cesium scene
         cesiumViewer.render()
@@ -110,13 +115,13 @@ export class CesiumSceneViewModel {
         }
     }
 
-    invalidate = (frames?: number) => {
+    invalidate(frames?: number) {
         this.sceneViewModel?.invalidate(frames)
     }
 
-    syncCameras = (cameraControls: CameraControls) => {
+    syncCameras(cameraControls: CameraControls) {
 
-        if (!this.cesiumInitialized) return
+        if (!this.initialized) return
 
         // wait for three camera
         const threeCamera = cameraControls?.camera
@@ -190,7 +195,7 @@ export class CesiumSceneViewModel {
         }
     }
 
-    performDoubleClick = (e: MouseEvent) => {
+    performDoubleClick(e: MouseEvent) {
         const cesiumCamera = this.cesiumCamera
         if (!cesiumCamera) return
 
@@ -217,38 +222,38 @@ export class CesiumSceneViewModel {
         this.addRemoveCallback(tilesLoadingRemoveCallback)
     }
 
-    private handleGlobeLoadingProgress = (globe: Globe, progress: number) => {
+    private handleGlobeLoadingProgress(globe: Globe, progress: number) {
         this.globeTileLoadingCount = progress
     }
 
-    public addCesium3DTilesetFromUrl = async (url: string, options?: Cesium3DTileset.ConstructorOptions): Promise<void> => {
+    public async addCesium3DTilesetFromUrl(url: string, options?: Cesium3DTileset.ConstructorOptions): Promise<void> {
         const cesium3DTileset = await Cesium3DTileset.fromUrl(url, options)
         this.addCesium3DTileset(cesium3DTileset)
     }
 
-    public addCesium3DTileset = (cesium3DTileset: Cesium3DTileset) => {
+    public addCesium3DTileset(cesium3DTileset: Cesium3DTileset) {
         if (!this.cesiumScene) return
         this.cesium3DTilesets.push(cesium3DTileset)
         this.addCesium3dTilesetLoadingListener(cesium3DTileset)
         this.cesiumScene.primitives.add(cesium3DTileset)
     }
 
-    private addCesium3dTilesetLoadingListener = (cesium3DTileset: Cesium3DTileset) => {
+    private addCesium3dTilesetLoadingListener(cesium3DTileset: Cesium3DTileset) {
         let tilesLoadingRemoveCallback: Event.RemoveCallback = cesium3DTileset.loadProgress.addEventListener((count) => {
             this.handleCesium3dTilesetLoadingProgress(cesium3DTileset, count)
         })
         this.addRemoveCallback(tilesLoadingRemoveCallback)
     }
 
-    private handleCesium3dTilesetLoadingProgress = (cesium3DTileset: Cesium3DTileset, progress: number) => {
+    private handleCesium3dTilesetLoadingProgress(cesium3DTileset: Cesium3DTileset, progress: number) {
         this.cesium3DTilesetsLoadingProgress.set(cesium3DTileset, progress)
     }
 
-    private addRemoveCallback = (eventListenerRemoveCallback: Event.RemoveCallback) => {
+    private addRemoveCallback(eventListenerRemoveCallback: Event.RemoveCallback) {
         this.eventListenerRemoveCallbacks.push(eventListenerRemoveCallback)
     }
 
-    private clearRemoveCallbacks = () => {
+    private clearRemoveCallbacks() {
         while (this.eventListenerRemoveCallbacks.length) {
             const removeCallback = this.eventListenerRemoveCallbacks.pop()
             if (removeCallback) {
