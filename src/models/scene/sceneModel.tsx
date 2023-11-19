@@ -1,24 +1,15 @@
 import { ReactElement } from "react";
 import { Vector3 } from "three";
-import {
-    Cartesian3,
-    Ellipsoid
-} from "cesium";
+import { Cartesian3, Ellipsoid } from "cesium";
 import {
     getScenePositionForCartesian,
     getScenePositionForLongitudeLatitudeHeight,
     getSceneSurfaceNormalForLongitudeLatitudeHeight
 } from "../../services/projection/projectionService";
-import {
-    SceneExtensionNames,
-    GaussianSplatCloudsSceneExtension,
-    Ogc3DTilesSceneExtension,
-    PointCloudsSceneExtension,
-    CesiumSceneExtension,
-    ThreeSceneExtension,
-    SceneExtension
-} from "../../extensions";
+import { SceneExtension } from "../../extensions";
 import { SceneContentProps } from "../../components";
+import { DefaultSceneConfigurationModel, SceneConfiguration } from "../sceneConfiguration";
+
 
 export class SceneModel {
 
@@ -33,6 +24,7 @@ export class SceneModel {
         public name: string,
         public sceneCenterLongitudeLatitudeHeight: Vector3,
         public sceneContent: ReactElement<SceneContentProps>,
+        public sceneConfiguration: SceneConfiguration = new DefaultSceneConfigurationModel()
     ) {
         // initialize scene center
         Cartesian3.fromDegrees(
@@ -43,25 +35,11 @@ export class SceneModel {
             this.sceneCenterCartesian
         )
 
-        // three
-        const threeSceneExtension = new ThreeSceneExtension(SceneExtensionNames.Three, this)
-        this.sceneExtensions.set(threeSceneExtension.name, threeSceneExtension)
-
-        // gaussian splat clouds
-        const gaussianSplatCloudsSceneExtension = new GaussianSplatCloudsSceneExtension(SceneExtensionNames.GaussianSplatClouds, this)
-        this.sceneExtensions.set(gaussianSplatCloudsSceneExtension.name, gaussianSplatCloudsSceneExtension)
-
-        // point clouds
-        const pointCloudsSceneExtension = new PointCloudsSceneExtension(SceneExtensionNames.PointClouds, this)
-        this.sceneExtensions.set(pointCloudsSceneExtension.name, pointCloudsSceneExtension)
-
-        // OGC 3D Tiles
-        const ogc3DTilesSceneExtension = new Ogc3DTilesSceneExtension(SceneExtensionNames.OGC3DTiles, this)
-        this.sceneExtensions.set(ogc3DTilesSceneExtension.name, ogc3DTilesSceneExtension)
-
-        // cesium
-        const cesiumSceneExtension = new CesiumSceneExtension(SceneExtensionNames.Cesium, this)
-        this.sceneExtensions.set(cesiumSceneExtension.name, cesiumSceneExtension)
+        // configure scene extensions
+        const sceneExtensions = sceneConfiguration.configureSceneExtensions(this)
+        sceneExtensions.forEach((sceneExtension) => {
+            this.sceneExtensions.set(sceneExtension.name, sceneExtension)
+        })
     }
 
     getScenePositionForLongitudeLatitudeHeight(longitudeLatitudeHeight: Vector3, scenePosition = new Vector3()): Vector3 {

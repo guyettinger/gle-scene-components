@@ -1,2 +1,3 @@
-export * from "./scene"
-export * from "./sceneView"
+export * from './scene'
+export * from './sceneView'
+export * from './sceneConfiguration'
