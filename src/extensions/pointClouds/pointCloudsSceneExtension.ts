@@ -1,10 +1,10 @@
 import { PointCloudOctree, Potree } from "gle-potree";
 import { SceneModel } from "../../models/scene";
-import { SceneExtensionModel } from "../../models/sceneExtension";
 import { SceneViewModel } from "../../models/sceneView";
-import { PointCloudsSceneViewExtension } from "./pointCloudsSceneViewExtension";
+import { SceneExtension } from "../sceneExtension";
+import { PointCloudsSceneViewForegroundLayerExtension } from "./pointCloudsSceneViewForegroundLayerExtension";
 
-export class PointCloudsSceneExtension extends SceneExtensionModel {
+export class PointCloudsSceneExtension extends SceneExtension {
 
     // point clouds
     potree = new Potree()
@@ -25,7 +25,7 @@ export class PointCloudsSceneExtension extends SceneExtensionModel {
         this.pointBudget = 2_000_000
     }
 
-    createSceneViewExtension(sceneViewModel: SceneViewModel): PointCloudsSceneViewExtension {
-        return new PointCloudsSceneViewExtension(this.name, sceneViewModel, this)
+    createSceneViewExtension(sceneViewModel: SceneViewModel): PointCloudsSceneViewForegroundLayerExtension {
+        return new PointCloudsSceneViewForegroundLayerExtension(this.name, sceneViewModel, this)
     }
 }

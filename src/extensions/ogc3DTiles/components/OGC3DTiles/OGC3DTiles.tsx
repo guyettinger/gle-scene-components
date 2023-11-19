@@ -3,12 +3,13 @@ import { Group } from "three";
 import { GroupProps, ThreeEvent, useFrame } from "@react-three/fiber";
 import { OGC3DTile } from "gle-threedtiles";
 import { useSceneViewModel } from "../../../../providers";
+import { SceneExtensionNames } from "../../../sceneExtensionNames";
+import { Ogc3DTilesSceneViewForegroundLayerExtension } from "../../ogc3DTilesSceneViewForegroundLayerExtension";
 import { OGC3DTilesProps } from "./OGC3DTiles.types";
-import { ExtensionNames, Ogc3DTilesSceneViewExtension } from "../../../index";
 
 export const OGC3DTiles = (ogc3DTilesProps: OGC3DTilesProps) => {
     const sceneViewModel = useSceneViewModel()
-    const ogc3DTilesSceneViewExtension = sceneViewModel.getSceneViewExtension<Ogc3DTilesSceneViewExtension>(ExtensionNames.OGC3DTiles)
+    const ogc3DTilesSceneViewExtension = sceneViewModel.getSceneViewExtension<Ogc3DTilesSceneViewForegroundLayerExtension>(SceneExtensionNames.OGC3DTiles)
     const [initialized, setInitialized] = useState(false)
     const groupReference = useRef<Group>(null)
     const groupProps = ogc3DTilesProps as GroupProps

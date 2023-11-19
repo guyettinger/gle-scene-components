@@ -1,10 +1,10 @@
 import { RootState, ThreeEvent } from "@react-three/fiber";
 import { PointCloudOctree, Potree } from "gle-potree";
 import { SceneViewModel } from "../../models/sceneView";
-import { SceneViewExtensionModel } from "../../models/sceneViewExtension";
+import { SceneViewForegroundLayerExtension } from "../sceneViewForegroundLayerExtension";
 import { PointCloudsSceneExtension } from "./pointCloudsSceneExtension";
 
-export class PointCloudsSceneViewExtension extends SceneViewExtensionModel {
+export class PointCloudsSceneViewForegroundLayerExtension extends SceneViewForegroundLayerExtension {
 
     get potree(): Potree {
         return this.pointCloudsSceneExtension.potree

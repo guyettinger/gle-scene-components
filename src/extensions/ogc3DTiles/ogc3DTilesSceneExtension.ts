@@ -1,15 +1,15 @@
 import { SceneModel } from "../../models/scene";
-import { SceneExtensionModel } from "../../models/sceneExtension";
 import { SceneViewModel } from "../../models/sceneView";
-import { Ogc3DTilesSceneViewExtension } from "./ogc3DTilesSceneViewExtension";
+import { SceneExtension } from "../sceneExtension";
+import { Ogc3DTilesSceneViewForegroundLayerExtension } from "./ogc3DTilesSceneViewForegroundLayerExtension";
 
-export class Ogc3DTilesSceneExtension extends SceneExtensionModel {
+export class Ogc3DTilesSceneExtension extends SceneExtension {
 
     constructor(name: string, sceneModel: SceneModel) {
         super(name, sceneModel)
     }
 
-    createSceneViewExtension(sceneViewModel: SceneViewModel): Ogc3DTilesSceneViewExtension {
-        return new Ogc3DTilesSceneViewExtension(this.name, sceneViewModel, this)
+    createSceneViewExtension(sceneViewModel: SceneViewModel): Ogc3DTilesSceneViewForegroundLayerExtension {
+        return new Ogc3DTilesSceneViewForegroundLayerExtension(this.name, sceneViewModel, this)
     }
 }

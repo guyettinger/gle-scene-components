@@ -1,3 +1,3 @@
 export { CesiumSceneExtension } from './cesiumSceneExtension'
-export { CesiumSceneViewExtension } from './cesiumSceneViewExtension'
+export { CesiumSceneViewBackgroundExtension } from './cesiumSceneViewBackgroundExtension'
 export * from './components'

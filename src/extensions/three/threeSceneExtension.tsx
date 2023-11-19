@@ -1,12 +1,12 @@
 import { ReactNode } from "react";
 import { getChildrenByType } from "react-nanny";
 import { SceneModel } from "../../models/scene";
-import { SceneExtensionModel } from "../../models/sceneExtension";
 import { SceneViewModel } from "../../models/sceneView";
+import { SceneExtension } from "../sceneExtension";
 import { ThreeSceneContent } from "./components";
 import { ThreeSceneViewExtension } from "./threeSceneViewExtension";
 
-export class ThreeSceneExtension extends SceneExtensionModel {
+export class ThreeSceneExtension extends SceneExtension {
 
     // three scene
     public threeScene: ReactNode

@@ -1,15 +1,15 @@
 import { SceneModel } from "../../models/scene";
-import { SceneExtensionModel } from "../../models/sceneExtension";
 import { SceneViewModel } from "../../models/sceneView";
-import { GaussianSplatCloudsSceneViewExtension } from "./gaussianSplatCloudsSceneViewExtension";
+import { SceneExtension } from "../sceneExtension";
+import { GaussianSplatCloudsSceneViewForegroundLayerExtension } from "./gaussianSplatCloudsSceneViewForegroundLayerExtension";
 
-export class GaussianSplatCloudsSceneExtension extends SceneExtensionModel {
+export class GaussianSplatCloudsSceneExtension extends SceneExtension {
 
     constructor(name: string, sceneModel: SceneModel) {
         super(name, sceneModel)
     }
 
-    createSceneViewExtension(sceneViewModel: SceneViewModel): GaussianSplatCloudsSceneViewExtension {
-        return new GaussianSplatCloudsSceneViewExtension(this.name, sceneViewModel, this)
+    createSceneViewExtension(sceneViewModel: SceneViewModel): GaussianSplatCloudsSceneViewForegroundLayerExtension {
+        return new GaussianSplatCloudsSceneViewForegroundLayerExtension(this.name, sceneViewModel, this)
     }
 }

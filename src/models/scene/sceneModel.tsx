@@ -9,14 +9,14 @@ import {
     getScenePositionForLongitudeLatitudeHeight,
     getSceneSurfaceNormalForLongitudeLatitudeHeight
 } from "../../services/projection/projectionService";
-import { SceneExtensionModel } from "../sceneExtension";
 import {
-    ExtensionNames,
+    SceneExtensionNames,
     GaussianSplatCloudsSceneExtension,
     Ogc3DTilesSceneExtension,
     PointCloudsSceneExtension,
     CesiumSceneExtension,
-    ThreeSceneExtension
+    ThreeSceneExtension,
+    SceneExtension
 } from "../../extensions";
 import { SceneContentProps } from "../../components";
 
@@ -27,7 +27,7 @@ export class SceneModel {
     sceneCenterCartesian: Cartesian3 = new Cartesian3()
 
     // scene extensions
-    sceneExtensions: Map<string, SceneExtensionModel> = new Map<string, SceneExtensionModel>()
+    sceneExtensions: Map<string, SceneExtension> = new Map<string, SceneExtension>()
 
     constructor(
         public name: string,
@@ -44,24 +44,24 @@ export class SceneModel {
         )
 
         // three
-        const threeSceneExtensionModel = new ThreeSceneExtension(ExtensionNames.Three, this)
-        this.sceneExtensions.set(threeSceneExtensionModel.name, threeSceneExtensionModel)
+        const threeSceneExtension = new ThreeSceneExtension(SceneExtensionNames.Three, this)
+        this.sceneExtensions.set(threeSceneExtension.name, threeSceneExtension)
 
         // gaussian splat clouds
-        const gaussianSplatCloudsSceneExtensionModel = new GaussianSplatCloudsSceneExtension(ExtensionNames.GaussianSplatClouds, this)
-        this.sceneExtensions.set(gaussianSplatCloudsSceneExtensionModel.name, gaussianSplatCloudsSceneExtensionModel)
+        const gaussianSplatCloudsSceneExtension = new GaussianSplatCloudsSceneExtension(SceneExtensionNames.GaussianSplatClouds, this)
+        this.sceneExtensions.set(gaussianSplatCloudsSceneExtension.name, gaussianSplatCloudsSceneExtension)
 
         // point clouds
-        const pointCloudsSceneExtensionModel = new PointCloudsSceneExtension(ExtensionNames.PointClouds, this)
-        this.sceneExtensions.set(pointCloudsSceneExtensionModel.name, pointCloudsSceneExtensionModel)
+        const pointCloudsSceneExtension = new PointCloudsSceneExtension(SceneExtensionNames.PointClouds, this)
+        this.sceneExtensions.set(pointCloudsSceneExtension.name, pointCloudsSceneExtension)
 
         // OGC 3D Tiles
-        const ogc3DTilesSceneExtensionModel = new Ogc3DTilesSceneExtension(ExtensionNames.OGC3DTiles, this)
-        this.sceneExtensions.set(ogc3DTilesSceneExtensionModel.name, ogc3DTilesSceneExtensionModel)
+        const ogc3DTilesSceneExtension = new Ogc3DTilesSceneExtension(SceneExtensionNames.OGC3DTiles, this)
+        this.sceneExtensions.set(ogc3DTilesSceneExtension.name, ogc3DTilesSceneExtension)
 
         // cesium
-        const cesiumSceneExtensionModel = new CesiumSceneExtension(ExtensionNames.Cesium, this)
-        this.sceneExtensions.set(cesiumSceneExtensionModel.name, cesiumSceneExtensionModel)
+        const cesiumSceneExtension = new CesiumSceneExtension(SceneExtensionNames.Cesium, this)
+        this.sceneExtensions.set(cesiumSceneExtension.name, cesiumSceneExtension)
     }
 
     getScenePositionForLongitudeLatitudeHeight(longitudeLatitudeHeight: Vector3, scenePosition = new Vector3()): Vector3 {

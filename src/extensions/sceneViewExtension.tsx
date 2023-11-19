@@ -1,10 +1,10 @@
 import { RootState } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
-import { SceneModel } from "../scene";
-import { SceneViewModel } from "../sceneView";
-import { SceneExtensionModel } from "../sceneExtension";
+import { SceneModel } from "../models/scene";
+import { SceneViewModel } from "../models/sceneView";
+import { SceneExtension } from "./sceneExtension";
 
-export abstract class SceneViewExtensionModel {
+export abstract class SceneViewExtension {
 
     // initialization
     initialized: boolean = false
@@ -15,7 +15,7 @@ export abstract class SceneViewExtensionModel {
     protected constructor(
         public name: string,
         public sceneViewModel: SceneViewModel,
-        public sceneExtensionModel: SceneExtensionModel
+        public sceneExtension: SceneExtension
     ) {
         this.sceneModel = this.sceneViewModel.sceneModel
     }

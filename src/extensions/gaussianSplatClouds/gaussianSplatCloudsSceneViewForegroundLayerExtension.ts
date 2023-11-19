@@ -1,10 +1,10 @@
 import { RootState, ThreeEvent } from "@react-three/fiber";
 import { Viewer as GaussianSplatViewer } from "gle-gaussian-splat-3d";
 import { SceneViewModel } from "../../models/sceneView";
-import { SceneViewExtensionModel } from "../../models/sceneViewExtension";
 import { GaussianSplatCloudsSceneExtension } from "./gaussianSplatCloudsSceneExtension";
+import { SceneViewForegroundLayerExtension } from "../sceneViewForegroundLayerExtension";
 
-export class GaussianSplatCloudsSceneViewExtension extends SceneViewExtensionModel {
+export class GaussianSplatCloudsSceneViewForegroundLayerExtension extends SceneViewForegroundLayerExtension {
 
     // gaussian splat viewer
     gaussianSplatViewerInitialized: boolean = false

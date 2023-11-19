@@ -1,10 +1,10 @@
 import { RootState, ThreeEvent } from "@react-three/fiber";
 import { OGC3DTile } from "gle-threedtiles";
 import { SceneViewModel } from "../../models/sceneView";
-import { SceneViewExtensionModel } from "../../models/sceneViewExtension";
+import { SceneViewForegroundLayerExtension } from "../sceneViewForegroundLayerExtension";
 import { Ogc3DTilesSceneExtension } from "./ogc3DTilesSceneExtension";
 
-export class Ogc3DTilesSceneViewExtension extends SceneViewExtensionModel {
+export class Ogc3DTilesSceneViewForegroundLayerExtension extends SceneViewForegroundLayerExtension {
 
     // tilesets
     ogc3DTiles: OGC3DTile[] = []
@@ -20,7 +20,7 @@ export class Ogc3DTilesSceneViewExtension extends SceneViewExtensionModel {
     render(state: RootState, delta: number) {
         // get three state
         const {gl, scene, camera} = state;
-        this.ogc3DTiles.forEach((ogc3DTile:OGC3DTile)=>{
+        this.ogc3DTiles.forEach((ogc3DTile: OGC3DTile) => {
             ogc3DTile.update(camera)
         })
     }

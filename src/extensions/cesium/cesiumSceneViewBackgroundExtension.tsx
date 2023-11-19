@@ -18,11 +18,11 @@ import {
 import { CameraControls } from "@react-three/drei";
 import { normalizeAngle, offsetCartesianPositionBySceneOffset } from "../../services";
 import { SceneViewModel } from "../../models/sceneView";
-import { SceneViewBackgroundExtension } from "../../models/sceneViewExtension";
+import { SceneViewBackgroundExtension } from "../sceneViewBackgroundExtension";
 import { CesiumSceneExtension } from "./cesiumSceneExtension";
 import { CesiumView, CesiumViewProps } from "./components";
 
-export class CesiumSceneViewExtension extends SceneViewBackgroundExtension {
+export class CesiumSceneViewBackgroundExtension extends SceneViewBackgroundExtension {
 
     // cesium
     cesiumViewer: CesiumViewer | null = null

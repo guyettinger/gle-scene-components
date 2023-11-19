@@ -1,4 +1,4 @@
-export enum ExtensionNames {
+export enum SceneExtensionNames {
     Cesium = "Cesium",
     GaussianSplatClouds = 'Gaussian Splat Clouds',
     OGC3DTiles = "OGC 3D Tiles",

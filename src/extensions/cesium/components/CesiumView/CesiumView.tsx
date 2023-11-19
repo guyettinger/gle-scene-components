@@ -2,8 +2,9 @@ import { CesiumComponentRef, Viewer } from 'resium'
 import { SceneMode, Viewer as CesiumViewer } from "cesium"
 import { observer } from "mobx-react";
 import { useSceneViewModel } from "../../../../providers";
+import { SceneExtensionNames } from "../../../sceneExtensionNames";
+import { CesiumSceneViewBackgroundExtension } from "../../cesiumSceneViewBackgroundExtension";
 import { CesiumViewProps } from "./CesiumView.types";
-import { CesiumSceneViewExtension, ExtensionNames } from "../../../index";
 
 /*
     Component Lifecycle
@@ -17,7 +18,7 @@ import { CesiumSceneViewExtension, ExtensionNames } from "../../../index";
  */
 export const CesiumView = observer(({}: CesiumViewProps) => {
     const sceneViewModel = useSceneViewModel()
-    const cesiumSceneViewExtension = sceneViewModel.getSceneViewExtension<CesiumSceneViewExtension>(ExtensionNames.Cesium)
+    const cesiumSceneViewExtension = sceneViewModel.getSceneViewExtension<CesiumSceneViewBackgroundExtension>(SceneExtensionNames.Cesium)
     const cesiumSceneExtension = cesiumSceneViewExtension.cesiumSceneExtension
     const {cesiumScene} = cesiumSceneExtension
     const creditContainer = typeof document !== 'undefined' ? document?.createElement("div") : null!

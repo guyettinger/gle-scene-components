@@ -3,12 +3,12 @@ import { getChildrenByType } from "react-nanny";
 import { Cartographic, CesiumTerrainProvider, createWorldTerrainAsync, sampleTerrainMostDetailed } from "cesium";
 import { Globe, Sun } from "resium";
 import { SceneModel } from "../../models/scene";
-import { SceneExtensionModel } from "../../models/sceneExtension";
 import { SceneViewModel } from "../../models/sceneView";
-import { CesiumSceneViewExtension } from "./cesiumSceneViewExtension";
+import { SceneExtension } from "../sceneExtension";
+import { CesiumSceneViewBackgroundExtension } from "./cesiumSceneViewBackgroundExtension";
 import { CesiumSceneContent } from "./components";
 
-export class CesiumSceneExtension extends SceneExtensionModel {
+export class CesiumSceneExtension extends SceneExtension {
 
     // cesium scene
     cesiumScene: ReactNode
@@ -40,8 +40,8 @@ export class CesiumSceneExtension extends SceneExtensionModel {
             </>
     }
 
-    createSceneViewExtension(sceneViewModel: SceneViewModel): CesiumSceneViewExtension {
-        return new CesiumSceneViewExtension(this.name, sceneViewModel, this)
+    createSceneViewExtension(sceneViewModel: SceneViewModel): CesiumSceneViewBackgroundExtension {
+        return new CesiumSceneViewBackgroundExtension(this.name, sceneViewModel, this)
     }
 
     queryHeightAtLongitudeLatitude = async (longitude: number, latitude: number): Promise<number> => {

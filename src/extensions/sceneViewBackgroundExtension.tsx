@@ -1,14 +1,14 @@
 import { ReactElement } from "react";
-import { SceneViewExtensionModel } from "./sceneViewExtensionModel";
-import { SceneViewModel } from "../sceneView";
-import { SceneExtensionModel } from "../sceneExtension";
+import { SceneViewModel } from "../models/sceneView";
+import { SceneExtension } from "./sceneExtension";
+import { SceneViewExtension } from "./sceneViewExtension";
 import { SceneViewBackgroundProps } from "./sceneViewExtension.types";
 
-export abstract class SceneViewBackgroundExtension extends SceneViewExtensionModel {
+export abstract class SceneViewBackgroundExtension extends SceneViewExtension {
     protected constructor(public name: string,
                           public sceneViewModel: SceneViewModel,
-                          public sceneExtensionModel: SceneExtensionModel) {
-        super(name, sceneViewModel, sceneExtensionModel)
+                          public sceneExtension: SceneExtension) {
+        super(name, sceneViewModel, sceneExtension)
     }
 
     abstract createBackgroundView(sceneViewBackgroundProps: SceneViewBackgroundProps): ReactElement<SceneViewBackgroundProps>

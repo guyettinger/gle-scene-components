@@ -1,5 +1,5 @@
-import { StoreProvider, SceneProvider, SceneViewProvider } from "../../providers";
 import styled from "styled-components";
+import { StoreProvider, SceneProvider, SceneViewProvider } from "../../providers";
 import { SceneViewProps } from "./SceneView.types";
 
 const SceneViewContent = styled.div`

@@ -1,4 +1,4 @@
 export { PointCloudsSceneExtension } from './pointCloudsSceneExtension'
-export { PointCloudsSceneViewExtension } from './pointCloudsSceneViewExtension'
+export { PointCloudsSceneViewForegroundLayerExtension } from './pointCloudsSceneViewForegroundLayerExtension'
 export * from './components'
 export * from './services'

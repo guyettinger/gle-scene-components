@@ -4,10 +4,10 @@ import { RootState } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
 import { SceneModel } from "../scene";
 import {
-    SceneViewExtensionModel,
+    SceneViewExtension,
     SceneViewBackgroundExtension,
     SceneViewForegroundExtension
-} from "../sceneViewExtension";
+} from "../../extensions";
 
 export class SceneViewModel {
 
@@ -19,7 +19,7 @@ export class SceneViewModel {
     cameraControls: CameraControls | null = null
 
     // scene view extensions
-    sceneViewExtensions: Map<string, SceneViewExtensionModel> = new Map<string, SceneViewExtensionModel>()
+    sceneViewExtensions: Map<string, SceneViewExtension> = new Map<string, SceneViewExtension>()
 
     // debug
     debug: boolean = false
@@ -29,13 +29,13 @@ export class SceneViewModel {
         public sceneModel: SceneModel
     ) {
         // scene view extensions
-        this.sceneModel.sceneExtensions.forEach((sceneExtensionModel) => {
-            const sceneViewExtensionModel = sceneExtensionModel.createSceneViewExtension(this)
-            this.sceneViewExtensions.set(sceneViewExtensionModel.name, sceneViewExtensionModel)
+        this.sceneModel.sceneExtensions.forEach((sceneExtension) => {
+            const sceneViewExtension = sceneExtension.createSceneViewExtension(this)
+            this.sceneViewExtensions.set(sceneViewExtension.name, sceneViewExtension)
         })
     }
 
-    getSceneViewExtension<T extends SceneViewExtensionModel>(name: string): T {
+    getSceneViewExtension<T extends SceneViewExtension>(name: string): T {
         return this.sceneViewExtensions.get(name) as T
     }
 

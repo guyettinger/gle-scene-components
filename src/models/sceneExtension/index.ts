@@ -1,1 +1,0 @@
-export { SceneExtensionModel } from './sceneExtensionModel'
