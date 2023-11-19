@@ -3,19 +3,21 @@ import { Group, Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
 import { CoordinatedGroupProps } from "./CoordinatedGroup.types";
 import { useSceneViewModel } from "../../providers";
+import { convertVector3PropToVector3 } from "../../services";
 
 export const CoordinatedGroup = ({longitudeLatitudeHeight, children, ...groupProps}: CoordinatedGroupProps) => {
     const sceneViewModel = useSceneViewModel()
     const sceneModel = sceneViewModel.sceneModel
     const groupReference = useRef<Group>(null)
     const [groupLongitudeLatitudeHeight, setGroupLongitudeLatitudeHeight] = useState<Vector3|null>(null)
+    const longitudeLatitudeHeightVector = convertVector3PropToVector3(longitudeLatitudeHeight)
 
     useFrame(({}) => {
         // wait for camera initialization
         if (!sceneViewModel.cameraControlsInitialized) return
 
         // only when the group coordinates are different then the desired coordinates
-        if (!!groupLongitudeLatitudeHeight && groupLongitudeLatitudeHeight.equals(longitudeLatitudeHeight)) return
+        if (!!groupLongitudeLatitudeHeight && groupLongitudeLatitudeHeight.equals(longitudeLatitudeHeightVector)) return
 
         syncGroup()
 
@@ -28,7 +30,7 @@ export const CoordinatedGroup = ({longitudeLatitudeHeight, children, ...groupPro
         if (!group) return
 
         // desired coordinates
-        const groupLongitudeLatitudeHeight = new Vector3().copy(longitudeLatitudeHeight)
+        const groupLongitudeLatitudeHeight = new Vector3().copy(longitudeLatitudeHeightVector)
 
         // set the group's position
         sceneModel.getScenePositionForLongitudeLatitudeHeight(groupLongitudeLatitudeHeight, group.position)

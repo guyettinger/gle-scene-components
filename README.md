@@ -18,92 +18,108 @@ A React component library for building 3D scenes.
 [Storybook](https://guyettinger.github.io/gle-scene-components/)
 
 ## Demos
-- [Boxes](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--boxes)
-- [Animated Boxes](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--animated-boxes)
-- [Point Clouds](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--point-clouds)
-- [Gaussian Splatting](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--gaussian-splat-clouds)
-- [Coordinated Groups](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--coordinated-groups)
-- [Google Photorealistic 3D Tiles](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--google-tiles)
-- [Mesh 3D Tiles](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--three-d-tiles)
+- [Boxes](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--boxes)
+- [Animated Boxes](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--animated-boxes)
+- [Point Clouds](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--point-clouds)
+- [Gaussian Splatting](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--gaussian-splat-clouds)
+- [Coordinated Groups](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--coordinated-groups)
+- [Google Photorealistic 3D Tiles](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--google-tiles)
+- [Mesh 3D Tiles](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--three-d-tiles)
 
-## Example
-![example-screenshot.png](public%2Fimages%2Fexample-screenshot.png)
+## Examples
+
+![example-simple-scene.png](public%2Fimages%2Fexample-simple-scene.png)
 ```tsx
-// coordinates
-const upperArenaLongitudeLatitudeHeight = new Vector3(-83.765350, 34.401279, 357.0)
-const barnParkingLotLongitudeLatitudeHeight = new Vector3(-83.76536188233062, 34.400715493095205, 353.0)
-const lowerArenaLongitudeLatitudeHeight = new Vector3(-83.76612684589652, 34.40024525982904, 350.0)
+export const ExampleSimpleScene = () => {
+    return (
+        <Scene name='Simple Scene'
+               sceneCenterLongitudeLatitudeHeight={[-83.765350, 34.401279, 357.0]}>
+            <SceneContent>
+                <ThreeSceneContent>
+                    <Box position={[4, 0, 0]}/>
+                    <Box position={[0, 0, -4]}/>
+                    <Box position={[-4, 0, 0]}/>
+                </ThreeSceneContent>
+            </SceneContent>
+        </Scene>
+    )
+}
+```
+[Simple Example Demo](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--boxes)
 
-// create a scene
-const sceneModel: SceneModel = new SceneModel(
-    'Scene1',
-    upperArenaLongitudeLatitudeHeight,
-    <SceneContent>
-        <ThreeSceneContent>
-            <CoordinatedGroup longitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}>
-                <PointCloud
-                    baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
-                    fileName="cloud.js"
-                    onPointCloudLoad={rotatePointCloudOctreeYUp}
-                    position={[0, -.75, 0]}
-                />
-            </CoordinatedGroup>
-            <CoordinatedGroup longitudeLatitudeHeight={barnParkingLotLongitudeLatitudeHeight}>
-                <Box position={[0, 0, 0]}/>
-            </CoordinatedGroup>
-            <CoordinatedGroup longitudeLatitudeHeight={lowerArenaLongitudeLatitudeHeight}>
-                <group position={[0, 2.60, -15]}
-                       rotation={[MathUtils.degToRad(30), 0, 0, 'XYZ']}>
-                    <GaussianSplatCloud baseUrl="./"
-                                        fileName="splats/ornament/ornament.splat"
-                                        rotation={[
-                                            MathUtils.degToRad(-38),
-                                            MathUtils.degToRad(-85),
-                                            MathUtils.degToRad(180), 'ZYX']}
-                    />
-                </group>
-                <OGC3DTiles url={"https://storage.googleapis.com/ogc-3d-tiles/museumMeshed/tileset.json"}
-                            position={[0, -2, 0]}
-                            rotation={[
-                                MathUtils.degToRad(0),
-                                MathUtils.degToRad(90),
-                                MathUtils.degToRad(180), 'XYZ'
-                            ]}/>
-            </CoordinatedGroup>
-        </ThreeSceneContent>
-        <CesiumSceneContent>
-            <GoogleMapsPhotorealistic3DTiles/>
-        </CesiumSceneContent>
-    </SceneContent>
-)
 
-// create a view of the scene
-const sceneViewModel: SceneViewModel = new SceneViewModel(
-    'SceneView1',
-    sceneModel
-)
+![example-complex-scene.png](public%2Fimages%2Fexample-complex-scene.png)
+```tsx
+export const ExampleComplexScene = () => {
+    
+    // coordinates
+    const upperArenaLongitudeLatitudeHeight = new Vector3(-83.765350, 34.401279, 357.0)
+    const barnParkingLotLongitudeLatitudeHeight = new Vector3(-83.76536188233062, 34.400715493095205, 353.0)
+    const lowerArenaLongitudeLatitudeHeight = new Vector3(-83.76612684589652, 34.40024525982904, 350.0)
 
-export const ExampleScene = () => {
+    // reference
+    const sceneRef = useRef<SceneInterface>(null)
+    
     return (
         <>
-            <button
-                onClick={() => sceneViewModel.moveCameraToLongitudeLatitudeHeight(upperArenaLongitudeLatitudeHeight)}>
+            <SceneButton
+                onClick={() => sceneRef.current?.moveCameraToLongitudeLatitudeHeight(upperArenaLongitudeLatitudeHeight)}>
                 Upper Arena
-            </button>
-            <button
-                onClick={() => sceneViewModel.moveCameraToLongitudeLatitudeHeight(barnParkingLotLongitudeLatitudeHeight)}>
+            </SceneButton>
+            <SceneButton
+                onClick={() => sceneRef.current?.moveCameraToLongitudeLatitudeHeight(barnParkingLotLongitudeLatitudeHeight)}>
                 Parking
-            </button>
-            <button
-                onClick={() => sceneViewModel.moveCameraToLongitudeLatitudeHeight(lowerArenaLongitudeLatitudeHeight)}>
+            </SceneButton>
+            <SceneButton
+                onClick={() => sceneRef.current?.moveCameraToLongitudeLatitudeHeight(lowerArenaLongitudeLatitudeHeight)}>
                 Lower Arena
-            </button>
-            <SceneView sceneViewModel={sceneViewModel}/>
+            </SceneButton>
+            <Scene name='Complex Scene'
+                   ref={sceneRef}
+                   sceneCenterLongitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}>
+                <SceneContent>
+                    <ThreeSceneContent>
+                        <CoordinatedGroup longitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}>
+                            <PointCloud
+                                baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
+                                fileName="cloud.js"
+                                onPointCloudLoad={rotatePointCloudOctreeYUp}
+                                position={[0, -.75, 0]}
+                            />
+                        </CoordinatedGroup>
+                        <CoordinatedGroup longitudeLatitudeHeight={barnParkingLotLongitudeLatitudeHeight}>
+                            <Box position={[0, 0, 0]}/>
+                        </CoordinatedGroup>
+                        <CoordinatedGroup longitudeLatitudeHeight={lowerArenaLongitudeLatitudeHeight}>
+                            <group position={[0, 2.60, -15]}
+                                   rotation={[MathUtils.degToRad(30), 0, 0, 'XYZ']}>
+                                <GaussianSplatCloud baseUrl="./"
+                                                    fileName="splats/ornament/ornament.splat"
+                                                    rotation={[
+                                                        MathUtils.degToRad(-38),
+                                                        MathUtils.degToRad(-85),
+                                                        MathUtils.degToRad(180), 'ZYX']}
+                                />
+                            </group>
+                            <OGC3DTiles url={"https://storage.googleapis.com/ogc-3d-tiles/museumMeshed/tileset.json"}
+                                        position={[0, -2, 0]}
+                                        rotation={[
+                                            MathUtils.degToRad(0),
+                                            MathUtils.degToRad(90),
+                                            MathUtils.degToRad(180), 'XYZ'
+                                        ]}/>
+                        </CoordinatedGroup>
+                    </ThreeSceneContent>
+                    <CesiumSceneContent>
+                        <GoogleMapsPhotorealistic3DTiles/>
+                    </CesiumSceneContent>
+                </SceneContent>
+            </Scene>
         </>
     )
 }
 ```
-[Example Demo](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-sceneview--everything)
+[Complex Example Demo](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--everything)
 
 ## Installation
 ```shell
