@@ -1,4 +1,5 @@
 export * from './Box'
+export * from './Floor'
 export * from './Line'
 export * from './ThreeSceneContent'
 export * from './ThreeView'

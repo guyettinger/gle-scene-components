@@ -8,7 +8,7 @@ import { SceneContent } from "../SceneContent";
 import { CoordinatedGroup } from "../CoordinatedGroup";
 import {
     Box,
-    CesiumSceneContent,
+    CesiumSceneContent, Floor,
     GaussianSplatCloud,
     GoogleMapsPhotorealistic3DTiles,
     OGC3DTiles,
@@ -52,6 +52,7 @@ export const Boxes: Story = (args: any) => {
                     <Box position={[4, 0, 0]}/>
                     <Box position={[0, 0, -4]}/>
                     <Box position={[-4, 0, 0]}/>
+                    <Floor position={[0, -0.5, 0]}/>
                 </ThreeSceneContent>
             </SceneContent>
         </Scene>

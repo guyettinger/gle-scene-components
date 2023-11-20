@@ -60,7 +60,7 @@ export class SceneViewModel {
 
     render(state: RootState, delta: number) {
         // get three state
-        const {gl, scene, camera} = state;
+        const {gl, scene, camera} = state
 
         // initialize scene view extensions
         this.sceneViewExtensions.forEach((sceneViewExtension) => {
@@ -182,7 +182,7 @@ export class SceneViewModel {
         })
     }
 
-    getScenePositionForSun = (date:Date = new Date()) => {
+    getScenePositionForSun = (date: Date = new Date()) => {
         return getScenePositionForSun(this.sceneModel.sceneCenter, this.sceneModel.sceneCenterCartesian, date)
     }
 

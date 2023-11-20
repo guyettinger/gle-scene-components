@@ -10,18 +10,20 @@ export const Box = ({animate, ...meshProps}: BoxProps) => {
     const [active, setActive] = useState(false);
     const sceneViewModel = useSceneViewModel()
     useFrame((state, delta) => {
-        if(!animate) return
+        if (!animate) return
         meshRef.current.rotation.y += delta
         sceneViewModel.invalidate()
     })
     return (
-        <mesh  {...meshProps}
-               ref={meshRef}
-               scale={active ? 1.5 : 1}
-               onClick={(event) => setActive(!active)}
-               onPointerOver={(event) => setHovered(true)}
-               onPointerOut={(event) => setHovered(false)}>
-            <boxGeometry args={[1, 1, 1]} />
+        <mesh {...meshProps}
+              ref={meshRef}
+              scale={active ? 1.5 : 1}
+              onClick={(event) => setActive(!active)}
+              onPointerOver={(event) => setHovered(true)}
+              onPointerOut={(event) => setHovered(false)}
+              castShadow={true}
+              receiveShadow={true}>
+            <boxGeometry args={[1, 1, 1]}/>
             <meshPhysicalMaterial color={hovered ? 'hotpink' : 'orange'} reflectivity={1} clearcoat={1}/>
         </mesh>
     )

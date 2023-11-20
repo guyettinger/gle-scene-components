@@ -4,7 +4,6 @@ import { useRef } from "react";
 import { useSceneViewModel } from "../../../../providers";
 import { ThreeSceneProps } from "./ThreeView.types";
 
-
 export const ThreeScene = ({children, ...sceneProps}: ThreeSceneProps) => {
     const sceneViewModel = useSceneViewModel()
     const cameraControlsReference = useRef<CameraControls>(null)
@@ -35,7 +34,8 @@ export const ThreeScene = ({children, ...sceneProps}: ThreeSceneProps) => {
             <ambientLight/>
             <directionalLight position={sunPosition}
                               color={0xfff1e0}
-                              intensity={1.5}>
+                              intensity={1.5}
+                              castShadow={true}>
             </directionalLight>
             <CameraControls
                 ref={cameraControlsReference}
