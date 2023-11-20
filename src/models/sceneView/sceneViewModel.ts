@@ -8,6 +8,7 @@ import {
     SceneViewBackgroundExtension,
     SceneViewForegroundExtension
 } from "../../extensions";
+import { getScenePositionForSun } from "../../services";
 
 export class SceneViewModel {
 
@@ -179,6 +180,10 @@ export class SceneViewModel {
                 resolve()
             })
         })
+    }
+
+    getScenePositionForSun = (date:Date = new Date()) => {
+        return getScenePositionForSun(this.sceneModel.sceneCenter, this.sceneModel.sceneCenterCartesian, date)
     }
 
     passMouseEvent(e: MouseEvent) {
