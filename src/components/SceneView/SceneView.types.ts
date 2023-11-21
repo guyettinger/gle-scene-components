@@ -3,4 +3,5 @@ import { SceneViewModel } from "../../models";
 
 export interface SceneViewProps extends HTMLAttributes<HTMLDivElement> {
     sceneViewModel: SceneViewModel
+    shadows?: boolean
 }

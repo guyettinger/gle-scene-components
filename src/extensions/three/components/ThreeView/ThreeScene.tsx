@@ -4,10 +4,10 @@ import { useRef } from "react";
 import { useSceneViewModel } from "../../../../providers";
 import { ThreeSceneProps } from "./ThreeView.types";
 
-export const ThreeScene = ({children, ...sceneProps}: ThreeSceneProps) => {
+export const ThreeScene = ({children, castShadow, receiveShadow, ...sceneProps}: ThreeSceneProps) => {
     const sceneViewModel = useSceneViewModel()
     const cameraControlsReference = useRef<CameraControls>(null)
-    const sunPosition = sceneViewModel.getScenePositionForSun()
+    const sunPosition = sceneViewModel.getSceneDirectionForSun().multiplyScalar(100)
     console.log('sun position', sunPosition)
 
     useThree((threeRootState) => {
@@ -30,12 +30,16 @@ export const ThreeScene = ({children, ...sceneProps}: ThreeSceneProps) => {
     }
 
     return (
-        <scene onPointerMissed={handlePointerMissed} {...sceneProps}>
+        <scene onPointerMissed={handlePointerMissed}
+               castShadow={castShadow}
+               receiveShadow={receiveShadow}
+               {...sceneProps}>
             <ambientLight/>
             <directionalLight position={sunPosition}
                               color={0xfff1e0}
                               intensity={1.5}
-                              castShadow={true}>
+                              castShadow={castShadow}>
+                {castShadow && <orthographicCamera attach="shadow-camera" args={[-10, 10, 10, -10]}/>}
             </directionalLight>
             <CameraControls
                 ref={cameraControlsReference}

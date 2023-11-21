@@ -3,7 +3,7 @@ import { RootState } from "@react-three/fiber";
 import { SceneViewModel } from "../../models/sceneView";
 import { SceneViewForegroundExtension } from "../sceneViewForegroundExtension";
 import { ThreeSceneExtension } from "./threeSceneExtension";
-import { ThreeScene, ThreeSceneGroup, ThreeView, ThreeSceneGroupProps } from "./components";
+import { ThreeScene, ThreeSceneGroup, ThreeView, ThreeViewProps } from "./components";
 
 export class ThreeSceneViewExtension extends SceneViewForegroundExtension {
 
@@ -23,10 +23,13 @@ export class ThreeSceneViewExtension extends SceneViewForegroundExtension {
         gl.render(scene, camera)
     }
 
-    createForegroundView(threeSceneGroupProps: ThreeSceneGroupProps): ReactElement<ThreeSceneGroupProps> {
+    createForegroundView({shadows, ...threeViewProps}: ThreeViewProps): ReactElement<ThreeViewProps> {
+        const castShadow = !!shadows
+        const receiveShadow = !!shadows
+
         return (
-            <ThreeView {...threeSceneGroupProps}>
-                <ThreeScene>
+            <ThreeView shadows={shadows} {...threeViewProps}>
+                <ThreeScene castShadow={castShadow} receiveShadow={receiveShadow}>
                     <ThreeSceneGroup/>
                 </ThreeScene>
             </ThreeView>

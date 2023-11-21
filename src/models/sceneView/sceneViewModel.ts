@@ -8,7 +8,7 @@ import {
     SceneViewBackgroundExtension,
     SceneViewForegroundExtension
 } from "../../extensions";
-import { getScenePositionForSun } from "../../services";
+import { getSceneDirectionForSun, getScenePositionForSun } from "../../services";
 
 export class SceneViewModel {
 
@@ -182,8 +182,12 @@ export class SceneViewModel {
         })
     }
 
-    getScenePositionForSun = (date: Date = new Date()) => {
+    getScenePositionForSun = (date: Date = new Date()): Vector3 => {
         return getScenePositionForSun(this.sceneModel.sceneCenter, this.sceneModel.sceneCenterCartesian, date)
+    }
+
+    getSceneDirectionForSun = (date: Date = new Date()): Vector3 => {
+        return getSceneDirectionForSun(this.sceneModel.sceneCenter, this.sceneModel.sceneCenterCartesian, date)
     }
 
     passMouseEvent(e: MouseEvent) {

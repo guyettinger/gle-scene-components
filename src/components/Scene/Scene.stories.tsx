@@ -52,7 +52,6 @@ export const Boxes: Story = (args: any) => {
                     <Box position={[4, 0, 0]}/>
                     <Box position={[0, 0, -4]}/>
                     <Box position={[-4, 0, 0]}/>
-                    <Floor position={[0, -0.5, 0]}/>
                 </ThreeSceneContent>
             </SceneContent>
         </Scene>
@@ -208,6 +207,25 @@ export const ThreeDTiles: Story = (args: any) => {
     )
 }
 ThreeDTiles.args = {};
+
+export const Shadows: Story = (args: any) => {
+
+    return (
+        <Scene data-testid='Scene-id'
+               name='Scene1'
+               sceneCenterLongitudeLatitudeHeight={[-83.765350, 34.401279, 357.0]} shadows={true}>
+            <SceneContent>
+                <ThreeSceneContent>
+                    <Box position={[4, 0, 0]} castShadow={true}/>
+                    <Box position={[0, 0, -4]} castShadow={true}/>
+                    <Box position={[-4, 0, 0]} castShadow={true}/>
+                    <Floor position={[0, -0.5, 0]} receiveShadow={true}/>
+                </ThreeSceneContent>
+            </SceneContent>
+        </Scene>
+    )
+}
+Shadows.args = {};
 
 
 export const Everything: Story = (args: any) => {

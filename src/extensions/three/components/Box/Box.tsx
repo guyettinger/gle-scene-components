@@ -15,14 +15,12 @@ export const Box = ({animate, ...meshProps}: BoxProps) => {
         sceneViewModel.invalidate()
     })
     return (
-        <mesh {...meshProps}
-              ref={meshRef}
+        <mesh ref={meshRef}
               scale={active ? 1.5 : 1}
               onClick={(event) => setActive(!active)}
               onPointerOver={(event) => setHovered(true)}
               onPointerOut={(event) => setHovered(false)}
-              castShadow={true}
-              receiveShadow={true}>
+              {...meshProps}>
             <boxGeometry args={[1, 1, 1]}/>
             <meshPhysicalMaterial color={hovered ? 'hotpink' : 'orange'} reflectivity={1} clearcoat={1}/>
         </mesh>

@@ -4,7 +4,7 @@ import { SceneViewProps } from "./SceneView.types";
 
 const SceneViewContent = styled.div`
 `
-export const SceneView = ({sceneViewModel, ...divProps}: SceneViewProps) => {
+export const SceneView = ({sceneViewModel, shadows = false, ...divProps}: SceneViewProps) => {
     return (
         <SceneViewContent className='gle-scene-view' {...divProps} >
             <StoreProvider>
@@ -17,7 +17,7 @@ export const SceneView = ({sceneViewModel, ...divProps}: SceneViewProps) => {
                         })}
                         {sceneViewModel.getSceneViewForegroundExtensions().map((sceneViewForegroundExtension) => {
                             return (
-                                sceneViewForegroundExtension.createForegroundView({key: sceneViewForegroundExtension.name})
+                                sceneViewForegroundExtension.createForegroundView({key: sceneViewForegroundExtension.name, shadows: shadows})
                             )
                         })}
                     </SceneViewProvider>

@@ -9,3 +9,9 @@ export const getScenePositionForSun = (sceneCenter: Vector3, sceneCenterCartesia
     const sunPositionCartesian = CesiumMatrix3.multiplyByVector(transformMatrix, sunPositionInEarthInertialFrame, new Cartesian3());
     return getScenePositionForCartesian(sceneCenter, sceneCenterCartesian, sunPositionCartesian)
 }
+
+export const getSceneDirectionForSun = (sceneCenter: Vector3, sceneCenterCartesian: Cartesian3, date: Date = new Date()): Vector3 => {
+    const scenePosition = getScenePositionForSun(sceneCenter, sceneCenterCartesian, date)
+    const direction = scenePosition.normalize()
+    return direction;
+}
