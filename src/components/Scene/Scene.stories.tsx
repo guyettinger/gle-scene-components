@@ -101,17 +101,12 @@ export const GaussianSplatClouds: Story = (args: any) => {
     return (
         <Scene data-testid='Scene-id'
                name='Scene1'
-               sceneCenterLongitudeLatitudeHeight={[-83.765350, 34.401279, 357.0]}>
+               sceneCenterLongitudeLatitudeHeight={[-83.76530, 34.4012376, 357.0]}>
             <SceneContent>
                 <ThreeSceneContent>
                     <GaussianSplatCloud baseUrl="./"
-                                        fileName="splats/ornament/ornament.splat"
-                                        position={[0, 2, 0]}
-                                        rotation={[
-                                            MathUtils.degToRad(-30),
-                                            MathUtils.degToRad(-45),
-                                            MathUtils.degToRad(180), 'ZYX'
-                                        ]}
+                                        fileName="splats/jump/jump.splat"
+                                        position={[0, -0.8, 0]}
                     />
                 </ThreeSceneContent>
             </SceneContent>
