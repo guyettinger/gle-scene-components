@@ -3,14 +3,14 @@ import { Group, Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
 import { CoordinatedGroupProps } from "./CoordinatedGroup.types";
 import { useSceneViewModel } from "../../providers";
-import { convertVector3PropToVector3 } from "../../services";
+import { convertVector3Prop } from "../../services";
 
 export const CoordinatedGroup = ({longitudeLatitudeHeight, children, ...groupProps}: CoordinatedGroupProps) => {
     const sceneViewModel = useSceneViewModel()
     const sceneModel = sceneViewModel.sceneModel
     const groupReference = useRef<Group>(null)
     const [groupLongitudeLatitudeHeight, setGroupLongitudeLatitudeHeight] = useState<Vector3|null>(null)
-    const longitudeLatitudeHeightVector = convertVector3PropToVector3(longitudeLatitudeHeight)
+    const longitudeLatitudeHeightVector = convertVector3Prop(longitudeLatitudeHeight)
 
     useFrame(({}) => {
         // wait for camera initialization

@@ -6,21 +6,31 @@ import { SceneModel } from "../scene";
 import {
     SceneViewExtension,
     SceneViewBackgroundExtension,
-    SceneViewForegroundExtension
+    SceneViewForegroundExtension, SceneViewForegroundProps, SceneViewBackgroundProps
 } from "../../extensions";
 import { getSceneDirectionForSun, getScenePositionForSun } from "../../services";
+import { SceneViewProps } from "../../components";
 
 export class SceneViewModel {
 
-    // scene
+    // scene view props
+    sceneViewProps: SceneViewProps
+
+    // scene foreground view props
+    sceneViewForegroundProps: SceneViewForegroundProps
+
+    // scene background view props
+    sceneViewBackgroundProps: SceneViewBackgroundProps
+
+    // scene view extensions
+    sceneViewExtensions: Map<string, SceneViewExtension> = new Map<string, SceneViewExtension>()
+
+    // scene state
     sceneRootState: RootState | null = null
 
     // camera controls
     cameraControlsInitialized: boolean = false
     cameraControls: CameraControls | null = null
-
-    // scene view extensions
-    sceneViewExtensions: Map<string, SceneViewExtension> = new Map<string, SceneViewExtension>()
 
     // debug
     debug: boolean = false
@@ -29,6 +39,22 @@ export class SceneViewModel {
         public name: string,
         public sceneModel: SceneModel
     ) {
+        // scene view properties
+        this.sceneViewProps = {
+            sceneViewModel: this
+        }
+
+        // scene view foreground properties
+        this.sceneViewForegroundProps = {
+            shadows: sceneModel.sceneProperties.shadows,
+            cameraPosition: sceneModel.sceneProperties.cameraPosition,
+            children: sceneModel.sceneProperties.children
+        }
+
+        // scene view background properties
+        this.sceneViewBackgroundProps = {
+        }
+
         // scene view extensions
         this.sceneModel.sceneExtensions.forEach((sceneExtension) => {
             const sceneViewExtension = sceneExtension.createSceneViewExtension(this)

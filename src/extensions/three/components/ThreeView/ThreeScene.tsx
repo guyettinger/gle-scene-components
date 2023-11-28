@@ -1,14 +1,17 @@
+import { Vector3 } from "three";
 import { useFrame, useThree } from "@react-three/fiber";
-import { CameraControls } from "@react-three/drei";
-import { useRef } from "react";
+import { CameraControls, PerspectiveCamera } from "@react-three/drei";
+import { useRef, useState } from "react";
 import { useSceneViewModel } from "../../../../providers";
 import { ThreeSceneProps } from "./ThreeView.types";
 
-export const ThreeScene = ({children, castShadow, receiveShadow, ...sceneProps}: ThreeSceneProps) => {
+export const ThreeScene = ({children, cameraPosition, castShadow, receiveShadow, ...sceneProps}: ThreeSceneProps) => {
     const sceneViewModel = useSceneViewModel()
     const cameraControlsReference = useRef<CameraControls>(null)
+    const [initialCameraPosition] = useState(cameraPosition ?? new Vector3(0, 5, 10))
+
+    // todo: choose a reasonable position for the sun within camera range
     const sunPosition = sceneViewModel.getSceneDirectionForSun().multiplyScalar(100)
-    console.log('sun position', sunPosition)
 
     useThree((threeRootState) => {
         sceneViewModel.sceneRootState = threeRootState
@@ -43,10 +46,16 @@ export const ThreeScene = ({children, castShadow, receiveShadow, ...sceneProps}:
             </directionalLight>
             <CameraControls
                 ref={cameraControlsReference}
+                makeDefault={true}
                 smoothTime={0}
                 draggingSmoothTime={0}
                 onChange={handleCameraControlsChange}
-            />
+            >
+                <PerspectiveCamera
+                    position={initialCameraPosition}
+                    makeDefault={true}
+                />
+            </CameraControls>
             {children}
         </scene>
     )

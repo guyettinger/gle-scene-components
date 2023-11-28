@@ -23,13 +23,13 @@ export class ThreeSceneViewExtension extends SceneViewForegroundExtension {
         gl.render(scene, camera)
     }
 
-    createForegroundView({shadows, ...threeViewProps}: ThreeViewProps): ReactElement<ThreeViewProps> {
+    createForegroundView({shadows, cameraPosition, ...threeViewProps}: ThreeViewProps): ReactElement<ThreeViewProps> {
         const castShadow = !!shadows
         const receiveShadow = !!shadows
 
         return (
             <ThreeView shadows={shadows} {...threeViewProps}>
-                <ThreeScene castShadow={castShadow} receiveShadow={receiveShadow}>
+                <ThreeScene cameraPosition={cameraPosition} castShadow={castShadow} receiveShadow={receiveShadow}>
                     <ThreeSceneGroup/>
                 </ThreeScene>
             </ThreeView>

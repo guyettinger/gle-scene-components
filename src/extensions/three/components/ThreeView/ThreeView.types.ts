@@ -1,10 +1,11 @@
-import { CanvasProps, GroupProps, SceneProps } from "@react-three/fiber";
+import { CanvasProps, GroupProps, SceneProps, Vector3 } from "@react-three/fiber";
 import { SceneViewForegroundProps } from "../../../sceneViewExtension.types";
 
-export interface ThreeViewProps extends CanvasProps, SceneViewForegroundProps {
+export interface ThreeViewProps extends SceneViewForegroundProps, CanvasProps {
 }
 
 export interface ThreeSceneProps extends SceneProps {
+    cameraPosition?: Vector3
 }
 
 export interface ThreeSceneGroupProps extends GroupProps {

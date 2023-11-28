@@ -1,16 +1,17 @@
 import { ReactElement } from "react";
-import { SceneContentProps } from "../SceneContent";
-import { SceneConfiguration } from "../../models";
-import { Vector3Prop } from "../../types";
 import { Vector3 } from "three";
 import { Cartesian3 } from "cesium";
+import { SceneContentProps } from "../SceneContent";
+import { SceneExtensionGenerator } from "../../extensions";
+import { Vector3Prop } from "../../types";
 
 export interface SceneProps {
     name: string,
-    sceneCenterLongitudeLatitudeHeight: Vector3Prop
+    cameraPosition?: Vector3Prop
     children: ReactElement<SceneContentProps>
+    sceneCenterLongitudeLatitudeHeight: Vector3Prop
+    sceneExtensionGenerator?: SceneExtensionGenerator
     shadows?: boolean
-    sceneConfiguration?: SceneConfiguration
 }
 
 export interface SceneInterface {

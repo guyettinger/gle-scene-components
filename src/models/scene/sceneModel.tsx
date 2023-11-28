@@ -6,37 +6,50 @@ import {
     getScenePositionForLongitudeLatitudeHeight,
     getSceneSurfaceNormalForLongitudeLatitudeHeight
 } from "../../services/projection/projectionService";
-import { SceneExtension } from "../../extensions";
+import { defaultSceneExtensionGenerator, SceneExtension, SceneExtensionGenerator } from "../../extensions";
 import { SceneContentProps } from "../../components";
-import { DefaultSceneConfigurationModel, SceneConfiguration } from "../sceneConfiguration";
-
+import { SceneProps } from "../../components/Scene";
+import { convertVector3Prop } from "../../services";
 
 export class SceneModel {
 
+    // name
+    name: string
+
     // scene center
     sceneCenter: Vector3 = new Vector3(0, 0, 0)
+    sceneCenterLongitudeLatitudeHeight: Vector3
     sceneCenterCartesian: Cartesian3 = new Cartesian3()
 
+    // scene content
+    sceneContent: ReactElement<SceneContentProps>
+
     // scene extensions
+    sceneExtensionGenerator: SceneExtensionGenerator
     sceneExtensions: Map<string, SceneExtension> = new Map<string, SceneExtension>()
 
     constructor(
-        public name: string,
-        public sceneCenterLongitudeLatitudeHeight: Vector3,
-        public sceneContent: ReactElement<SceneContentProps>,
-        public sceneConfiguration: SceneConfiguration = new DefaultSceneConfigurationModel()
+        public sceneProperties: SceneProps
     ) {
-        // initialize scene center
+        // scene name
+        this.name = sceneProperties.name
+
+        // scene center
+        this.sceneCenterLongitudeLatitudeHeight = convertVector3Prop(this.sceneProperties.sceneCenterLongitudeLatitudeHeight)
         Cartesian3.fromDegrees(
-            sceneCenterLongitudeLatitudeHeight.x,
-            sceneCenterLongitudeLatitudeHeight.y,
-            sceneCenterLongitudeLatitudeHeight.z,
+            this.sceneCenterLongitudeLatitudeHeight.x,
+            this.sceneCenterLongitudeLatitudeHeight.y,
+            this.sceneCenterLongitudeLatitudeHeight.z,
             Ellipsoid.WGS84,
             this.sceneCenterCartesian
         )
 
-        // configure scene extensions
-        const sceneExtensions = sceneConfiguration.configureSceneExtensions(this)
+        // scene content
+        this.sceneContent = sceneProperties.children
+
+        // scene extensions
+        this.sceneExtensionGenerator = sceneProperties.sceneExtensionGenerator ?? defaultSceneExtensionGenerator
+        const sceneExtensions = this.sceneExtensionGenerator(this)
         sceneExtensions.forEach((sceneExtension) => {
             this.sceneExtensions.set(sceneExtension.name, sceneExtension)
         })
