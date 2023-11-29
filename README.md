@@ -18,13 +18,13 @@ A React component library for building 3D scenes.
 [Storybook](https://guyettinger.github.io/gle-scene-components/)
 
 ## Demos
-- [Boxes](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--boxes)
-- [Animated Boxes](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--animated-boxes)
-- [Point Clouds](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--point-clouds)
-- [Gaussian Splatting](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--gaussian-splat-clouds)
-- [Coordinated Groups](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--coordinated-groups)
-- [Google Photorealistic 3D Tiles](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--google-tiles)
-- [Mesh 3D Tiles](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--three-d-tiles)
+- [Boxes](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--boxes)
+- [Animated Boxes](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--animated-boxes)
+- [Point Clouds](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--point-clouds)
+- [Gaussian Splatting](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--gaussian-splat-clouds)
+- [Coordinated Groups](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--coordinated-groups)
+- [Google Photorealistic 3D Tiles](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--google-tiles)
+- [Mesh 3D Tiles](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--three-d-tiles)
 
 ## Examples
 
@@ -45,7 +45,7 @@ export const ExampleSimpleScene = () => {
     )
 }
 ```
-[Simple Example Demo](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--boxes)
+[Simple Example Demo](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--boxes)
 
 
 ![example-complex-scene.png](public%2Fimages%2Fexample-complex-scene.png)
@@ -119,7 +119,7 @@ export const ExampleComplexScene = () => {
     )
 }
 ```
-[Complex Example Demo](https://guyettinger.github.io/gle-scene-components/?path=/story/gle-scene-components-scene--everything)
+[Complex Example Demo](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--everything)
 
 ## Installation
 ```shell
