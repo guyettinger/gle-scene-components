@@ -3,8 +3,15 @@
 </a>
 
 # GLE Scene Components
+[![Version](https://img.shields.io/npm/v/gle-scene-components?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/@react-three/xr)
+[![Downloads](https://img.shields.io/npm/dt/gle-scene-components.svg?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/@react-three/xr)
 
 A React component library for building 3D scenes.
+
+## Installation
+```shell
+npm install gle-scene-components@latest
+```
 
 ## Supports
 - [React Three Fiber](https://github.com/pmndrs/react-three-fiber)
@@ -120,11 +127,6 @@ export const ExampleComplexScene = () => {
 }
 ```
 [Complex Example Demo](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--everything)
-
-## Installation
-```shell
-npm install gle-scene-components@latest
-```
 
 ## Configuration
 ### Configure Resium
