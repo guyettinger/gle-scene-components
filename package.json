@@ -1,6 +1,6 @@
 {
   "name": "gle-scene-components",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "GLE Scene Components",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

@@ -6,9 +6,8 @@ import { SceneViewForegroundLayerExtension } from "../sceneViewForegroundLayerEx
 
 export class GaussianSplatCloudsSceneViewForegroundLayerExtension extends SceneViewForegroundLayerExtension {
 
-    // gaussian splat viewer
-    gaussianSplatViewerInitialized: boolean = false
-    gaussianSplatViewer: GaussianSplatViewer | null = null
+    // gaussian splat viewers
+    gaussianSplatViewerMap: Map<string, GaussianSplatViewer> = new Map<string, GaussianSplatViewer>()
 
     constructor(
         name: string,
@@ -20,11 +19,12 @@ export class GaussianSplatCloudsSceneViewForegroundLayerExtension extends SceneV
 
     render(state: RootState, delta: number) {
         // render gaussian splats
-        const gaussianSplatViewer = this.gaussianSplatViewer
-        if (gaussianSplatViewer && this.gaussianSplatViewerInitialized) {
-            gaussianSplatViewer.update()
-            gaussianSplatViewer.render()
-        }
+        this.gaussianSplatViewerMap.forEach((gaussianSplatViewer) => {
+            if (gaussianSplatViewer) {
+                gaussianSplatViewer.update()
+                gaussianSplatViewer.render()
+            }
+        })
     }
 
     performDoubleClick(e: ThreeEvent<MouseEvent>) {

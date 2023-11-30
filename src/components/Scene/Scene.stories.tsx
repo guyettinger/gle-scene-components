@@ -136,6 +136,38 @@ export const PointClouds: Story = (args: any) => {
 }
 PointClouds.args = {};
 
+export const MultiplePointClouds: Story = (args: any) => {
+    return (
+        <Scene data-testid='Scene-id'
+               name='Scene1'
+               sceneCenterLongitudeLatitudeHeight={[-83.765350, 34.401279, 357.0]}>
+            <SceneContent>
+                <ThreeSceneContent>
+                    <PointCloud
+                        baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
+                        fileName="cloud.js"
+                        onPointCloudLoad={rotatePointCloudOctreeYUp}
+                        position={[-4, -.75, 0]}
+                    />
+                    <PointCloud
+                        baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
+                        fileName="cloud.js"
+                        onPointCloudLoad={rotatePointCloudOctreeYUp}
+                        position={[0, -.75, 0]}
+                    />
+                    <PointCloud
+                        baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
+                        fileName="cloud.js"
+                        onPointCloudLoad={rotatePointCloudOctreeYUp}
+                        position={[4, -.75, 0]}
+                    />
+                </ThreeSceneContent>
+            </SceneContent>
+        </Scene>
+    )
+}
+MultiplePointClouds.args = {};
+
 export const GaussianSplatClouds: Story = (args: any) => {
     return (
         <Scene data-testid='Scene-id'
@@ -153,6 +185,32 @@ export const GaussianSplatClouds: Story = (args: any) => {
     )
 }
 GaussianSplatClouds.args = {};
+
+export const MultipleGaussianSplatClouds: Story = (args: any) => {
+    return (
+        <Scene data-testid='Scene-id'
+               name='Scene1'
+               sceneCenterLongitudeLatitudeHeight={[-83.76530, 34.4012376, 357.0]}>
+            <SceneContent>
+                <ThreeSceneContent>
+                    <GaussianSplatCloud baseUrl="./"
+                                        fileName="splats/jump/jump.splat"
+                                        position={[-5, -0.8, 0]}
+                    />
+                    <GaussianSplatCloud baseUrl="./"
+                                        fileName="splats/jump/jump.splat"
+                                        position={[0, -0.8, 0]}
+                    />
+                    <GaussianSplatCloud baseUrl="./"
+                                        fileName="splats/jump/jump.splat"
+                                        position={[5, -0.8, 0]}
+                    />
+                </ThreeSceneContent>
+            </SceneContent>
+        </Scene>
+    )
+}
+MultipleGaussianSplatClouds.args = {};
 
 
 export const CoordinatedGroups: Story = (args: any) => {
