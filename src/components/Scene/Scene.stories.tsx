@@ -186,31 +186,31 @@ export const GaussianSplatClouds: Story = (args: any) => {
 }
 GaussianSplatClouds.args = {};
 
-export const MultipleGaussianSplatClouds: Story = (args: any) => {
-    return (
-        <Scene data-testid='Scene-id'
-               name='Scene1'
-               sceneCenterLongitudeLatitudeHeight={[-83.76530, 34.4012376, 357.0]}>
-            <SceneContent>
-                <ThreeSceneContent>
-                    <GaussianSplatCloud baseUrl="./"
-                                        fileName="splats/jump/jump.splat"
-                                        position={[-5, -0.8, 0]}
-                    />
-                    <GaussianSplatCloud baseUrl="./"
-                                        fileName="splats/jump/jump.splat"
-                                        position={[0, -0.8, 0]}
-                    />
-                    <GaussianSplatCloud baseUrl="./"
-                                        fileName="splats/jump/jump.splat"
-                                        position={[5, -0.8, 0]}
-                    />
-                </ThreeSceneContent>
-            </SceneContent>
-        </Scene>
-    )
-}
-MultipleGaussianSplatClouds.args = {};
+// export const MultipleGaussianSplatClouds: Story = (args: any) => {
+//     return (
+//         <Scene data-testid='Scene-id'
+//                name='Scene1'
+//                sceneCenterLongitudeLatitudeHeight={[-83.76530, 34.4012376, 357.0]}>
+//             <SceneContent>
+//                 <ThreeSceneContent>
+//                     <GaussianSplatCloud baseUrl="./"
+//                                         fileName="splats/jump/jump.splat"
+//                                         position={[-5, -0.8, 0]}
+//                     />
+//                     <GaussianSplatCloud baseUrl="./"
+//                                         fileName="splats/jump/jump.splat"
+//                                         position={[0, -0.8, 0]}
+//                     />
+//                     <GaussianSplatCloud baseUrl="./"
+//                                         fileName="splats/jump/jump.splat"
+//                                         position={[5, -0.8, 0]}
+//                     />
+//                 </ThreeSceneContent>
+//             </SceneContent>
+//         </Scene>
+//     )
+// }
+// MultipleGaussianSplatClouds.args = {};
 
 
 export const CoordinatedGroups: Story = (args: any) => {

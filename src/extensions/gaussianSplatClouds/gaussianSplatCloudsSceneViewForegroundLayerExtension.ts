@@ -18,16 +18,10 @@ export class GaussianSplatCloudsSceneViewForegroundLayerExtension extends SceneV
     }
 
     render(state: RootState, delta: number) {
-        const gaussianSplatViewerCount = this.gaussianSplatViewerMap.size
-
         // render gaussian splats
         this.gaussianSplatViewerMap.forEach((gaussianSplatViewer) => {
             gaussianSplatViewer.update()
-
-            // only call render if there is one viewer, multiple viewers breaks here
-            if (gaussianSplatViewerCount === 1) {
-                gaussianSplatViewer.render()
-            }
+            gaussianSplatViewer.render()
         })
     }
 
