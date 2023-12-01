@@ -22,7 +22,7 @@ npm install gle-scene-components@latest
 - [ThreeJS 3D Tiles](https://github.com/ebeaufay/threedtiles)
 
 ## Documentation
-[Storybook](https://guyettinger.github.io/gle-scene-components/)
+- [Storybook](https://guyettinger.github.io/gle-scene-components/)
 
 ## Demos
 - [Boxes](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--boxes)
