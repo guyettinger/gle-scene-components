@@ -3,14 +3,14 @@
 </a>
 
 # GLE Scene Components
-[![Version](https://img.shields.io/npm/v/gle-scene-components?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/@react-three/xr)
-[![Downloads](https://img.shields.io/npm/dt/gle-scene-components.svg?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/@react-three/xr)
+[![Version](https://img.shields.io/npm/v/gle-scene-components?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/gle-scene-components)
+[![Downloads](https://img.shields.io/npm/dt/gle-scene-components.svg?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/gle-scene-components)
 
 A React component library for building 3D scenes.
 
 ## Installation
 ```shell
-npm install gle-scene-components@latest
+npm install gle-scene-components
 ```
 
 ## Supports
