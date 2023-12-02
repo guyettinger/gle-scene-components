@@ -8,13 +8,17 @@ import { SceneContent } from "../SceneContent";
 import { CoordinatedGroup } from "../CoordinatedGroup";
 import {
     Box,
-    CesiumSceneContent, Floor,
+    CesiumSceneContent,
+    Floor,
     GaussianSplatCloud,
     GoogleMapsPhotorealistic3DTiles,
     OGC3DTiles,
     PointCloud,
     rotatePointCloudOctreeYUp,
-    ThreeSceneContent
+    ThreeSceneContent,
+    XRView,
+    ARButton,
+    VRButton
 } from "../../extensions";
 
 const meta: Meta<typeof Scene> = {
@@ -295,6 +299,52 @@ export const ThreeDTiles: Story = (args: any) => {
     )
 }
 ThreeDTiles.args = {};
+
+export const VR: Story = (args: any) => {
+
+    return (
+        <>
+            <VRButton/>
+            <Scene data-testid='Scene-id'
+                   name='Scene1'
+                   sceneCenterLongitudeLatitudeHeight={[-83.765350, 34.401279, 357.0]}>
+                <SceneContent>
+                    <ThreeSceneContent>
+                        <XRView>
+                            <Box position={[4, 0, 0]}/>
+                            <Box position={[0, 0, -4]}/>
+                            <Box position={[-4, 0, 0]}/>
+                        </XRView>
+                    </ThreeSceneContent>
+                </SceneContent>
+            </Scene>
+        </>
+    )
+}
+VR.args = {};
+
+export const AR: Story = (args: any) => {
+
+    return (
+        <>
+            <ARButton/>
+            <Scene data-testid='Scene-id'
+                   name='Scene1'
+                   sceneCenterLongitudeLatitudeHeight={[-83.765350, 34.401279, 357.0]}>
+                <SceneContent>
+                    <ThreeSceneContent>
+                        <XRView>
+                            <Box position={[4, 0, 0]}/>
+                            <Box position={[0, 0, -4]}/>
+                            <Box position={[-4, 0, 0]}/>
+                        </XRView>
+                    </ThreeSceneContent>
+                </SceneContent>
+            </Scene>
+        </>
+    )
+}
+AR.args = {};
 
 
 export const Everything: Story = (args: any) => {
