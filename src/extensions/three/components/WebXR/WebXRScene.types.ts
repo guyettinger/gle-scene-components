@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
 
-export interface XRSceneProps {
+export interface WebXRSceneProps {
     children: ReactNode
 }

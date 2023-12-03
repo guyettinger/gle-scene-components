@@ -16,9 +16,9 @@ import {
     PointCloud,
     rotatePointCloudOctreeYUp,
     ThreeSceneContent,
-    XRView,
-    ARButton,
-    VRButton
+    WebXRManager,
+    WebXREnableARButton,
+    WebXREnableVRButton
 } from "../../extensions";
 
 const meta: Meta<typeof Scene> = {
@@ -304,17 +304,17 @@ export const VR: Story = (args: any) => {
 
     return (
         <>
-            <VRButton/>
+            <WebXREnableVRButton/>
             <Scene data-testid='Scene-id'
                    name='Scene1'
                    sceneCenterLongitudeLatitudeHeight={[-83.765350, 34.401279, 357.0]}>
                 <SceneContent>
                     <ThreeSceneContent>
-                        <XRView>
+                        <WebXRManager>
                             <Box position={[4, 0, 0]}/>
                             <Box position={[0, 0, -4]}/>
                             <Box position={[-4, 0, 0]}/>
-                        </XRView>
+                        </WebXRManager>
                     </ThreeSceneContent>
                 </SceneContent>
             </Scene>
@@ -327,17 +327,17 @@ export const AR: Story = (args: any) => {
 
     return (
         <>
-            <ARButton/>
+            <WebXREnableARButton/>
             <Scene data-testid='Scene-id'
                    name='Scene1'
                    sceneCenterLongitudeLatitudeHeight={[-83.765350, 34.401279, 357.0]}>
                 <SceneContent>
                     <ThreeSceneContent>
-                        <XRView>
+                        <WebXRManager>
                             <Box position={[4, 0, 0]}/>
                             <Box position={[0, 0, -4]}/>
                             <Box position={[-4, 0, 0]}/>
-                        </XRView>
+                        </WebXRManager>
                     </ThreeSceneContent>
                 </SceneContent>
             </Scene>

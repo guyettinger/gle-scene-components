@@ -2,9 +2,9 @@ import { Vector3 } from "three";
 import { Controllers, Hands, useXR } from "@react-three/xr";
 import { useFrame } from "@react-three/fiber";
 import { useSceneViewModel } from "../../../../providers";
-import { XRSceneProps } from "./XRScene.types";
+import { WebXRSceneProps } from "./WebXRScene.types";
 
-export const XRScene = ({children}: XRSceneProps) => {
+export const WebXRScene = ({children}: WebXRSceneProps) => {
     const sceneViewModel = useSceneViewModel()
 
     const {
