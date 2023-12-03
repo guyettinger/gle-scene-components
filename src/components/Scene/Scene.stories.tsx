@@ -180,7 +180,7 @@ export const GaussianSplatClouds: Story = (args: any) => {
             <SceneContent>
                 <ThreeSceneContent>
                     <GaussianSplatCloud baseUrl="./"
-                                        fileName="splats/jump1/jump1.splat"
+                                        fileName="splats/jump/jump.ksplat"
                                         position={[0, -0.8, 0]}
                     />
                 </ThreeSceneContent>
@@ -198,11 +198,11 @@ export const MultipleGaussianSplatClouds: Story = (args: any) => {
             <SceneContent>
                 <ThreeSceneContent>
                     <GaussianSplatCloud baseUrl="./"
-                                        fileName="splats/jump1/jump1.splat"
+                                        fileName="splats/jump/jump.ksplat"
                                         position={[-3, -0.8, 0]}
                     />
                     <GaussianSplatCloud baseUrl="./"
-                                        fileName="splats/jump2/jump2.splat"
+                                        fileName="splats/jump/jump.ksplat"
                                         position={[3, -0.8, 0]}
                     />
                 </ThreeSceneContent>
@@ -382,23 +382,12 @@ export const Everything: Story = (args: any) => {
                                 baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
                                 fileName="cloud.js"
                                 onPointCloudLoad={rotatePointCloudOctreeYUp}
-                                position={[0, -.75, 0]}
+                                position={[0, -3, -10]}
                             />
-                        </CoordinatedGroup>
-                        <CoordinatedGroup longitudeLatitudeHeight={barnParkingLotLongitudeLatitudeHeight}>
-                            <Box position={[0, 0, 0]}/>
-                        </CoordinatedGroup>
-                        <CoordinatedGroup longitudeLatitudeHeight={lowerArenaLongitudeLatitudeHeight}>
-                            <group position={[0, 2.60, -15]}
-                                   rotation={[MathUtils.degToRad(30), 0, 0, 'XYZ']}>
-                                <GaussianSplatCloud baseUrl="./"
-                                                    fileName="splats/ornament/ornament.splat"
-                                                    rotation={[
-                                                        MathUtils.degToRad(-38),
-                                                        MathUtils.degToRad(-85),
-                                                        MathUtils.degToRad(180), 'ZYX']}
-                                />
-                            </group>
+                            <GaussianSplatCloud baseUrl="./"
+                                                fileName="splats/jump/jump.ksplat"
+                                                position={[0, -1.65, -3]}
+                            />
                             <OGC3DTiles url={"https://storage.googleapis.com/ogc-3d-tiles/museumMeshed/tileset.json"}
                                         position={[0, -2, 0]}
                                         rotation={[
@@ -406,6 +395,12 @@ export const Everything: Story = (args: any) => {
                                             MathUtils.degToRad(90),
                                             MathUtils.degToRad(180), 'XYZ'
                                         ]}/>
+                        </CoordinatedGroup>
+                        <CoordinatedGroup longitudeLatitudeHeight={barnParkingLotLongitudeLatitudeHeight}>
+                            <Box position={[0, 0, 0]}/>
+                        </CoordinatedGroup>
+                        <CoordinatedGroup longitudeLatitudeHeight={lowerArenaLongitudeLatitudeHeight}>
+                            <Box position={[0, 0, 0]}/>
                         </CoordinatedGroup>
                     </ThreeSceneContent>
                     <CesiumSceneContent>
