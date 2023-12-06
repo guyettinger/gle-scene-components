@@ -20,6 +20,7 @@ npm install gle-scene-components
 - [Gaussian Splatting](https://github.com/guyettinger/gle-gaussian-splat-3d)
 - [Cesium 3D Tiles](https://cesium.com/blog/2023/10/26/photorealistic-3d-tiles-in-cesium-ion/)
 - [ThreeJS 3D Tiles](https://github.com/ebeaufay/threedtiles)
+- [WebXR](https://github.com/pmndrs/react-xr)
 
 ## Documentation
 - [Storybook](https://guyettinger.github.io/gle-scene-components/)
@@ -32,6 +33,8 @@ npm install gle-scene-components
 - [Coordinated Groups](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--coordinated-groups)
 - [Google Photorealistic 3D Tiles](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--google-tiles)
 - [Mesh 3D Tiles](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--three-d-tiles)
+- [VR](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--vr)
+- [AR](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--ar)
 
 ## Examples
 
