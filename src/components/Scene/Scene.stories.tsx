@@ -212,6 +212,25 @@ export const MultipleGaussianSplatClouds: Story = (args: any) => {
 }
 MultipleGaussianSplatClouds.args = {};
 
+export const Juanita: Story = (args: any) => {
+    return (
+        <Scene data-testid='Scene-id'
+               name='Scene1'
+               cameraPosition={[1.5, .75, -3]}
+               sceneCenterLongitudeLatitudeHeight={[-84.700844, 10.461162, 1592.0]}>
+            <SceneContent>
+                <ThreeSceneContent>
+                    <GaussianSplatCloud baseUrl="./"
+                                        fileName="splats/juanita/juanita.ksplat"
+                                        position={[0, -1.2, 0]}
+                    />
+                </ThreeSceneContent>
+            </SceneContent>
+        </Scene>
+    )
+}
+Juanita.args = {};
+
 
 export const CoordinatedGroups: Story = (args: any) => {
 
