@@ -86,7 +86,7 @@ export const GaussianSplatCloud = (
                     console.log('Loading gaussian splat cloud success')
                 }).catch((reason: any) => {
                     console.log('Loading gaussian splat cloud failed', reason)
-                }).finally(() => {
+                }).then(() => {
                     // finished loading
                     setGaussianSplatCloudLoaded(true)
                     setGaussianSplatCloudLoading(false)
