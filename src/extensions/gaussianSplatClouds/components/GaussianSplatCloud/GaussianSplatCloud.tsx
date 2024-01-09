@@ -35,7 +35,9 @@ export const GaussianSplatCloud = (
                 scene: scene,
                 selfDrivenMode: false,
                 useBuiltInControls: false,
-                ignoreDevicePixelRatio: false
+                ignoreDevicePixelRatio: false,
+                sharedMemoryForWorkers: false,
+                gpuAcceleratedSort: false
             })
             gaussianSplatCloudsSceneViewExtension.gaussianSplatViewer = gaussianSplatViewer
         } else {
