@@ -1,3 +1,5 @@
 <script>
-    window.parent.document.getElementById('storybook-preview-iframe').setAttribute('sandbox', 'allow-same-origin');
+    window.onload = ()=>{
+        window.parent.document.getElementById('storybook-preview-iframe').setAttribute('sandbox', 'allow-same-origin');
+    }
 </script>
