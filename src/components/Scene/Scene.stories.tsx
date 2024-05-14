@@ -297,6 +297,22 @@ export const GoogleTiles: Story = (args: any) => {
 }
 GoogleTiles.args = {};
 
+export const Flaire: Story = (args: any) => {
+    return (
+        <Scene data-testid='Scene-id'
+               name='Scene1'
+               cameraPosition={[300, 300, 300]}
+               sceneCenterLongitudeLatitudeHeight={[-84.45851295602611, 33.8775791454675, 300.0]}>
+            <SceneContent>
+                <CesiumSceneContent>
+                    <GoogleMapsPhotorealistic3DTiles/>
+                </CesiumSceneContent>
+            </SceneContent>
+        </Scene>
+    )
+}
+Flaire.args = {};
+
 export const ThreeDTiles: Story = (args: any) => {
     return (
         <Scene data-testid='Scene-id'
