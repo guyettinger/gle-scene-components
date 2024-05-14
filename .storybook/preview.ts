@@ -1,7 +1,7 @@
 import type { Preview } from "@storybook/react";
 import { Ion } from "cesium";
 
-Ion.defaultAccessToken = (import.meta as any).env.STORYBOOK_CESIUM_ACCESS_TOKEN ?? process.env.NEXT_PUBLIC_CESIUM_ACCESS_TOKEN
+Ion.defaultAccessToken = (import.meta as any).env.STORYBOOK_CESIUM_ACCESS_TOKEN
 
 console.log("import.meta", import.meta)
 
