@@ -25,9 +25,6 @@ const config: StorybookConfig = {
     viteFinal(config) {
         return mergeConfig(config, {
             base: "",
-            define: {
-              "process.env.NEXT_PUBLIC_CESIUM_ACCESS_TOKEN": process.env.NEXT_PUBLIC_CESIUM_ACCESS_TOKEN
-            },
             plugins: [cesium()],
         });
     }
