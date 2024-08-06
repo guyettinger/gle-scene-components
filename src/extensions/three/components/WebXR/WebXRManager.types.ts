@@ -1,5 +1,5 @@
-import { XRProps } from "@react-three/xr";
+import { XRProperties } from "@react-three/xr";
 
-export interface WebXRManagerProps extends XRProps{
+export interface WebXRManagerProps extends XRProperties{
 }
 

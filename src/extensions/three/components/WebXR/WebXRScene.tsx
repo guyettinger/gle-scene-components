@@ -1,5 +1,5 @@
 import { Vector3 } from "three";
-import { Controllers, Hands, useXR } from "@react-three/xr";
+import { useXR } from "@react-three/xr";
 import { useFrame } from "@react-three/fiber";
 import { useSceneViewModel } from "../../../../providers";
 import { WebXRSceneProps } from "./WebXRScene.types";
@@ -45,8 +45,6 @@ export const WebXRScene = ({children}: WebXRSceneProps) => {
 
     return (
         <>
-            <Controllers/>
-            <Hands/>
             {children}
         </>
     )

@@ -143,10 +143,6 @@ This can be achieved by setting response headers on your server:
 response.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
 response.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
 ```
-... or deploying [coi-serviceworker](https://github.com/gzuidhof/coi-serviceworker) in your webpage:
-```html
-<script src="coi-serviceworker.js"></script>
-```
 
 ## Development
 Install

@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Group, Vector2 } from "three";
 import { ThreeEvent, useFrame } from "@react-three/fiber";
-import { Viewer as GaussianSplatViewer } from "gle-gaussian-splat-3d";
+import { SceneRevealMode, Viewer as GaussianSplatViewer } from "gle-gaussian-splat-3d";
 import { SceneExtensionNames } from "../../../sceneExtensionNames";
 import { useSceneViewModel } from "../../../../providers";
 import {
@@ -32,23 +32,25 @@ export const GaussianSplatCloud = (
             gaussianSplatViewer = new GaussianSplatViewer({
                 renderer: gl,
                 camera: camera,
-                scene: scene,
+                threeScene: scene,
                 selfDrivenMode: false,
                 useBuiltInControls: false,
                 ignoreDevicePixelRatio: false,
                 sharedMemoryForWorkers: false,
-                gpuAcceleratedSort: false
+                gpuAcceleratedSort: false,
+                sceneRevealMode: SceneRevealMode.Instant,
             })
             gaussianSplatCloudsSceneViewExtension.gaussianSplatViewer = gaussianSplatViewer
         } else {
-            if (!gaussianSplatCloudLoaded && !gaussianSplatCloudLoading) {
+
+            if (!gaussianSplatViewer.isLoadingOrUnloading() && !gaussianSplatCloudLoaded && !gaussianSplatCloudLoading) {
+
                 // load gaussian splat cloud
                 setGaussianSplatCloudLoading(true)
 
-                gaussianSplatViewer.loadFile(baseUrl + fileName, {
-                    halfPrecisionCovariancesOnGPU: true,
+                gaussianSplatViewer.addSplatScene(baseUrl + fileName, {
                     splatAlphaRemovalThreshold: 5, // out of 255
-                    showLoadingSpinner: false,
+                    showLoadingUI: false,
                     position: position,
                     rotation: rotation,
                     scale: scale

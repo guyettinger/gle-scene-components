@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { useRef } from "react";
 import { MathUtils, Vector3 } from "three";
+import { createXRStore } from "@react-three/xr";
 import styled from "styled-components";
 import { Scene } from "./Scene";
 import { SceneInterface } from "./Scene.types";
@@ -16,10 +17,10 @@ import {
     PointCloud,
     rotatePointCloudOctreeYUp,
     ThreeSceneContent,
-    WebXRManager,
-    WebXREnableARButton,
-    WebXREnableVRButton
+    WebXRManager
 } from "../../extensions";
+
+const store = createXRStore()
 
 const meta: Meta<typeof Scene> = {
     component: Scene,
@@ -31,18 +32,18 @@ export default meta;
 type Story = StoryObj<typeof Scene>;
 
 const SceneButton = styled.button`
-  position: relative;
-  margin-right: 10px;
-  padding: 4px 8px;
-  z-index: 10;
-  background: rgba(255, 255, 255, 0.25);
-  border: 1px rgba(0, 0, 0, 0.25);
-  border-radius: 4px;
+    position: relative;
+    margin-right: 10px;
+    padding: 4px 8px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
 
-  &:hover {
-    background: rgba(255, 255, 255, 0.5);
-    border: 1px rgba(0, 0, 0, 0.5);
-  }
+    &:hover {
+        background: rgba(255, 255, 255, 0.5);
+        border: 1px rgba(0, 0, 0, 0.5);
+    }
 `
 
 export const Boxes: Story = (args: any) => {
@@ -180,7 +181,7 @@ export const GaussianSplatClouds: Story = (args: any) => {
             <SceneContent>
                 <ThreeSceneContent>
                     <GaussianSplatCloud baseUrl="./"
-                                        fileName="splats/jump/jump.ksplat"
+                                        fileName="splats/juanita/juanita.ply"
                                         position={[0, -0.8, 0]}
                     />
                 </ThreeSceneContent>
@@ -198,11 +199,11 @@ export const MultipleGaussianSplatClouds: Story = (args: any) => {
             <SceneContent>
                 <ThreeSceneContent>
                     <GaussianSplatCloud baseUrl="./"
-                                        fileName="splats/jump/jump.ksplat"
+                                        fileName="splats/juanita/juanita.ply"
                                         position={[-3, -0.8, 0]}
                     />
                     <GaussianSplatCloud baseUrl="./"
-                                        fileName="splats/jump/jump.ksplat"
+                                        fileName="splats/jump/jump.ply"
                                         position={[3, -0.8, 0]}
                     />
                 </ThreeSceneContent>
@@ -221,7 +222,7 @@ export const Juanita: Story = (args: any) => {
             <SceneContent>
                 <ThreeSceneContent>
                     <GaussianSplatCloud baseUrl="./"
-                                        fileName="splats/juanita/juanita.ksplat"
+                                        fileName="splats/juanita/juanita.ply"
                                         position={[0, -1.2, 0]}
                     />
                 </ThreeSceneContent>
@@ -297,22 +298,6 @@ export const GoogleTiles: Story = (args: any) => {
 }
 GoogleTiles.args = {};
 
-export const Flaire: Story = (args: any) => {
-    return (
-        <Scene data-testid='Scene-id'
-               name='Scene1'
-               cameraPosition={[300, 300, 300]}
-               sceneCenterLongitudeLatitudeHeight={[-84.45851295602611, 33.8775791454675, 300.0]}>
-            <SceneContent>
-                <CesiumSceneContent>
-                    <GoogleMapsPhotorealistic3DTiles/>
-                </CesiumSceneContent>
-            </SceneContent>
-        </Scene>
-    )
-}
-Flaire.args = {};
-
 export const ThreeDTiles: Story = (args: any) => {
     return (
         <Scene data-testid='Scene-id'
@@ -339,13 +324,13 @@ export const VR: Story = (args: any) => {
 
     return (
         <>
-            <WebXREnableVRButton/>
+            <button onClick={() => store.enterVR()}>Enter VR</button>
             <Scene data-testid='Scene-id'
                    name='Scene1'
                    sceneCenterLongitudeLatitudeHeight={[-83.765350, 34.401279, 357.0]}>
                 <SceneContent>
                     <ThreeSceneContent>
-                        <WebXRManager>
+                        <WebXRManager store={store}>
                             <Box position={[4, 0, 0]}/>
                             <Box position={[0, 0, -4]}/>
                             <Box position={[-4, 0, 0]}/>
@@ -362,13 +347,13 @@ export const AR: Story = (args: any) => {
 
     return (
         <>
-            <WebXREnableARButton/>
+            <button onClick={() => store.enterAR()}>Enter AR</button>
             <Scene data-testid='Scene-id'
                    name='Scene1'
                    sceneCenterLongitudeLatitudeHeight={[-83.765350, 34.401279, 357.0]}>
                 <SceneContent>
                     <ThreeSceneContent>
-                        <WebXRManager>
+                        <WebXRManager store={store}>
                             <Box position={[4, 0, 0]}/>
                             <Box position={[0, 0, -4]}/>
                             <Box position={[-4, 0, 0]}/>
@@ -420,8 +405,8 @@ export const Everything: Story = (args: any) => {
                                 position={[0, -3, -10]}
                             />
                             <GaussianSplatCloud baseUrl="./"
-                                                fileName="splats/jump/jump.ksplat"
-                                                position={[0, -1.65, -3]}
+                                                fileName="splats/juanita/juanita.ply"
+                                                position={[0, 0, 0]}
                             />
                             <OGC3DTiles url={"https://storage.googleapis.com/ogc-3d-tiles/museumMeshed/tileset.json"}
                                         position={[0, -2, 0]}
