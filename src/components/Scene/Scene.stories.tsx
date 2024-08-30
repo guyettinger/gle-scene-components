@@ -228,7 +228,7 @@ export const MultipleGaussianSplatClouds: Story = (args: any) => {
           />
           <GaussianSplatCloud
             baseUrl="./"
-            fileName="splats/jump/jump.ply"
+            fileName="splats/juanita/juanita.ply"
             position={[3, -0.8, 0]}
           />
         </ThreeSceneContent>
