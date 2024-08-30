@@ -13,6 +13,10 @@ A React component library for building 3D scenes.
 npm install gle-scene-components
 ```
 
+## Configuration
+### Configure Resium
+Follow the [Resium Install Guide ](https://resium.reearth.io/installation)
+
 ## Supports
 - [React Three Fiber](https://github.com/pmndrs/react-three-fiber)
 - [Resium](https://github.com/reearth/resium)
@@ -130,19 +134,6 @@ export const ExampleComplexScene = () => {
 }
 ```
 [Complex Example Demo](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--everything)
-
-## Configuration
-### Configure Resium
-Follow the [Resium Install Guide ](https://resium.reearth.io/installation)
-
-### Configure Cross-origin Isolation
-Gaussian Splatting Shared Memory requires [Cross-origin Isolation to be configured](https://web.dev/articles/coop-coep) in deployment.
-
-This can be achieved by setting response headers on your server:
-```
-response.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-response.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-```
 
 ## Development
 Install

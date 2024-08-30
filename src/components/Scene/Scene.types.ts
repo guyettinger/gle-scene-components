@@ -12,6 +12,7 @@ export interface SceneProps {
     sceneCenterLongitudeLatitudeHeight: Vector3Prop
     sceneExtensionGenerator?: SceneExtensionGenerator
     shadows?: boolean
+    cesiumIonAccessToken?: string
 }
 
 export interface SceneInterface {

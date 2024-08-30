@@ -46,12 +46,15 @@ const SceneButton = styled.button`
   }
 `;
 
+const cesiumIonAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjOWIzZmM0Mi0zOThjLTRmZjItOTM2OC1iOWM4N2ZiMzY3MzUiLCJpZCI6MTYzOTg4LCJpYXQiOjE2OTM2MDMzMzl9.SkbJ2XbsBVeaGSZ2MrwuksCHx4xuux3DGYh6pIJJhGQ"
+
 export const Boxes: Story = (args: any) => {
   return (
     <Scene
       data-testid="Scene-id"
       name="Scene1"
       sceneCenterLongitudeLatitudeHeight={[-83.76535, 34.401279, 357.0]}
+      cesiumIonAccessToken={cesiumIonAccessToken}
     >
       <SceneContent>
         <ThreeSceneContent>
@@ -71,6 +74,7 @@ export const AnimatedBoxes: Story = (args: any) => {
       data-testid="Scene-id"
       name="Scene1"
       sceneCenterLongitudeLatitudeHeight={[-83.76535, 34.401279, 357.0]}
+      cesiumIonAccessToken={cesiumIonAccessToken}
     >
       <SceneContent>
         <ThreeSceneContent>
@@ -91,6 +95,7 @@ export const CameraPosition: Story = (args: any) => {
       name="Scene1"
       sceneCenterLongitudeLatitudeHeight={[-83.76535, 34.401279, 357.0]}
       cameraPosition={[10, 10, 10]}
+      cesiumIonAccessToken={cesiumIonAccessToken}
     >
       <SceneContent>
         <ThreeSceneContent>
@@ -111,6 +116,7 @@ export const Shadows: Story = (args: any) => {
       name="Scene1"
       sceneCenterLongitudeLatitudeHeight={[-83.76535, 34.401279, 357.0]}
       shadows={true}
+      cesiumIonAccessToken={cesiumIonAccessToken}
     >
       <SceneContent>
         <ThreeSceneContent>
@@ -131,6 +137,7 @@ export const PointClouds: Story = (args: any) => {
       data-testid="Scene-id"
       name="Scene1"
       sceneCenterLongitudeLatitudeHeight={[-83.76535, 34.401279, 357.0]}
+      cesiumIonAccessToken={cesiumIonAccessToken}
     >
       <SceneContent>
         <ThreeSceneContent>
@@ -153,6 +160,7 @@ export const MultiplePointClouds: Story = (args: any) => {
       data-testid="Scene-id"
       name="Scene1"
       sceneCenterLongitudeLatitudeHeight={[-83.76535, 34.401279, 357.0]}
+      cesiumIonAccessToken={cesiumIonAccessToken}
     >
       <SceneContent>
         <ThreeSceneContent>
@@ -187,6 +195,7 @@ export const GaussianSplatClouds: Story = (args: any) => {
       data-testid="Scene-id"
       name="Scene1"
       sceneCenterLongitudeLatitudeHeight={[-83.7653, 34.4012376, 357.0]}
+      cesiumIonAccessToken={cesiumIonAccessToken}
     >
       <SceneContent>
         <ThreeSceneContent>
@@ -208,6 +217,7 @@ export const MultipleGaussianSplatClouds: Story = (args: any) => {
       data-testid="Scene-id"
       name="Scene1"
       sceneCenterLongitudeLatitudeHeight={[-83.7653, 34.4012376, 357.0]}
+      cesiumIonAccessToken={cesiumIonAccessToken}
     >
       <SceneContent>
         <ThreeSceneContent>
@@ -235,6 +245,7 @@ export const Juanita: Story = (args: any) => {
       name="Scene1"
       cameraPosition={[1.5, 0.75, -3]}
       sceneCenterLongitudeLatitudeHeight={[-84.700844, 10.461162, 1592.0]}
+      cesiumIonAccessToken={cesiumIonAccessToken}
     >
       <SceneContent>
         <ThreeSceneContent>
@@ -305,6 +316,7 @@ export const CoordinatedGroups: Story = (args: any) => {
         ref={sceneRef}
         name="Scene1"
         sceneCenterLongitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}
+        cesiumIonAccessToken={cesiumIonAccessToken}
       >
         <SceneContent>
           <ThreeSceneContent>
@@ -339,6 +351,7 @@ export const GoogleTiles: Story = (args: any) => {
       sceneCenterLongitudeLatitudeHeight={[
         -84.39285552774608, 33.772504710962814, 250.0,
       ]}
+      cesiumIonAccessToken={cesiumIonAccessToken}
     >
       <SceneContent>
         <ThreeSceneContent>
@@ -361,6 +374,7 @@ export const ThreeDTiles: Story = (args: any) => {
       sceneCenterLongitudeLatitudeHeight={[
         -83.76612684589652, 34.40024525982904, 349.0,
       ]}
+      cesiumIonAccessToken={cesiumIonAccessToken}
     >
       <SceneContent>
         <ThreeSceneContent>
@@ -391,6 +405,7 @@ export const VR: Story = (args: any) => {
         data-testid="Scene-id"
         name="Scene1"
         sceneCenterLongitudeLatitudeHeight={[-83.76535, 34.401279, 357.0]}
+        cesiumIonAccessToken={cesiumIonAccessToken}
       >
         <SceneContent>
           <ThreeSceneContent>
@@ -415,6 +430,7 @@ export const AR: Story = (args: any) => {
         data-testid="Scene-id"
         name="Scene1"
         sceneCenterLongitudeLatitudeHeight={[-83.76535, 34.401279, 357.0]}
+        cesiumIonAccessToken={cesiumIonAccessToken}
       >
         <SceneContent>
           <ThreeSceneContent>
@@ -486,6 +502,7 @@ export const Everything: Story = (args: any) => {
         ref={sceneRef}
         name="Scene1"
         sceneCenterLongitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}
+        cesiumIonAccessToken={cesiumIonAccessToken}
       >
         <SceneContent>
           <ThreeSceneContent>

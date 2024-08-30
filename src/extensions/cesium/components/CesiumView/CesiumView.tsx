@@ -41,7 +41,7 @@ export const CesiumView = observer(({}: CesiumViewProps) => {
                 creditContainer={creditContainer}
                 homeButton={false}
                 navigationHelpButton={false}
-                terrainProvider={cesiumSceneExtension.cesiumTerrainProviderFactory}
+                terrainProvider={cesiumSceneExtension.cesiumTerrainProviderFactory!}
                 timeline={false}
                 useDefaultRenderLoop={false}
                 geocoder={false}

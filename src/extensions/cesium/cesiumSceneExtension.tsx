@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { getChildrenByType } from "react-nanny";
-import { Cartographic, CesiumTerrainProvider, createWorldTerrainAsync, sampleTerrainMostDetailed } from "cesium";
+import { Cartographic, CesiumTerrainProvider, createWorldTerrainAsync, Ion, sampleTerrainMostDetailed } from "cesium";
 import { Globe, Sun } from "resium";
 import { SceneModel } from "../../models/scene";
 import { SceneViewModel } from "../../models/sceneView";
@@ -15,14 +15,23 @@ export class CesiumSceneExtension extends SceneExtension {
 
     // cesium terrain
     cesiumTerrainProvider: CesiumTerrainProvider | null = null
-    cesiumTerrainProviderFactory: Promise<CesiumTerrainProvider> = new Promise(async (resolve) => {
-        const cesiumTerrainProvider = await createWorldTerrainAsync()
-        this.cesiumTerrainProvider = cesiumTerrainProvider
-        resolve(cesiumTerrainProvider)
-    })
+    cesiumTerrainProviderFactory: Promise<CesiumTerrainProvider> | null = null
 
     constructor(name: string, sceneModel: SceneModel) {
         super(name, sceneModel)
+
+        // if there is a cesium ion access token, use it
+        const cesiumAccessToken = sceneModel?.sceneProperties?.cesiumIonAccessToken
+        if (!!cesiumAccessToken) {
+            Ion.defaultAccessToken = cesiumAccessToken
+        }
+
+        // create the terrain provider
+        this.cesiumTerrainProviderFactory = new Promise(async (resolve) => {
+            const cesiumTerrainProvider = await createWorldTerrainAsync()
+            this.cesiumTerrainProvider = cesiumTerrainProvider
+            resolve(cesiumTerrainProvider)
+        })
 
         // using the scene content
         const {sceneContent} = sceneModel
