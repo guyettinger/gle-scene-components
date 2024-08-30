@@ -33,7 +33,7 @@
     "mobx": "^6.13.1",
     "mobx-react": "^9.1.1",
     "react-nanny": "^2.15.0",
-    "resium": "^1.18.0",
+    "resium": "^1.18.2",
     "styled-components": "^6.1.12",
     "three": "^0.167.1"
   },
