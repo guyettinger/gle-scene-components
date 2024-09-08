@@ -26,6 +26,8 @@ export const OGC3DTiles = (ogc3DTilesProps: OGC3DTilesProps) => {
                 properties.renderer = gl
             }
 
+            console.log("ogc3DTile", properties)
+
             const ogc3DTile = new OGC3DTile(properties)
             ogc3DTilesSceneViewExtension.addOGC3DTile(ogc3DTile)
             group.add(ogc3DTile)

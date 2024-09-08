@@ -22,6 +22,7 @@ export class Ogc3DTilesSceneViewForegroundLayerExtension extends SceneViewForegr
         const {gl, scene, camera} = state;
         this.ogc3DTiles.forEach((ogc3DTile: OGC3DTile) => {
             ogc3DTile.update(camera)
+            ogc3DTile.tileLoader.update()
         })
     }
 

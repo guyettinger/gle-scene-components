@@ -1,6 +1,6 @@
 {
   "name": "gle-scene-components",
-  "version": "1.0.32",
+  "version": "1.0.33",
   "description": "GLE Scene Components",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -29,7 +29,7 @@
     "cesium": "^1.121.1",
     "gle-gaussian-splat-3d": "^1.0.20",
     "gle-potree": "^1.0.1",
-    "gle-threedtiles": "^9.1.25",
+    "gle-threedtiles": "^9.1.27",
     "mobx": "^6.13.1",
     "mobx-react": "^9.1.1",
     "react-nanny": "^2.15.0",
