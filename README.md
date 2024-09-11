@@ -27,7 +27,7 @@ Follow the [Resium Install Guide ](https://resium.reearth.io/installation)
 - [WebXR](https://github.com/pmndrs/react-xr)
 
 ## Documentation
-- [Storybook](https://guyettinger.github.io/gle-scene-components/)
+- [Storybook](https://gle-scene-components.vercel.app/)
 
 ## Demos
 - [Boxes](https://gle-scene-components.vercel.app/?path=/story/gle-scene-components-scene--boxes)
@@ -47,7 +47,8 @@ Follow the [Resium Install Guide ](https://resium.reearth.io/installation)
 export const ExampleSimpleScene = () => {
     return (
         <Scene name='Simple Scene'
-               sceneCenterLongitudeLatitudeHeight={[-83.765350, 34.401279, 357.0]}>
+               sceneCenterLongitudeLatitudeHeight={[-83.765350, 34.401279, 357.0]}
+               cesiumIonAccessToken={cesiumIonAccessToken}>
             <SceneContent>
                 <ThreeSceneContent>
                     <Box position={[4, 0, 0]}/>
@@ -90,7 +91,8 @@ export const ExampleComplexScene = () => {
             </SceneButton>
             <Scene name='Complex Scene'
                    ref={sceneRef}
-                   sceneCenterLongitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}>
+                   sceneCenterLongitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}
+                   cesiumIonAccessToken={cesiumIonAccessToken}>
                 <SceneContent>
                     <ThreeSceneContent>
                         <CoordinatedGroup longitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}>
