@@ -1,6 +1,6 @@
-import { Camera, Mesh, Points, Renderer } from "three";
-import { OcclusionCullingService, OGC3DTile, TileLoader } from "gle-threedtiles";
-import { GroupProps } from "@react-three/fiber";
+import { GroupProps } from '@react-three/fiber';
+import { OcclusionCullingService, OGC3DTile, TileLoader } from 'gle-threedtiles';
+import { Camera, Mesh, Points, Renderer } from 'three';
 
 /**
  *
@@ -27,27 +27,27 @@ import { GroupProps } from "@react-three/fiber";
  * yUp?: Object – optional value indicating the meshes are y up rather than z-up. This parameter is used only for box and sphere bounding volumes.
  * displayErrors?: Object – optional value indicating that errors should be shown on screen.
  */
-export interface OGC3DTilesProps extends GroupProps{
-    renderer?: Renderer
-    url?: string
-    queryParams?: any
-    geometricErrorMultiplier?: number
-    loadOutsideView?: boolean
-    tileLoader?: TileLoader
-    meshCallback?: (mesh:Mesh) => void
-    pointsCallback?: (points:Points) => void
-    onLoadCallback?: (tileset:OGC3DTile) => void
-    occlusionCullingService?: OcclusionCullingService
-    centerModel?: boolean
-    static?: boolean
-    rootPath?: string
-    json?: any
-    parentGeometricError?: number
-    parentBoundingVolume?: any
-    parentRefinement?: string
-    cameraOnLoad?: Camera
-    parentTile?: OGC3DTile
-    proxy?: string
-    yUp?: boolean
-    displayErrors?: boolean
+export interface OGC3DTilesProps extends GroupProps {
+  renderer?: Renderer;
+  url?: string;
+  queryParams?: any;
+  geometricErrorMultiplier?: number;
+  loadOutsideView?: boolean;
+  tileLoader?: TileLoader;
+  meshCallback?: (mesh: Mesh) => void;
+  pointsCallback?: (points: Points) => void;
+  onLoadCallback?: (tileset: OGC3DTile) => void;
+  occlusionCullingService?: OcclusionCullingService;
+  centerModel?: boolean;
+  static?: boolean;
+  rootPath?: string;
+  json?: any;
+  parentGeometricError?: number;
+  parentBoundingVolume?: any;
+  parentRefinement?: string;
+  cameraOnLoad?: Camera;
+  parentTile?: OGC3DTile;
+  proxy?: string;
+  yUp?: boolean;
+  displayErrors?: boolean;
 }

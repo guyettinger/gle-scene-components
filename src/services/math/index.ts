@@ -1,1 +1,1 @@
-export { normalizeAngle } from './mathService'
+export { normalizeAngle } from './mathService';

@@ -1,4 +1,3 @@
-import { SceneContentProps } from "../../../../components/SceneContent";
+import { SceneContentProps } from '../../../../components/SceneContent';
 
-export interface ThreeSceneContentProps extends SceneContentProps {
-}
+export interface ThreeSceneContentProps extends SceneContentProps {}

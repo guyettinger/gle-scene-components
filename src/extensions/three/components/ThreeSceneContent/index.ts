@@ -1,2 +1,2 @@
-export { type ThreeSceneContentProps } from './ThreeSceneContent.types'
-export { ThreeSceneContent } from './ThreeSceneContent'
+export { ThreeSceneContent } from './ThreeSceneContent';
+export { type ThreeSceneContentProps } from './ThreeSceneContent.types';

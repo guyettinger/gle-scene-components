@@ -1,1 +1,1 @@
-export { SceneViewModel } from './sceneViewModel'
+export { SceneViewModel } from './sceneViewModel';

@@ -1,1 +1,1 @@
-export { getScenePositionForSun, getSceneDirectionForSun } from './sunService'
+export { getSceneDirectionForSun, getScenePositionForSun } from './sunService';

@@ -1,1 +1,1 @@
-export { rotatePointCloudOctreeYUp } from './pointCloudOctreeService'
+export { rotatePointCloudOctreeYUp } from './pointCloudOctreeService';

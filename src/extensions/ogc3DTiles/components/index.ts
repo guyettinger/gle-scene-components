@@ -1,1 +1,1 @@
-export * from "./OGC3DTiles"
+export * from './OGC3DTiles';

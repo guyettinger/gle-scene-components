@@ -1,6 +1,6 @@
-import { Cesium3DTileset } from "cesium";
+import { Cesium3DTileset } from 'cesium';
 
 export interface Cesium3DTilesProps {
-    url: string,
-    options?: Cesium3DTileset.ConstructorOptions
+  url: string;
+  options?: Cesium3DTileset.ConstructorOptions;
 }

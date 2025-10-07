@@ -1,3 +1,3 @@
-export { GaussianSplatCloudsSceneExtension } from './gaussianSplatCloudsSceneExtension'
-export { GaussianSplatCloudsSceneViewForegroundLayerExtension } from './gaussianSplatCloudsSceneViewForegroundLayerExtension'
-export * from './components'
+export * from './components';
+export { GaussianSplatCloudsSceneExtension } from './gaussianSplatCloudsSceneExtension';
+export { GaussianSplatCloudsSceneViewForegroundLayerExtension } from './gaussianSplatCloudsSceneViewForegroundLayerExtension';

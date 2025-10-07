@@ -1,1 +1,1 @@
-export * from "./GaussianSplatCloud"
+export * from './GaussianSplatCloud';

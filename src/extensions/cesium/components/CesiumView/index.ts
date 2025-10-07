@@ -1,2 +1,2 @@
-export { type CesiumViewProps } from "./CesiumView.types"
-export { CesiumView } from "./CesiumView"
+export { CesiumView } from './CesiumView';
+export { type CesiumViewProps } from './CesiumView.types';

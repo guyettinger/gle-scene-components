@@ -1,1 +1,1 @@
-export { type SceneStore, default as DefaultSceneStore } from './sceneStore'
+export { default as DefaultSceneStore, type SceneStore } from './sceneStore';

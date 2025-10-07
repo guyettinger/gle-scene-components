@@ -1,2 +1,2 @@
-export { type SceneViewProps } from './SceneView.types'
-export { SceneView } from './SceneView'
+export { SceneView } from './SceneView';
+export { type SceneViewProps } from './SceneView.types';

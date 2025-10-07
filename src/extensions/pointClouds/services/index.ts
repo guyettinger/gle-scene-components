@@ -1,1 +1,1 @@
-export * from "./pointCloudOctree"
+export * from './pointCloudOctree';

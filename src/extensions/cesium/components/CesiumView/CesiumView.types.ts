@@ -1,5 +1,3 @@
-import { SceneViewBackgroundProps } from "../../../sceneViewExtension.types";
+import { SceneViewBackgroundProps } from '../../../sceneViewExtension.types';
 
-export interface CesiumViewProps extends SceneViewBackgroundProps {
-
-}
+export interface CesiumViewProps extends SceneViewBackgroundProps {}

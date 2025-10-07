@@ -1,3 +1,3 @@
-export * from './scene'
-export * from './sceneView'
-export * from './root'
+export * from './root';
+export * from './scene';
+export * from './sceneView';

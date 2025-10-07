@@ -1,10 +1,10 @@
-import { CesiumComponentRef, Viewer } from 'resium'
-import { SceneMode, Viewer as CesiumViewer } from "cesium"
-import { observer } from "mobx-react";
-import { useSceneViewModel } from "../../../../providers";
-import { SceneExtensionNames } from "../../../sceneExtensionNames";
-import { CesiumSceneViewBackgroundExtension } from "../../cesiumSceneViewBackgroundExtension";
-import { CesiumViewProps } from "./CesiumView.types";
+import { Viewer as CesiumViewer, SceneMode } from 'cesium';
+import { observer } from 'mobx-react';
+import { CesiumComponentRef, Viewer } from 'resium';
+import { useSceneViewModel } from '../../../../providers';
+import { SceneExtensionNames } from '../../../sceneExtensionNames';
+import { CesiumSceneViewBackgroundExtension } from '../../cesiumSceneViewBackgroundExtension';
+import { CesiumViewProps } from './CesiumView.types';
 
 /*
     Component Lifecycle
@@ -17,40 +17,44 @@ import { CesiumViewProps } from "./CesiumView.types";
     5. Unmount: The Cesium element is destroyed.
  */
 export const CesiumView = observer(({}: CesiumViewProps) => {
-    const sceneViewModel = useSceneViewModel()
-    const cesiumSceneViewExtension = sceneViewModel.getSceneViewExtension<CesiumSceneViewBackgroundExtension>(SceneExtensionNames.Cesium)
-    const cesiumSceneExtension = cesiumSceneViewExtension.cesiumSceneExtension
-    const {cesiumScene} = cesiumSceneExtension
-    const creditContainer = typeof document !== 'undefined' ? document?.createElement("div") : null!
+  const sceneViewModel = useSceneViewModel();
+  const cesiumSceneViewExtension =
+    sceneViewModel.getSceneViewExtension<CesiumSceneViewBackgroundExtension>(
+      SceneExtensionNames.Cesium
+    );
+  const cesiumSceneExtension = cesiumSceneViewExtension.cesiumSceneExtension;
+  const { cesiumScene } = cesiumSceneExtension;
+  const creditContainer = typeof document !== 'undefined' ? document?.createElement('div') : null!;
 
-    const handleRef = (e: CesiumComponentRef<CesiumViewer> | null) => {
-        if (!e) return;
-        const cesiumViewer = e.cesiumElement
-        if (!cesiumViewer) return;
-        handleCesiumViewer(cesiumViewer)
-    }
+  const handleRef = (e: CesiumComponentRef<CesiumViewer> | null) => {
+    if (!e) return;
+    const cesiumViewer = e.cesiumElement;
+    if (!cesiumViewer) return;
+    handleCesiumViewer(cesiumViewer);
+  };
 
-    const handleCesiumViewer = (cesiumViewer: CesiumViewer) => {
-        cesiumSceneViewExtension.cesiumViewer = cesiumViewer;
-    }
+  const handleCesiumViewer = (cesiumViewer: CesiumViewer) => {
+    cesiumSceneViewExtension.cesiumViewer = cesiumViewer;
+  };
 
-    return (
-        <Viewer full
-                ref={handleRef}
-                animation={false}
-                creditContainer={creditContainer}
-                homeButton={false}
-                navigationHelpButton={false}
-                terrainProvider={cesiumSceneExtension.cesiumTerrainProviderFactory!}
-                timeline={false}
-                useDefaultRenderLoop={false}
-                geocoder={false}
-                sceneModePicker={false}
-                baseLayerPicker={false}
-                fullscreenButton={false}
-                sceneMode={SceneMode.SCENE3D}
-        >
-            {cesiumScene}
-        </Viewer>
-    )
-})
+  return (
+    <Viewer
+      full
+      ref={handleRef}
+      animation={false}
+      creditContainer={creditContainer}
+      homeButton={false}
+      navigationHelpButton={false}
+      terrainProvider={cesiumSceneExtension.cesiumTerrainProviderFactory!}
+      timeline={false}
+      useDefaultRenderLoop={false}
+      geocoder={false}
+      sceneModePicker={false}
+      baseLayerPicker={false}
+      fullscreenButton={false}
+      sceneMode={SceneMode.SCENE3D}
+    >
+      {cesiumScene}
+    </Viewer>
+  );
+});

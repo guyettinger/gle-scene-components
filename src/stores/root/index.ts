@@ -1,1 +1,1 @@
-export { type RootStore, default as DefaultRootStore } from './rootStore'
+export { default as DefaultRootStore, type RootStore } from './rootStore';

@@ -1,12 +1,8 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { useRef } from "react";
-import { MathUtils, Vector3 } from "three";
-import { createXRStore } from "@react-three/xr";
-import styled from "styled-components";
-import { Scene } from "./Scene";
-import { SceneInterface } from "./Scene.types";
-import { SceneContent } from "../SceneContent";
-import { CoordinatedGroup } from "../CoordinatedGroup";
+import { createXRStore } from '@react-three/xr';
+import { Meta, StoryObj } from '@storybook/react';
+import { useRef } from 'react';
+import styled from 'styled-components';
+import { MathUtils, Vector3 } from 'three';
 import {
   Box,
   CesiumSceneContent,
@@ -18,13 +14,17 @@ import {
   rotatePointCloudOctreeYUp,
   ThreeSceneContent,
   WebXRManager,
-} from "../../extensions";
+} from '../../extensions';
+import { CoordinatedGroup } from '../CoordinatedGroup';
+import { SceneContent } from '../SceneContent';
+import { Scene } from './Scene';
+import { SceneInterface } from './Scene.types';
 
 const store = createXRStore();
 
 const meta: Meta<typeof Scene> = {
   component: Scene,
-  title: "gle-scene-components/Scene",
+  title: 'gle-scene-components/Scene',
   argTypes: {},
 };
 export default meta;
@@ -46,7 +46,8 @@ const SceneButton = styled.button`
   }
 `;
 
-const cesiumIonAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjOWIzZmM0Mi0zOThjLTRmZjItOTM2OC1iOWM4N2ZiMzY3MzUiLCJpZCI6MTYzOTg4LCJpYXQiOjE2OTM2MDMzMzl9.SkbJ2XbsBVeaGSZ2MrwuksCHx4xuux3DGYh6pIJJhGQ"
+const cesiumIonAccessToken =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjOWIzZmM0Mi0zOThjLTRmZjItOTM2OC1iOWM4N2ZiMzY3MzUiLCJpZCI6MTYzOTg4LCJpYXQiOjE2OTM2MDMzMzl9.SkbJ2XbsBVeaGSZ2MrwuksCHx4xuux3DGYh6pIJJhGQ';
 
 export const Boxes: Story = (args: any) => {
   return (
@@ -263,20 +264,16 @@ Juanita.args = {};
 
 export const CoordinatedGroups: Story = (args: any) => {
   // coordinates
-  const upperArenaLongitudeLatitudeHeight = new Vector3(
-    -83.76535,
-    34.401279,
-    357.0,
-  );
+  const upperArenaLongitudeLatitudeHeight = new Vector3(-83.76535, 34.401279, 357.0);
   const barnParkingLotLongitudeLatitudeHeight = new Vector3(
     -83.76536188233062,
     34.400715493095205,
-    353.0,
+    353.0
   );
   const lowerArenaLongitudeLatitudeHeight = new Vector3(
     -83.76612684589652,
     34.40024525982904,
-    350.0,
+    350.0
   );
 
   // reference
@@ -286,9 +283,7 @@ export const CoordinatedGroups: Story = (args: any) => {
     <>
       <SceneButton
         onClick={() =>
-          sceneRef.current?.moveCameraToLongitudeLatitudeHeight(
-            upperArenaLongitudeLatitudeHeight,
-          )
+          sceneRef.current?.moveCameraToLongitudeLatitudeHeight(upperArenaLongitudeLatitudeHeight)
         }
       >
         Upper Arena
@@ -296,7 +291,7 @@ export const CoordinatedGroups: Story = (args: any) => {
       <SceneButton
         onClick={() =>
           sceneRef.current?.moveCameraToLongitudeLatitudeHeight(
-            barnParkingLotLongitudeLatitudeHeight,
+            barnParkingLotLongitudeLatitudeHeight
           )
         }
       >
@@ -304,9 +299,7 @@ export const CoordinatedGroups: Story = (args: any) => {
       </SceneButton>
       <SceneButton
         onClick={() =>
-          sceneRef.current?.moveCameraToLongitudeLatitudeHeight(
-            lowerArenaLongitudeLatitudeHeight,
-          )
+          sceneRef.current?.moveCameraToLongitudeLatitudeHeight(lowerArenaLongitudeLatitudeHeight)
         }
       >
         Lower Arena
@@ -320,19 +313,13 @@ export const CoordinatedGroups: Story = (args: any) => {
       >
         <SceneContent>
           <ThreeSceneContent>
-            <CoordinatedGroup
-              longitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}
-            >
+            <CoordinatedGroup longitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}>
               <Box position={[0, 0, 0]} />
             </CoordinatedGroup>
-            <CoordinatedGroup
-              longitudeLatitudeHeight={barnParkingLotLongitudeLatitudeHeight}
-            >
+            <CoordinatedGroup longitudeLatitudeHeight={barnParkingLotLongitudeLatitudeHeight}>
               <Box position={[0, 0, 0]} />
             </CoordinatedGroup>
-            <CoordinatedGroup
-              longitudeLatitudeHeight={lowerArenaLongitudeLatitudeHeight}
-            >
+            <CoordinatedGroup longitudeLatitudeHeight={lowerArenaLongitudeLatitudeHeight}>
               <Box position={[0, 0, 0]} />
             </CoordinatedGroup>
           </ThreeSceneContent>
@@ -348,9 +335,7 @@ export const GoogleTiles: Story = (args: any) => {
     <Scene
       data-testid="Scene-id"
       name="Scene1"
-      sceneCenterLongitudeLatitudeHeight={[
-        -84.39285552774608, 33.772504710962814, 250.0,
-      ]}
+      sceneCenterLongitudeLatitudeHeight={[-84.39285552774608, 33.772504710962814, 250.0]}
       cesiumIonAccessToken={cesiumIonAccessToken}
     >
       <SceneContent>
@@ -371,23 +356,19 @@ export const ThreeDTiles: Story = (args: any) => {
     <Scene
       data-testid="Scene-id"
       name="Scene1"
-      sceneCenterLongitudeLatitudeHeight={[
-        -83.76612684589652, 34.40024525982904, 349.0,
-      ]}
+      sceneCenterLongitudeLatitudeHeight={[-83.76612684589652, 34.40024525982904, 349.0]}
       cesiumIonAccessToken={cesiumIonAccessToken}
     >
       <SceneContent>
         <ThreeSceneContent>
           <OGC3DTiles
-            url={
-              "https://storage.googleapis.com/ogc-3d-tiles/museumMeshed/tileset.json"
-            }
+            url={'https://storage.googleapis.com/ogc-3d-tiles/museumMeshed/tileset.json'}
             position={[0, -2, 0]}
             rotation={[
               MathUtils.degToRad(0),
               MathUtils.degToRad(90),
               MathUtils.degToRad(180),
-              "XYZ",
+              'XYZ',
             ]}
           />
         </ThreeSceneContent>
@@ -449,20 +430,16 @@ AR.args = {};
 
 export const Everything: Story = (args: any) => {
   // coordinates
-  const upperArenaLongitudeLatitudeHeight = new Vector3(
-    -83.76535,
-    34.401279,
-    357.0,
-  );
+  const upperArenaLongitudeLatitudeHeight = new Vector3(-83.76535, 34.401279, 357.0);
   const barnParkingLotLongitudeLatitudeHeight = new Vector3(
     -83.76536188233062,
     34.400715493095205,
-    353.0,
+    353.0
   );
   const lowerArenaLongitudeLatitudeHeight = new Vector3(
     -83.76612684589652,
     34.40024525982904,
-    350.0,
+    350.0
   );
 
   // reference
@@ -472,9 +449,7 @@ export const Everything: Story = (args: any) => {
     <>
       <SceneButton
         onClick={() =>
-          sceneRef.current?.moveCameraToLongitudeLatitudeHeight(
-            upperArenaLongitudeLatitudeHeight,
-          )
+          sceneRef.current?.moveCameraToLongitudeLatitudeHeight(upperArenaLongitudeLatitudeHeight)
         }
       >
         Upper Arena
@@ -482,7 +457,7 @@ export const Everything: Story = (args: any) => {
       <SceneButton
         onClick={() =>
           sceneRef.current?.moveCameraToLongitudeLatitudeHeight(
-            barnParkingLotLongitudeLatitudeHeight,
+            barnParkingLotLongitudeLatitudeHeight
           )
         }
       >
@@ -490,9 +465,7 @@ export const Everything: Story = (args: any) => {
       </SceneButton>
       <SceneButton
         onClick={() =>
-          sceneRef.current?.moveCameraToLongitudeLatitudeHeight(
-            lowerArenaLongitudeLatitudeHeight,
-          )
+          sceneRef.current?.moveCameraToLongitudeLatitudeHeight(lowerArenaLongitudeLatitudeHeight)
         }
       >
         Lower Arena
@@ -506,9 +479,7 @@ export const Everything: Story = (args: any) => {
       >
         <SceneContent>
           <ThreeSceneContent>
-            <CoordinatedGroup
-              longitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}
-            >
+            <CoordinatedGroup longitudeLatitudeHeight={upperArenaLongitudeLatitudeHeight}>
               <PointCloud
                 baseUrl="https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/"
                 fileName="cloud.js"
@@ -521,26 +492,20 @@ export const Everything: Story = (args: any) => {
                 position={[0, 0, 0]}
               />
               <OGC3DTiles
-                url={
-                  "https://storage.googleapis.com/ogc-3d-tiles/museumMeshed/tileset.json"
-                }
+                url={'https://storage.googleapis.com/ogc-3d-tiles/museumMeshed/tileset.json'}
                 position={[0, -2, 0]}
                 rotation={[
                   MathUtils.degToRad(0),
                   MathUtils.degToRad(90),
                   MathUtils.degToRad(180),
-                  "XYZ",
+                  'XYZ',
                 ]}
               />
             </CoordinatedGroup>
-            <CoordinatedGroup
-              longitudeLatitudeHeight={barnParkingLotLongitudeLatitudeHeight}
-            >
+            <CoordinatedGroup longitudeLatitudeHeight={barnParkingLotLongitudeLatitudeHeight}>
               <Box position={[0, 0, 0]} />
             </CoordinatedGroup>
-            <CoordinatedGroup
-              longitudeLatitudeHeight={lowerArenaLongitudeLatitudeHeight}
-            >
+            <CoordinatedGroup longitudeLatitudeHeight={lowerArenaLongitudeLatitudeHeight}>
               <Box position={[0, 0, 0]} />
             </CoordinatedGroup>
           </ThreeSceneContent>

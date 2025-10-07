@@ -1,57 +1,56 @@
-import { useEffect, useRef } from "react";
-import { Group } from "three";
-import { ThreeEvent } from "@react-three/fiber";
-import { PointCloudProps } from "./PointCloud.types";
-import { useSceneViewModel } from "../../../../providers";
-import { SceneExtensionNames } from "../../../sceneExtensionNames";
-import { PointCloudsSceneViewForegroundLayerExtension } from "../../pointCloudsSceneViewForegroundLayerExtension";
+import { ThreeEvent } from '@react-three/fiber';
+import { useEffect, useRef } from 'react';
+import { Group } from 'three';
+import { useSceneViewModel } from '../../../../providers';
+import { SceneExtensionNames } from '../../../sceneExtensionNames';
+import { PointCloudsSceneViewForegroundLayerExtension } from '../../pointCloudsSceneViewForegroundLayerExtension';
+import { PointCloudProps } from './PointCloud.types';
 
-export const PointCloud = ({fileName, baseUrl, onPointCloudLoad, ...groupProps}: PointCloudProps) => {
-    const sceneViewModel = useSceneViewModel()
-    const pointCloudGroupReference = useRef<Group>(null)
-    const pointCloudsSceneViewExtension = sceneViewModel.getSceneViewExtension<PointCloudsSceneViewForegroundLayerExtension>(SceneExtensionNames.PointClouds)
-    const pointCloudsSceneExtension = pointCloudsSceneViewExtension.pointCloudsSceneExtension
+export const PointCloud = ({
+  fileName,
+  baseUrl,
+  onPointCloudLoad,
+  ...groupProps
+}: PointCloudProps) => {
+  const sceneViewModel = useSceneViewModel();
+  const pointCloudGroupReference = useRef<Group>(null);
+  const pointCloudsSceneViewExtension =
+    sceneViewModel.getSceneViewExtension<PointCloudsSceneViewForegroundLayerExtension>(
+      SceneExtensionNames.PointClouds
+    );
+  const pointCloudsSceneExtension = pointCloudsSceneViewExtension.pointCloudsSceneExtension;
 
-    useEffect(() => {
+  useEffect(() => {
+    // ensure point cloud group
+    const pointCloudGroup = pointCloudGroupReference?.current;
+    if (!pointCloudGroup) return;
 
-        // ensure point cloud group
-        const pointCloudGroup = pointCloudGroupReference?.current;
-        if (!pointCloudGroup) return
+    console.log('point cloud loading');
 
-        console.log('point cloud loading')
+    // load point cloud
+    pointCloudsSceneExtension.potree
+      .loadPointCloud(fileName, (relativeUrl) => `${baseUrl}${relativeUrl}`)
+      .then((pco) => {
+        // register the point cloud
+        pointCloudsSceneExtension.pointClouds.push(pco);
 
-        // load point cloud
-        pointCloudsSceneExtension.potree
-            .loadPointCloud(
-                fileName,
-                relativeUrl => `${baseUrl}${relativeUrl}`,
-            )
-            .then(pco => {
+        // add the point cloud to the group
+        pointCloudGroup.add(pco);
 
-                // register the point cloud
-                pointCloudsSceneExtension.pointClouds.push(pco)
+        // notify point cloud loaded
+        onPointCloudLoad?.(pco);
+      })
+      .finally(() => {
+        console.log('point cloud loaded');
+      });
+  }, [fileName, baseUrl]);
 
-                // add the point cloud to the group
-                pointCloudGroup.add(pco)
+  const handleDoubleClick = (e: ThreeEvent<MouseEvent>) => {
+    e.stopPropagation();
+    pointCloudsSceneViewExtension.performDoubleClick(e);
+  };
 
-                // notify point cloud loaded
-                onPointCloudLoad?.(pco)
-
-            })
-            .finally(() => {
-                console.log("point cloud loaded")
-            })
-    }, [fileName, baseUrl]);
-
-    const handleDoubleClick = (e: ThreeEvent<MouseEvent>) => {
-        e.stopPropagation()
-        pointCloudsSceneViewExtension.performDoubleClick(e)
-    }
-
-    return (
-        <group {...groupProps}
-               ref={pointCloudGroupReference}
-               onDoubleClick={handleDoubleClick}>
-        </group>
-    )
-}
+  return (
+    <group {...groupProps} ref={pointCloudGroupReference} onDoubleClick={handleDoubleClick}></group>
+  );
+};

@@ -1,10 +1,6 @@
-import { SceneContentProps } from "./SceneContent.types";
-import { Fragment } from "react";
+import { Fragment } from 'react';
+import { SceneContentProps } from './SceneContent.types';
 
-export const SceneContent = ({children}:SceneContentProps) => {
-    return (
-        <Fragment>
-            {children}
-        </Fragment>
-    )
-}
+export const SceneContent = ({ children }: SceneContentProps) => {
+  return <Fragment>{children}</Fragment>;
+};

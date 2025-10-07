@@ -1,5 +1,3 @@
-import { MeshProps } from "@react-three/fiber/dist/declarations/src/three-types";
+import { MeshProps } from '@react-three/fiber/dist/declarations/src/three-types';
 
-export interface FloorProps extends MeshProps{
-
-}
+export interface FloorProps extends MeshProps {}

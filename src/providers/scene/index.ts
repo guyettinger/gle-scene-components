@@ -1,1 +1,1 @@
-export { SceneContext, SceneProvider, useSceneModel } from './sceneProvider'
+export { SceneContext, SceneProvider, useSceneModel } from './sceneProvider';

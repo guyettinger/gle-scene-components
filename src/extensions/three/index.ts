@@ -1,3 +1,3 @@
-export { ThreeSceneExtension } from './threeSceneExtension'
-export { ThreeSceneViewExtension } from './threeSceneViewExtension'
-export * from './components'
+export * from './components';
+export { ThreeSceneExtension } from './threeSceneExtension';
+export { ThreeSceneViewExtension } from './threeSceneViewExtension';

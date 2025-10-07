@@ -1,14 +1,14 @@
-import { SceneStore, DefaultSceneStore } from "../scene";
-import { SceneViewStore, DefaultSceneViewStore } from "../sceneView";
+import { DefaultSceneStore, SceneStore } from '../scene';
+import { DefaultSceneViewStore, SceneViewStore } from '../sceneView';
 
 export type RootStore = {
-    sceneStore: SceneStore
-    sceneViewStore: SceneViewStore
-}
+  sceneStore: SceneStore;
+  sceneViewStore: SceneViewStore;
+};
 
 const rootStore: RootStore = {
-    sceneStore: DefaultSceneStore,
-    sceneViewStore: DefaultSceneViewStore
-}
+  sceneStore: DefaultSceneStore,
+  sceneViewStore: DefaultSceneViewStore,
+};
 
 export default rootStore;

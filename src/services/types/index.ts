@@ -1,1 +1,1 @@
-export {convertVector3Prop} from './typesService'
+export { convertVector3Prop } from './typesService';

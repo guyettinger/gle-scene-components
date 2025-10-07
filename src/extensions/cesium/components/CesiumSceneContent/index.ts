@@ -1,2 +1,2 @@
-export { type CesiumSceneContentProps } from './CesiumSceneContent.types'
-export { CesiumSceneContent } from './CesiumSceneContent'
+export { CesiumSceneContent } from './CesiumSceneContent';
+export { type CesiumSceneContentProps } from './CesiumSceneContent.types';

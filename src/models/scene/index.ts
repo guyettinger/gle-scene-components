@@ -1,1 +1,1 @@
-export { SceneModel } from './sceneModel'
+export { SceneModel } from './sceneModel';

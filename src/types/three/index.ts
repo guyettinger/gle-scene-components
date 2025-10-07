@@ -1,1 +1,1 @@
-export { type Vector3Prop, type ShadowsProp } from './three.types'
+export { type ShadowsProp, type Vector3Prop } from './three.types';

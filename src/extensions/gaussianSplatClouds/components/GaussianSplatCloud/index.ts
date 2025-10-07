@@ -1,2 +1,2 @@
-export { type GaussianSplatCloudProps } from './GaussianSplatCloud.types'
-export { GaussianSplatCloud } from './GaussianSplatCloud'
+export { GaussianSplatCloud } from './GaussianSplatCloud';
+export { type GaussianSplatCloudProps } from './GaussianSplatCloud.types';
